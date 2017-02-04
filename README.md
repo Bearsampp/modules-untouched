@@ -6,7 +6,17 @@ Binaries files that are not available as archives artefacts (zip or 7z) are rebu
 
 ## Modules
 
+### Filezilla Server
+
+Rebuild required, only available as setup executable.<br />
+Extracted using 7zip and rebuild without unecessary files (sources, readme).
+
+* http://sourceforge.net/projects/filezilla/files/FileZilla%20Server/
+* http://mirror.ufs.ac.za/filezilla/FileZilla%20Server/
+
 ### MongoDB
+
+No rebuild required. Available as archives artefacts.
 
 * https://www.mongodb.org/dl/win32/
 

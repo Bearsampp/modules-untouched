@@ -2,9 +2,15 @@
 
 This a sub-repo of [Neard project](https://github.com/crazy-max/neard) involving mirror of all modules binaries from their original locations.<br />
 There are hosted on Github to prevent dead links.<br />
-Binaries files that are not available as archives artefacts (zip or 7z) are rebuild for Neard but original files are included too.
+Binaries files that are not available as archives artefacts (zip or 7z) or single file are rebuild for Neard but original files are included too.
 
 ## Modules
+
+### Adminer
+
+No rebuild required. Available as single PHP file.
+
+* https://github.com/vrana/adminer/releases
 
 ### Filezilla Server
 

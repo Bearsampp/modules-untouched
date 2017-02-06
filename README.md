@@ -5,9 +5,11 @@ Issues must be reported on [Neard repository](https://github.com/crazy-max/neard
 
 ## Adminer
 
-No rebuild required. Available as single PHP file.
+Available as single PHP file.<br />
+[Login server enhanced](https://github.com/crazy-max/login-servers-enhanced) plugin and [Adminer theme by Hever](https://raw.githubusercontent.com/vrana/adminer/master/designs/hever/adminer.css) have been integrated.
 
 * https://github.com/vrana/adminer/releases
+* https://github.com/vrana/adminer/blob/master/plugins/plugin.php
 
 ## Filezilla Server
 

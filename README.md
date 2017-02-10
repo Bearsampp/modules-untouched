@@ -43,3 +43,9 @@ No rebuild required. Available as archive artefact (zip).
 No rebuild required. Available as archive artefact (zip).
 
 * https://www.mongodb.org/dl/win32/
+
+## Webgrind
+
+No rebuild required. Available as archive artefact (zip).
+
+* https://github.com/jokkedk/webgrind/releases

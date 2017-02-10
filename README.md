@@ -59,3 +59,9 @@ No rebuild required. Available as archive artefact (zip).
 No rebuild required. Available as archive artefact (zip).
 
 * https://github.com/jokkedk/webgrind/releases
+
+## WebSVN
+
+No rebuild required. Available as archive artefact (zip).
+
+* http://www.websvn.info/download/

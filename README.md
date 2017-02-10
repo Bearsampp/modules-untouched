@@ -31,6 +31,12 @@ No rebuild required. Available as a single EXE file.
 
 * https://github.com/mailhog/MailHog/releases
 
+## MariaDB
+
+No rebuild required. Available as archive artefact (zip).
+
+* https://downloads.mariadb.org/mariadb/+releases/
+
 ## phpMemAdmin
 
 No rebuild required. Available as archive artefact (zip).<br />

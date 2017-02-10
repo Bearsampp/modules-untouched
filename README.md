@@ -38,6 +38,16 @@ No rebuild required. Available as archive artefact (zip).
 
 * https://www.phpmyadmin.net/downloads/
 
+## phpPgAdmin
+
+No rebuild required. Available as archive artefact (zip).
+
+* https://github.com/phppgadmin/phppgadmin
+
+Some are available through forked repositories :
+
+* Tomicapo: [phppgadmin-d32e737a0de724ab954a996d5bada363c863770f](https://github.com/Tomicapo/phppgadmin/tree/d32e737a0de724ab954a996d5bada363c863770f)
+
 ## MongoDB
 
 No rebuild required. Available as archive artefact (zip).

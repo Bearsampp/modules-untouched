@@ -37,6 +37,12 @@ No rebuild required. Available as archive artefact (zip).
 
 * https://downloads.mariadb.org/mariadb/+releases/
 
+## MongoDB
+
+No rebuild required. Available as archive artefact (zip).
+
+* https://www.mongodb.org/dl/win32/
+
 ## phpMemAdmin
 
 No rebuild required. Available as archive artefact (zip).<br />
@@ -59,12 +65,6 @@ No rebuild required. Available as archive artefact (zip).
 Some are available through forked repositories :
 
 * Tomicapo: [phppgadmin-d32e737a0de724ab954a996d5bada363c863770f](https://github.com/Tomicapo/phppgadmin/tree/d32e737a0de724ab954a996d5bada363c863770f)
-
-## MongoDB
-
-No rebuild required. Available as archive artefact (zip).
-
-* https://www.mongodb.org/dl/win32/
 
 ## Webgrind
 

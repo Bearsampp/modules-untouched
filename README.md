@@ -27,10 +27,16 @@ No rebuild required. Available as archive artefact (tar.gz).
 
 ## phpMemAdmin
 
-Available as archive artefact (zip).<br />
+No rebuild required. Available as archive artefact (zip).<br />
 Taken from sources on Github and version tagged as Travis build number.
 
 * https://github.com/clickalicious/phpMemAdmin/releases
+
+## phpMyAdmin
+
+No rebuild required. Available as archive artefact (zip).
+
+* https://www.phpmyadmin.net/downloads/
 
 ## MongoDB
 

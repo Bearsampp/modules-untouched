@@ -43,6 +43,12 @@ No rebuild required. Available as archive artefact (zip).
 
 * https://www.mongodb.org/dl/win32/
 
+## MySQL
+
+No rebuild required. Available as archive artefact (zip).
+
+* https://dev.mysql.com/downloads/mysql/
+
 ## phpMemAdmin
 
 No rebuild required. Available as archive artefact (zip).<br />

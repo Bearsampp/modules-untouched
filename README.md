@@ -49,6 +49,12 @@ No rebuild required. Available as archive artefact (zip).
 
 * https://dev.mysql.com/downloads/mysql/
 
+## Node.js
+
+No rebuild required. Available as msi artefact.
+
+* https://nodejs.org/dist/
+
 ## phpMemAdmin
 
 No rebuild required. Available as archive artefact (zip).<br />

@@ -55,6 +55,12 @@ No rebuild required. Available as msi artefact.
 
 * https://nodejs.org/dist/
 
+## PHP
+
+No rebuild required. Available as archive artefact (zip).
+
+* http://windows.php.net/downloads/releases/
+
 ## phpMemAdmin
 
 No rebuild required. Available as archive artefact (zip).<br />

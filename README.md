@@ -1,3 +1,5 @@
+![Total downloads](https://img.shields.io/github/downloads/crazy-max/neard-modules-untouched/total.svg?style=flat-square)
+
 This a sub-repo of [Neard project](https://github.com/crazy-max/neard) involving mirror of all modules binaries untouched from their original locations.<br />
 There are hosted on Github to prevent dead links.<br />
 Binaries files that are not available as archives artefacts or single file are rebuild for Neard but original files are included too.<br />
@@ -89,6 +91,14 @@ Some are available through forked repositories :
 No rebuild required. Available as archive artefact (zip).
 
 * https://www.enterprisedb.com/products-services-training/pgbindownload
+
+## Python
+
+Rebuild required, only available as setup executable.<br />
+Extracted using 7zip and rebuild with PyQt4 whl file.
+
+* https://winpython.github.io/
+* http://www.lfd.uci.edu/~gohlke/pythonlibs/#pyqt4
 
 ## SVN
 

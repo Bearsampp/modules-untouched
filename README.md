@@ -100,6 +100,14 @@ Extracted using 7zip and rebuild with PyQt4 whl file.
 * https://winpython.github.io/
 * http://www.lfd.uci.edu/~gohlke/pythonlibs/#pyqt4
 
+## Ruby
+
+Rebuild required, only available as setup executable.<br />
+Extracted using 7zip and rebuild with the latest RubyGems.
+
+* http://rubyinstaller.org
+* https://rubygems.org
+
 ## SVN
 
 Rebuild required, only available as setup executable.<br />

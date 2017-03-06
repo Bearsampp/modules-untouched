@@ -120,7 +120,7 @@ No rebuild required. Available as archive artefact (zip).
 ## Python
 
 Rebuild required, only available as setup executable.<br />
-Extracted using 7zip and rebuild with PyQt4 whl file.
+Extracted using 7zip.
 
 * https://winpython.github.io/
 * http://www.lfd.uci.edu/~gohlke/pythonlibs/#pyqt4

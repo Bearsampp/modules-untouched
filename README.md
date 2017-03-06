@@ -38,6 +38,12 @@ Available as a single PHP file.<br />
 * https://github.com/vrana/adminer/releases
 * https://github.com/vrana/adminer/blob/master/plugins/plugin.php
 
+## Apache
+
+No rebuild required. Available as archive artefact (zip).
+
+* http://www.apachehaus.com/cgi-bin/download.plx
+
 ## Filezilla Server
 
 Rebuild required, only available as setup executable.<br />

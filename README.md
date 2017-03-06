@@ -5,6 +5,31 @@ There are hosted on Github to prevent dead links.<br />
 Binaries files that are not available as archives artefacts or single file are rebuild for Neard but original files are included too.<br />
 Issues must be reported on [Neard repository](https://github.com/crazy-max/neard/issues).
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Adminer](#adminer)
+- [Filezilla Server](#filezilla-server)
+- [Gitlist](#gitlist)
+- [MailHog](#mailhog)
+- [MariaDB](#mariadb)
+- [MongoDB](#mongodb)
+- [MySQL](#mysql)
+- [Node.js](#nodejs)
+- [PHP](#php)
+- [phpMemAdmin](#phpmemadmin)
+- [phpMyAdmin](#phpmyadmin)
+- [phpPgAdmin](#phppgadmin)
+- [PostgreSQL](#postgresql)
+- [Python](#python)
+- [Ruby](#ruby)
+- [SVN](#svn)
+- [Webgrind](#webgrind)
+- [WebSVN](#websvn)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Adminer
 
 Available as a single PHP file.<br />
@@ -103,7 +128,7 @@ Extracted using 7zip and rebuild with PyQt4 whl file.
 ## Ruby
 
 Rebuild required, only available as setup executable.<br />
-Extracted using 7zip and rebuild with the latest RubyGems.
+Extracted using 7zip.
 
 * http://rubyinstaller.org
 * https://rubygems.org

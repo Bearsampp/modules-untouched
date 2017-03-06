@@ -10,6 +10,7 @@ Issues must be reported on [Neard repository](https://github.com/crazy-max/neard
 
 
 - [Adminer](#adminer)
+- [Apache](#apache)
 - [Filezilla Server](#filezilla-server)
 - [Gitlist](#gitlist)
 - [MailHog](#mailhog)

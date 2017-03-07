@@ -46,6 +46,12 @@ No rebuild required. Available as archive artefact (zip).
 
 * http://www.apachehaus.com/cgi-bin/download.plx
 
+## Composer
+
+No rebuild required. Available as a single PHAR file.
+
+* https://getcomposer.org/
+
 ## Filezilla Server
 
 Rebuild required, only available as setup executable.<br />

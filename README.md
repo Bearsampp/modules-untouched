@@ -12,6 +12,10 @@ Issues must be reported on [Neard repository](https://github.com/crazy-max/neard
 - [Adminer](#adminer)
 - [Apache](#apache)
 - [Composer](#composer)
+- [Console](#console)
+  - [Console 2](#console-2)
+  - [TCC/LE](#tccle)
+  - [ANSICON](#ansicon)
 - [Filezilla Server](#filezilla-server)
 - [Gitlist](#gitlist)
 - [MailHog](#mailhog)
@@ -52,6 +56,29 @@ No rebuild required. Available as archive artefact (zip).
 No rebuild required. Available as a single PHAR file.
 
 * https://getcomposer.org/
+
+## Console
+
+Console includes TCC/LE and ANSICON.
+
+### Console 2
+
+No rebuild required. Available as archive artefact (zip).
+
+* http://sourceforge.net/projects/console/files/console-devel/2.00/
+
+### TCC/LE
+
+Rebuild required, only available as setup executable.<br />
+Extracted by installing it and rebuild without unecessary files (uninstall).
+
+* https://jpsoft.com/all-downloads/downloads.html
+
+### ANSICON
+
+No rebuild required. Available as archive artefact (zip).
+
+* https://github.com/adoxa/ansicon/releases
 
 ## Filezilla Server
 
@@ -127,7 +154,7 @@ No rebuild required. Available as archive artefact (zip).
 
 No rebuild required. Available as archive artefact (zip).
 
-* https://github.com/phppgadmin/phppgadmin
+* https://github.com/phppgadmin/phppgadmin/releases
 
 Some are available through forked repositories :
 

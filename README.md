@@ -15,6 +15,7 @@ Issues must be reported on [Neard repository](https://github.com/crazy-max/neard
 - [Gitlist](#gitlist)
 - [MailHog](#mailhog)
 - [MariaDB](#mariadb)
+- [Memcached](#memcached)
 - [MongoDB](#mongodb)
 - [MySQL](#mysql)
 - [Node.js](#nodejs)
@@ -70,6 +71,13 @@ No rebuild required. Available as a single EXE file.
 No rebuild required. Available as archive artefact (zip).
 
 * https://downloads.mariadb.org/mariadb/+releases/
+
+## Memcached
+
+No rebuild required. Available as archive artefact (zip).
+
+* https://memcached.org/
+* https://commaster.net/content/installing-memcached-windows
 
 ## MongoDB
 

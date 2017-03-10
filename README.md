@@ -13,6 +13,7 @@ Issues must be reported on [Neard repository](https://github.com/crazy-max/neard
 - [Apache](#apache)
 - [Composer](#composer)
 - [Console](#console)
+- [Drush](#drush)
 - [Filezilla Server](#filezilla-server)
 - [Gitlist](#gitlist)
 - [MailHog](#mailhog)
@@ -76,6 +77,20 @@ Extracted by installing it and rebuild without unecessary files (uninstall).
 No rebuild required. Available as archive artefact (zip).
 
 * https://github.com/adoxa/ansicon/releases
+
+
+## Drush
+
+No rebuild required. Available as archive artefact (zip).<br />
+Some binaries provided by GnuWin have been included as well as MySQL.
+
+* https://github.com/drush-ops/drush/releases
+* https://sourceforge.net/projects/gnuwin32/files/bzip2/
+* https://sourceforge.net/projects/gnuwin32/files/gzip/
+* https://sourceforge.net/projects/gnuwin32/files/libarchive/
+* https://sourceforge.net/projects/gnuwin32/files/tar/
+* https://sourceforge.net/projects/gnuwin32/files/wget/
+* https://downloads.mysql.com/archives/workbench/
 
 ## Filezilla Server
 

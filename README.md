@@ -82,7 +82,7 @@ No rebuild required. Available as archive artefact (zip).
 ## Drush
 
 No rebuild required. Available as archive artefact (zip).<br />
-Some binaries are provided by GnuWin have been included as well as MySQL.
+Some binaries provided by GnuWin have been included as well as MySQL.
 
 * https://github.com/drush-ops/drush/releases
 * https://sourceforge.net/projects/gnuwin32/

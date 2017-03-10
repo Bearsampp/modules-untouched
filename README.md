@@ -78,7 +78,6 @@ No rebuild required. Available as archive artefact (zip).
 
 * https://github.com/adoxa/ansicon/releases
 
-
 ## Drush
 
 No rebuild required. Available as archive artefact (zip).<br />
@@ -86,7 +85,7 @@ Some binaries provided by GnuWin have been included as well as MySQL.
 
 * https://github.com/drush-ops/drush/releases
 * https://sourceforge.net/projects/gnuwin32/
-* https://downloads.mysql.com/archives/workbench/
+* https://dev.mysql.com/downloads/mysql/
 
 ## Filezilla Server
 

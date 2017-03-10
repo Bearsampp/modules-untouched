@@ -82,14 +82,10 @@ No rebuild required. Available as archive artefact (zip).
 ## Drush
 
 No rebuild required. Available as archive artefact (zip).<br />
-Some binaries provided by GnuWin have been included as well as MySQL.
+Some binaries are provided by GnuWin have been included as well as MySQL.
 
 * https://github.com/drush-ops/drush/releases
-* https://sourceforge.net/projects/gnuwin32/files/bzip2/
-* https://sourceforge.net/projects/gnuwin32/files/gzip/
-* https://sourceforge.net/projects/gnuwin32/files/libarchive/
-* https://sourceforge.net/projects/gnuwin32/files/tar/
-* https://sourceforge.net/projects/gnuwin32/files/wget/
+* https://sourceforge.net/projects/gnuwin32/
 * https://downloads.mysql.com/archives/workbench/
 
 ## Filezilla Server

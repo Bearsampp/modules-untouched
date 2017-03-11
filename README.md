@@ -28,6 +28,7 @@ Issues must be reported on [Neard repository](https://github.com/crazy-max/neard
 - [Notepad2-mod](#notepad2-mod)
 - [PHP](#php)
 - [phpMemAdmin](#phpmemadmin)
+- [PhpMetrics](#phpmetrics)
 - [phpMyAdmin](#phpmyadmin)
 - [phpPgAdmin](#phppgadmin)
 - [PostgreSQL](#postgresql)
@@ -179,6 +180,12 @@ No rebuild required. Available as archive artefact (zip).<br />
 Taken from sources on Github and version tagged as Travis build number.
 
 * https://github.com/clickalicious/phpMemAdmin/releases
+
+## PhpMetrics
+
+No rebuild required. Available as archive artefact (zip).
+
+* https://github.com/phpmetrics/PhpMetrics/releases
 
 ## phpMyAdmin
 

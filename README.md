@@ -15,6 +15,7 @@ Issues must be reported on [Neard repository](https://github.com/crazy-max/neard
 - [Console](#console)
 - [Drush](#drush)
 - [Filezilla Server](#filezilla-server)
+- [Git](#git)
 - [Gitlist](#gitlist)
 - [MailHog](#mailhog)
 - [MariaDB](#mariadb)
@@ -94,6 +95,13 @@ Extracted using 7zip and rebuild without unecessary files (sources, readme).
 
 * http://sourceforge.net/projects/filezilla/files/FileZilla%20Server/
 * http://mirror.ufs.ac.za/filezilla/FileZilla%20Server/
+
+## Git
+
+No rebuild required. Available as archive artefact (.7z).
+
+* https://github.com/git-for-windows/git/releases
+* https://github.com/msysgit/msysgit/releases
 
 ## Gitlist
 

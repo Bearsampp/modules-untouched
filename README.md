@@ -38,6 +38,7 @@ Issues must be reported on [Neard repository](https://github.com/crazy-max/neard
 - [SVN](#svn)
 - [Webgrind](#webgrind)
 - [WebSVN](#websvn)
+- [WP-CLI](#wp-cli)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -206,7 +207,7 @@ Some are available through forked repositories :
 
 ## PHPUnit
 
-No rebuild required. Available as archive artefact (zip).
+No rebuild required. Available as a single PHAR file.
 
 * https://github.com/sebastianbergmann/phpunit/releases
 
@@ -250,3 +251,9 @@ No rebuild required. Available as archive artefact (zip).
 No rebuild required. Available as archive artefact (zip).
 
 * http://www.websvn.info/download/
+
+## WP-CLI
+
+No rebuild required. Available as a single PHAR file.
+
+* https://github.com/wp-cli/wp-cli/releases

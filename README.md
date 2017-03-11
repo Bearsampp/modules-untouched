@@ -17,6 +17,7 @@ Issues must be reported on [Neard repository](https://github.com/crazy-max/neard
 - [Filezilla Server](#filezilla-server)
 - [Git](#git)
 - [Gitlist](#gitlist)
+- [HostsEditor](#hostseditor)
 - [MailHog](#mailhog)
 - [MariaDB](#mariadb)
 - [Memcached](#memcached)
@@ -108,6 +109,12 @@ No rebuild required. Available as archive artefact (.7z).
 No rebuild required. Available as archive artefact (tar.gz).
 
 * http://gitlist.org/
+
+## HostsEditor
+
+No rebuild required. Available as archive artefact (.zip).
+
+* https://hostseditor.codeplex.com/
 
 ## MailHog
 

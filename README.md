@@ -31,6 +31,7 @@ Issues must be reported on [Neard repository](https://github.com/crazy-max/neard
 - [PhpMetrics](#phpmetrics)
 - [phpMyAdmin](#phpmyadmin)
 - [phpPgAdmin](#phppgadmin)
+- [PHPUnit](#phpunit)
 - [PostgreSQL](#postgresql)
 - [Python](#python)
 - [Ruby](#ruby)
@@ -202,6 +203,12 @@ No rebuild required. Available as archive artefact (zip).
 Some are available through forked repositories :
 
 * Tomicapo: [phppgadmin-d32e737a0de724ab954a996d5bada363c863770f](https://github.com/Tomicapo/phppgadmin/tree/d32e737a0de724ab954a996d5bada363c863770f)
+
+## PHPUnit
+
+No rebuild required. Available as archive artefact (zip).
+
+* https://github.com/sebastianbergmann/phpunit/releases
 
 ## PostgreSQL
 

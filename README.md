@@ -39,6 +39,7 @@ Issues must be reported on [Neard repository](https://github.com/crazy-max/neard
 - [Webgrind](#webgrind)
 - [WebSVN](#websvn)
 - [WP-CLI](#wp-cli)
+- [XDebugClient](#xdebugclient)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -257,3 +258,9 @@ No rebuild required. Available as archive artefact (zip).
 No rebuild required. Available as a single PHAR file.
 
 * https://github.com/wp-cli/wp-cli/releases
+
+## XDebugClient
+
+No rebuild required. Available as archive artefact (zip).
+
+* https://code.google.com/archive/p/xdebugclient/

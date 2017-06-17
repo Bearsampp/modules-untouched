@@ -40,6 +40,7 @@ Issues must be reported on [Neard repository](https://github.com/crazy-max/neard
 - [WebSVN](#websvn)
 - [WP-CLI](#wp-cli)
 - [XDebugClient](#xdebugclient)
+- [Yarn](#yarn)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -264,3 +265,9 @@ No rebuild required. Available as a single PHAR file.
 No rebuild required. Available as archive artefact (zip).
 
 * https://code.google.com/archive/p/xdebugclient/
+
+## Yarn
+
+No rebuild required. Available as msi artefact.
+
+* https://yarnpkg.com/en/docs/install/

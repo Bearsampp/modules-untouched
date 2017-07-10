@@ -26,6 +26,7 @@ Issues must be reported on [Neard repository](https://github.com/crazy-max/neard
 - [MySQL](#mysql)
 - [Node.js](#nodejs)
 - [Notepad2-mod](#notepad2-mod)
+- [Perl](#perl)
 - [PHP](#php)
 - [phpMemAdmin](#phpmemadmin)
 - [PhpMetrics](#phpmetrics)
@@ -171,6 +172,12 @@ No rebuild required. Available as msi artefact.
 No rebuild required. Available as archive artefact (zip).
 
 * https://github.com/XhmikosR/notepad2-mod/releases
+
+## Perl
+
+No rebuild required. Available as archive artefact (zip).
+
+* http://strawberryperl.com/releases.html
 
 ## PHP
 

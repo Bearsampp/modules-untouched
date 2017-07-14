@@ -67,13 +67,32 @@ No rebuild required. Available as a single PHAR file.
 
 ## Console
 
-Console includes TCC/LE and ANSICON.
+Console is based on Console2 with extra dependencies.<br />
+See `deps.properties` file on the module repository.
 
-#### Console 2
+#### Console2
 
 No rebuild required. Available as archive artefact (zip).
 
 * http://sourceforge.net/projects/console/files/console-devel/2.00/
+
+#### ANSICON
+
+No rebuild required. Available as archive artefact (zip).
+
+* https://github.com/adoxa/ansicon/releases
+
+#### Clink
+
+No rebuild required. Available as archive artefact (zip).
+
+* https://github.com/mridgers/clink
+
+#### GnuWin32 CoreUtils
+
+No rebuild required. Available as archive artefact for Binaries and Dependencies (zip).
+
+* http://gnuwin32.sourceforge.net/packages/coreutils.htm
 
 #### TCC/LE
 
@@ -81,12 +100,6 @@ Rebuild required, only available as setup executable.<br />
 Extracted by installing it and rebuild without unecessary files (uninstall).
 
 * https://jpsoft.com/all-downloads/downloads.html
-
-#### ANSICON
-
-No rebuild required. Available as archive artefact (zip).
-
-* https://github.com/adoxa/ansicon/releases
 
 ## Drush
 

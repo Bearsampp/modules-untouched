@@ -15,6 +15,7 @@ Issues must be reported on [Neard repository](https://github.com/crazy-max/neard
 - [Console](#console)
 - [Drush](#drush)
 - [Filezilla Server](#filezilla-server)
+- [Ghostscript](#ghostscript)
 - [Git](#git)
 - [Gitlist](#gitlist)
 - [HostsEditor](#hostseditor)
@@ -117,6 +118,14 @@ Extracted using 7zip and rebuild without unecessary files (sources, readme).
 
 * http://sourceforge.net/projects/filezilla/files/FileZilla%20Server/
 * http://mirror.ufs.ac.za/filezilla/FileZilla%20Server/
+
+## Ghostscript
+
+Rebuild required, only available as setup executable.<br />
+Extracted using 7zip.
+
+* https://www.ghostscript.com/download/gsdnld.html
+* https://github.com/ArtifexSoftware/ghostpdl-downloads/releases
 
 ## Git
 

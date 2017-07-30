@@ -185,7 +185,7 @@ No rebuild required. Available as archive artefact (zip).
 
 ## Node.js
 
-No rebuild required. Available as msi artefact.
+No rebuild required. Available as msi or 7z artefact.
 
 * https://nodejs.org/dist/
 

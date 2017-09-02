@@ -26,7 +26,7 @@ Issues must be reported on [Neard repository](https://github.com/crazy-max/neard
 - [MongoDB](#mongodb)
 - [MySQL](#mysql)
 - [Node.js](#nodejs)
-- [Notepad2-mod](#notepad2-mod)
+- 🚫 [Notepad2-mod](#notepad2-mod)
 - [Perl](#perl)
 - [PHP](#php)
 - [phpMemAdmin](#phpmemadmin)
@@ -189,7 +189,7 @@ No rebuild required. Available as msi or 7z artefact.
 
 * https://nodejs.org/dist/
 
-## Notepad2-mod
+## 🚫 Notepad2-mod
 
 No rebuild required. Available as archive artefact (zip).
 

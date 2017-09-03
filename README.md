@@ -19,7 +19,7 @@ Issues must be reported on [Neard repository](https://github.com/crazy-max/neard
 - [Git](#git)
 - [Gitlist](#gitlist)
 - [HostsEditor](#hostseditor)
-- [ImageMagick](#imagemagick)
+- 🚫 [ImageMagick](#imagemagick)
 - [MailHog](#mailhog)
 - [MariaDB](#mariadb)
 - [Memcached](#memcached)
@@ -146,7 +146,7 @@ No rebuild required. Available as archive artefact (.zip).
 
 * https://hostseditor.codeplex.com/
 
-## ImageMagick
+## 🚫 ImageMagick
 
 No rebuild required. Available as archive artefact (.zip).
 

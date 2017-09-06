@@ -25,6 +25,7 @@ Issues must be reported on [Neard repository](https://github.com/crazy-max/neard
 - [Memcached](#memcached)
 - [MongoDB](#mongodb)
 - [MySQL](#mysql)
+- [Nginx](#nginx)
 - [Node.js](#nodejs)
 - 🚫 [Notepad2-mod](#notepad2-mod)
 - [Perl](#perl)
@@ -182,6 +183,12 @@ No rebuild required. Available as archive artefact (zip).
 No rebuild required. Available as archive artefact (zip).
 
 * https://dev.mysql.com/downloads/mysql/
+
+## Nginx
+
+No rebuild required. Available as archive artefact (.zip).
+
+* http://nginx.org/en/download.html
 
 ## Node.js
 

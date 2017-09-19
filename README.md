@@ -9,45 +9,45 @@ Issues must be reported on [Neard repository](https://github.com/crazy-max/neard
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [Adminer](#adminer)
-- [Apache](#apache)
-- [Composer](#composer)
-- [Console](#console)
-- [Drush](#drush)
-- [Filezilla Server](#filezilla-server)
-- [Ghostscript](#ghostscript)
-- [Git](#git)
-- [Gitlist](#gitlist)
+- 📦 [Adminer](#adminer)
+- 📦 [Apache](#apache)
+- 📦 [Composer](#composer)
+- 📦 [Console](#console)
+- 📦 [Drush](#drush)
+- 📦 [Filezilla Server](#filezilla-server)
+- 📦 [Ghostscript](#ghostscript)
+- 📦 [Git](#git)
+- 📦 [Gitlist](#gitlist)
 - 🚫 [HostsEditor](#hostseditor)
 - 🚫 [ImageMagick](#imagemagick)
-- [MailHog](#mailhog)
-- [MariaDB](#mariadb)
-- [Memcached](#memcached)
-- [MongoDB](#mongodb)
-- [MySQL](#mysql)
-- [Nginx](#nginx)
-- [Node.js](#nodejs)
+- 📦 [MailHog](#mailhog)
+- 📦 [MariaDB](#mariadb)
+- 📦 [Memcached](#memcached)
+- 📦 [MongoDB](#mongodb)
+- 📦 [MySQL](#mysql)
+- 📦 [Nginx](#nginx)
+- 📦 [Node.js](#nodejs)
 - 🚫 [Notepad2-mod](#notepad2-mod)
-- [Perl](#perl)
-- [PHP](#php)
-- [phpMemAdmin](#phpmemadmin)
-- [PhpMetrics](#phpmetrics)
-- [phpMyAdmin](#phpmyadmin)
-- [phpPgAdmin](#phppgadmin)
-- [PHPUnit](#phpunit)
-- [PostgreSQL](#postgresql)
-- [Python](#python)
-- [Ruby](#ruby)
-- [SVN](#svn)
-- [Webgrind](#webgrind)
-- [WebSVN](#websvn)
-- [WP-CLI](#wp-cli)
-- [XDebugClient](#xdebugclient)
-- [Yarn](#yarn)
+- 📦 [Perl](#perl)
+- 📦 [PHP](#php)
+- 📦 [phpMemAdmin](#phpmemadmin)
+- 📦 [PhpMetrics](#phpmetrics)
+- 📦 [phpMyAdmin](#phpmyadmin)
+- 📦 [phpPgAdmin](#phppgadmin)
+- 📦 [PHPUnit](#phpunit)
+- 📦 [PostgreSQL](#postgresql)
+- 📦 [Python](#python)
+- 📦 [Ruby](#ruby)
+- 📦 [SVN](#svn)
+- 📦 [Webgrind](#webgrind)
+- 📦 [WebSVN](#websvn)
+- 📦 [WP-CLI](#wp-cli)
+- 📦 [XDebugClient](#xdebugclient)
+- 📦 [Yarn](#yarn)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Adminer
+## 📦 Adminer
 
 Available as a single PHP file.<br />
 [Login server enhanced](https://github.com/crazy-max/login-servers-enhanced) plugin and [Adminer theme by Hever](https://raw.githubusercontent.com/vrana/adminer/master/designs/hever/adminer.css) have been integrated.
@@ -55,19 +55,19 @@ Available as a single PHP file.<br />
 * https://github.com/vrana/adminer/releases
 * https://github.com/vrana/adminer/blob/master/plugins/plugin.php
 
-## Apache
+## 📦 Apache
 
 No rebuild required. Available as archive artefact (zip).
 
 * http://www.apachehaus.com/cgi-bin/download.plx
 
-## Composer
+## 📦 Composer
 
 No rebuild required. Available as a single PHAR file.
 
 * https://getcomposer.org/
 
-## Console
+## 📦 Console
 
 Console is based on Console2 with extra dependencies.<br />
 See `deps.properties` file on the module repository.
@@ -80,11 +80,15 @@ No rebuild required. Available as archive artefact (zip).
 
 #### ANSICON
 
+> Removed since Console r4
+
 No rebuild required. Available as archive artefact (zip).
 
 * https://github.com/adoxa/ansicon/releases
 
 #### Clink
+
+> Added since Console r4
 
 No rebuild required. Available as archive artefact (zip).
 
@@ -92,18 +96,22 @@ No rebuild required. Available as archive artefact (zip).
 
 #### GnuWin32 CoreUtils
 
+> Added since Console r4
+
 No rebuild required. Available as archive artefact for Binaries and Dependencies (zip).
 
 * http://gnuwin32.sourceforge.net/packages/coreutils.htm
 
 #### TCC/LE
 
+> Removed since Console r4
+
 Rebuild required, only available as setup executable.<br />
 Extracted by installing it and rebuild without unecessary files (uninstall).
 
 * https://jpsoft.com/all-downloads/downloads.html
 
-## Drush
+## 📦 Drush
 
 No rebuild required. Available as archive artefact (zip).<br />
 Some binaries provided by GnuWin have been included as well as MySQL.
@@ -112,7 +120,7 @@ Some binaries provided by GnuWin have been included as well as MySQL.
 * https://sourceforge.net/projects/gnuwin32/
 * https://dev.mysql.com/downloads/mysql/
 
-## Filezilla Server
+## 📦 Filezilla Server
 
 Rebuild required, only available as setup executable.<br />
 Extracted using 7zip and rebuild without unecessary files (sources, readme).
@@ -120,7 +128,7 @@ Extracted using 7zip and rebuild without unecessary files (sources, readme).
 * http://sourceforge.net/projects/filezilla/files/FileZilla%20Server/
 * http://mirror.ufs.ac.za/filezilla/FileZilla%20Server/
 
-## Ghostscript
+## 📦 Ghostscript
 
 Rebuild required, only available as setup executable.<br />
 Extracted using 7zip.
@@ -128,14 +136,14 @@ Extracted using 7zip.
 * https://www.ghostscript.com/download/gsdnld.html
 * https://github.com/ArtifexSoftware/ghostpdl-downloads/releases
 
-## Git
+## 📦 Git
 
 No rebuild required. Available as archive artefact (.7z).
 
 * https://github.com/git-for-windows/git/releases
 * https://github.com/msysgit/msysgit/releases
 
-## Gitlist
+## 📦 Gitlist
 
 No rebuild required. Available as archive artefact (tar.gz).
 
@@ -153,44 +161,44 @@ No rebuild required. Available as archive artefact (.zip).
 
 * http://www.imagemagick.org/script/binary-releases.php
 
-## MailHog
+## 📦 MailHog
 
 No rebuild required. Available as a single EXE file.
 
 * https://github.com/mailhog/MailHog/releases
 
-## MariaDB
+## 📦 MariaDB
 
 No rebuild required. Available as archive artefact (zip).
 
 * https://downloads.mariadb.org/mariadb/+releases/
 
-## Memcached
+## 📦 Memcached
 
 No rebuild required. Available as archive artefact (zip).
 
 * https://memcached.org/
 * https://commaster.net/content/installing-memcached-windows
 
-## MongoDB
+## 📦 MongoDB
 
 No rebuild required. Available as archive artefact (zip).
 
 * https://www.mongodb.org/dl/win32/
 
-## MySQL
+## 📦 MySQL
 
 No rebuild required. Available as archive artefact (zip).
 
 * https://dev.mysql.com/downloads/mysql/
 
-## Nginx
+## 📦 Nginx
 
 No rebuild required. Available as archive artefact (.zip).
 
 * http://nginx.org/en/download.html
 
-## Node.js
+## 📦 Node.js
 
 No rebuild required. Available as msi or 7z artefact.
 
@@ -202,38 +210,38 @@ No rebuild required. Available as archive artefact (zip).
 
 * https://github.com/XhmikosR/notepad2-mod/releases
 
-## Perl
+## 📦 Perl
 
 No rebuild required. Available as archive artefact (zip).
 
 * http://strawberryperl.com/releases.html
 
-## PHP
+## 📦 PHP
 
 No rebuild required. Available as archive artefact (zip).
 
 * http://windows.php.net/downloads/releases/
 
-## phpMemAdmin
+## 📦 phpMemAdmin
 
 No rebuild required. Available as archive artefact (zip).<br />
 Taken from sources on Github and version tagged as Travis build number.
 
 * https://github.com/clickalicious/phpMemAdmin/releases
 
-## PhpMetrics
+## 📦 PhpMetrics
 
 No rebuild required. Available as archive artefact (zip).
 
 * https://github.com/phpmetrics/PhpMetrics/releases
 
-## phpMyAdmin
+## 📦 phpMyAdmin
 
 No rebuild required. Available as archive artefact (zip).
 
 * https://www.phpmyadmin.net/downloads/
 
-## phpPgAdmin
+## 📦 phpPgAdmin
 
 No rebuild required. Available as archive artefact (zip).
 
@@ -243,19 +251,19 @@ Some are available through forked repositories :
 
 * Tomicapo: [phppgadmin-d32e737a0de724ab954a996d5bada363c863770f](https://github.com/Tomicapo/phppgadmin/tree/d32e737a0de724ab954a996d5bada363c863770f)
 
-## PHPUnit
+## 📦 PHPUnit
 
 No rebuild required. Available as a single PHAR file.
 
 * https://github.com/sebastianbergmann/phpunit/releases
 
-## PostgreSQL
+## 📦 PostgreSQL
 
 No rebuild required. Available as archive artefact (zip).
 
 * https://www.enterprisedb.com/products-services-training/pgbindownload
 
-## Python
+## 📦 Python
 
 Rebuild required, only available as setup executable.<br />
 Extracted using 7zip.
@@ -263,7 +271,7 @@ Extracted using 7zip.
 * https://winpython.github.io/
 * http://www.lfd.uci.edu/~gohlke/pythonlibs/#pyqt4
 
-## Ruby
+## 📦 Ruby
 
 Rebuild required, only available as setup executable.<br />
 Extracted using 7zip.
@@ -271,38 +279,38 @@ Extracted using 7zip.
 * http://rubyinstaller.org
 * https://rubygems.org
 
-## SVN
+## 📦 SVN
 
 Rebuild required, only available as setup executable.<br />
 Installed on a computer by selecting SVNSERVE component and rebuilded.
 
 * http://www.collab.net/downloads/subversion
 
-## Webgrind
+## 📦 Webgrind
 
 No rebuild required. Available as archive artefact (zip).
 
 * https://github.com/jokkedk/webgrind/releases
 
-## WebSVN
+## 📦 WebSVN
 
 No rebuild required. Available as archive artefact (zip).
 
 * http://www.websvn.info/download/
 
-## WP-CLI
+## 📦 WP-CLI
 
 No rebuild required. Available as a single PHAR file.
 
 * https://github.com/wp-cli/wp-cli/releases
 
-## XDebugClient
+## 📦 XDebugClient
 
 No rebuild required. Available as archive artefact (zip).
 
 * https://code.google.com/archive/p/xdebugclient/
 
-## Yarn
+## 📦 Yarn
 
 No rebuild required. Available as msi artefact.
 

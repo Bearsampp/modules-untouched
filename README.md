@@ -18,7 +18,7 @@ Issues must be reported on [Neard repository](https://github.com/crazy-max/neard
 - [Ghostscript](#ghostscript)
 - [Git](#git)
 - [Gitlist](#gitlist)
-- [HostsEditor](#hostseditor)
+- 🚫 [HostsEditor](#hostseditor)
 - 🚫 [ImageMagick](#imagemagick)
 - [MailHog](#mailhog)
 - [MariaDB](#mariadb)
@@ -141,7 +141,7 @@ No rebuild required. Available as archive artefact (tar.gz).
 
 * http://gitlist.org/
 
-## HostsEditor
+## 🚫 HostsEditor
 
 No rebuild required. Available as archive artefact (.zip).
 

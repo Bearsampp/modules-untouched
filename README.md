@@ -26,6 +26,7 @@ Issues must be reported on [Neard repository](https://github.com/neard/neard/iss
 - [MongoDB](#mongodb)
 - [MySQL](#mysql)
 - [Nginx](#nginx)
+- [ngrok](#ngrok)
 - [Node.js](#nodejs)
 - [~~Notepad2-mod~~](#notepad2-mod)
 - [Perl](#perl)
@@ -197,6 +198,12 @@ No rebuild required. Available as archive artefact (zip).
 No rebuild required. Available as archive artefact (.zip).
 
 * http://nginx.org/en/download.html
+
+## ngrok
+
+No rebuild required. Available as a single EXE file.
+
+* https://ngrok.com/download
 
 ## Node.js
 

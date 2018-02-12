@@ -152,15 +152,15 @@ No rebuild required. Available as archive artefact (tar.gz).
 
 ## ~~HostsEditor~~
 
-No rebuild required. Available as archive artefact (.zip).
+~~No rebuild required. Available as archive artefact (.zip).~~
 
-* https://hostseditor.codeplex.com/
+* ~~https://hostseditor.codeplex.com/~~
 
 ## ~~ImageMagick~~
 
-No rebuild required. Available as archive artefact (.zip).
+~~No rebuild required. Available as archive artefact (.zip).~~
 
-* http://www.imagemagick.org/script/binary-releases.php
+* ~~http://www.imagemagick.org/script/binary-releases.php~~
 
 ## MailHog
 
@@ -213,9 +213,9 @@ No rebuild required. Available as msi or 7z artefact.
 
 ## ~~Notepad2-mod~~
 
-No rebuild required. Available as archive artefact (zip).
+~~No rebuild required. Available as archive artefact (zip).~~
 
-* https://github.com/XhmikosR/notepad2-mod/releases
+* ~~https://github.com/XhmikosR/notepad2-mod/releases~~
 
 ## Perl
 

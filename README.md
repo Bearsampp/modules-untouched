@@ -12,7 +12,7 @@ Issues must be reported on [Neard repository](https://github.com/neard/neard/iss
 - [Adminer](#adminer)
 - [Apache](#apache)
 - [Composer](#composer)
-- [Console](#console)
+- [ConsoleZ](#consolez)
 - [Drush](#drush)
 - [Filezilla Server](#filezilla-server)
 - [Ghostscript](#ghostscript)
@@ -65,24 +65,16 @@ No rebuild required. Available as a single PHAR file.
 
 * https://getcomposer.org/
 
-## Console
+## ConsoleZ
 
-Console is based on Console2 with extra dependencies.<br />
+ConsoleZ with extra dependencies.<br />
 See `deps.properties` file on the module repository.
 
-#### Console2
+#### ConsoleZ
 
 No rebuild required. Available as archive artefact (zip).
 
-* http://sourceforge.net/projects/console/files/console-devel/2.00/
-
-#### ANSICON
-
-> Removed since Console r4
-
-No rebuild required. Available as archive artefact (zip).
-
-* https://github.com/adoxa/ansicon/releases
+* https://github.com/cbucher/console/releases
 
 #### Clink
 
@@ -99,15 +91,6 @@ No rebuild required. Available as archive artefact (zip).
 No rebuild required. Available as archive artefact for Binaries and Dependencies (zip).
 
 * http://gnuwin32.sourceforge.net/packages/coreutils.htm
-
-#### TCC/LE
-
-> Removed since Console r4
-
-Rebuild required, only available as setup executable.<br />
-Extracted by installing it and rebuild without unecessary files (uninstall).
-
-* https://jpsoft.com/all-downloads/downloads.html
 
 ## Drush
 

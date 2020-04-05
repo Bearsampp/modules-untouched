@@ -78,15 +78,11 @@ No rebuild required. Available as archive artefact (zip).
 
 #### Clink
 
-> Added since Console r4
-
 No rebuild required. Available as archive artefact (zip).
 
 * https://github.com/mridgers/clink
 
 #### GnuWin32 CoreUtils
-
-> Added since Console r4
 
 No rebuild required. Available as archive artefact for Binaries and Dependencies (zip).
 

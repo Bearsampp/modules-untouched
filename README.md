@@ -18,8 +18,6 @@ Issues must be reported on [Neard repository](https://github.com/neard/neard/iss
 - [Ghostscript](#ghostscript)
 - [Git](#git)
 - [Gitlist](#gitlist)
-- [~~HostsEditor~~](#hostseditor)
-- [~~ImageMagick~~](#imagemagick)
 - [MailHog](#mailhog)
 - [MariaDB](#mariadb)
 - [Memcached](#memcached)
@@ -28,7 +26,6 @@ Issues must be reported on [Neard repository](https://github.com/neard/neard/iss
 - [Nginx](#nginx)
 - [ngrok](#ngrok)
 - [Node.js](#nodejs)
-- [~~Notepad2-mod~~](#notepad2-mod)
 - [Perl](#perl)
 - [PHP](#php)
 - [phpMemAdmin](#phpmemadmin)
@@ -150,18 +147,6 @@ No rebuild required. Available as archive artefact (tar.gz).
 
 * http://gitlist.org/
 
-## ~~HostsEditor~~
-
-~~No rebuild required. Available as archive artefact (.zip).~~
-
-* ~~https://hostseditor.codeplex.com/~~
-
-## ~~ImageMagick~~
-
-~~No rebuild required. Available as archive artefact (.zip).~~
-
-* ~~http://www.imagemagick.org/script/binary-releases.php~~
-
 ## MailHog
 
 No rebuild required. Available as a single EXE file.
@@ -210,12 +195,6 @@ No rebuild required. Available as a single EXE file.
 No rebuild required. Available as msi or 7z artefact.
 
 * https://nodejs.org/dist/
-
-## ~~Notepad2-mod~~
-
-~~No rebuild required. Available as archive artefact (zip).~~
-
-* ~~https://github.com/XhmikosR/notepad2-mod/releases~~
 
 ## Perl
 

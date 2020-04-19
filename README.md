@@ -13,7 +13,6 @@ Issues must be reported on [Neard repository](https://github.com/neard/neard/iss
 - [Apache](#apache)
 - [Composer](#composer)
 - [ConsoleZ](#consolez)
-- [Drush](#drush)
 - [Filezilla Server](#filezilla-server)
 - [Ghostscript](#ghostscript)
 - [Git](#git)
@@ -29,17 +28,14 @@ Issues must be reported on [Neard repository](https://github.com/neard/neard/iss
 - [Perl](#perl)
 - [PHP](#php)
 - [phpMemAdmin](#phpmemadmin)
-- [PhpMetrics](#phpmetrics)
 - [phpMyAdmin](#phpmyadmin)
 - [phpPgAdmin](#phppgadmin)
-- [PHPUnit](#phpunit)
 - [PostgreSQL](#postgresql)
 - [Python](#python)
 - [Ruby](#ruby)
 - [SVN](#svn)
 - [Webgrind](#webgrind)
 - [WebSVN](#websvn)
-- [WP-CLI](#wp-cli)
 - [XDebugClient](#xdebugclient)
 - [Yarn](#yarn)
 
@@ -87,15 +83,6 @@ No rebuild required. Available as archive artefact (zip).
 No rebuild required. Available as archive artefact for Binaries and Dependencies (zip).
 
 * http://gnuwin32.sourceforge.net/packages/coreutils.htm
-
-## Drush
-
-No rebuild required. Available as archive artefact (zip).<br />
-Some binaries provided by GnuWin have been included as well as MySQL.
-
-* https://github.com/drush-ops/drush/releases
-* https://sourceforge.net/projects/gnuwin32/
-* https://dev.mysql.com/downloads/mysql/
 
 ## Filezilla Server
 
@@ -194,12 +181,6 @@ Taken from sources on Github and version tagged as Travis build number.
 
 * https://github.com/clickalicious/phpMemAdmin/releases
 
-## PhpMetrics
-
-No rebuild required. Available as archive artefact (zip).
-
-* https://github.com/phpmetrics/PhpMetrics/releases
-
 ## phpMyAdmin
 
 No rebuild required. Available as archive artefact (zip).
@@ -215,12 +196,6 @@ No rebuild required. Available as archive artefact (zip).
 Some are available through forked repositories :
 
 * Tomicapo: [phppgadmin-d32e737a0de724ab954a996d5bada363c863770f](https://github.com/Tomicapo/phppgadmin/tree/d32e737a0de724ab954a996d5bada363c863770f)
-
-## PHPUnit
-
-No rebuild required. Available as a single PHAR file.
-
-* https://github.com/sebastianbergmann/phpunit/releases
 
 ## PostgreSQL
 
@@ -262,12 +237,6 @@ No rebuild required. Available as archive artefact (zip).
 No rebuild required. Available as archive artefact (zip).
 
 * http://www.websvn.info/download/
-
-## WP-CLI
-
-No rebuild required. Available as a single PHAR file.
-
-* https://github.com/wp-cli/wp-cli/releases
 
 ## XDebugClient
 

@@ -10,3 +10,8 @@
 
 # Neard
 /.dev
+/.idea/.gitignore
+/.idea/modules.xml
+/.idea/modules-untouched.iml
+/.idea/php.xml
+/.idea/vcs.xml

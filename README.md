@@ -89,8 +89,7 @@ No rebuild required. Available as archive artefact for Binaries and Dependencies
 Rebuild required, only available as setup executable.<br />
 Extracted using 7zip and rebuild without unecessary files (sources, readme).
 
-* http://sourceforge.net/projects/filezilla/files/FileZilla%20Server/
-* http://mirror.ufs.ac.za/filezilla/FileZilla%20Server/
+* https://filezilla-project.org/download.php?show_all=1&type=server
 
 ## Ghostscript
 

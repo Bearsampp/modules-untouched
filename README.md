@@ -1,13 +1,13 @@
-![Total downloads](https://img.shields.io/github/downloads/Bearsampp/bearsampp/modules-untouched/total.svg?style=flat-square)
+![Latest Commit](https://img.shields.io/github/last-commit/Bearsampp/modules-untouched?label=Latest%20commit&style=for-the-badge) ![](https://img.shields.io/github/commit-activity/y/Bearsampp/modules-untouched?label=Commits&style=for-the-badge)
 
-This a sub-repo of [Bearsampp project](https://github.com/bearsampp/bearsampp) involving mirror of all modules binaries untouched from their original locations.<br />
+This a sub-repo of [Bearsampp project](https://github.com/bearsampp/bearsampp) involving mirror of all module source binaries untouched from their original locations.<br />
 There are hosted on Github to prevent dead links.<br />
-Binaries files that are not available as archives artefacts or single file are rebuild for Neard but original files are included too.<br />
+Binaries files that are not available as archives artifacts or single file are rebuilt for Bearsampp but original files are included too.<br />
 Issues must be reported on [Bearsampp repository](https://github.com/bearsampp/bearsampp/issues).
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 - [Adminer](#adminer)
 - [Apache](#apache)

@@ -109,6 +109,8 @@ No rebuild required. Available as portable exe (.exe).
 ## Gitlist
 
 No rebuild required. Available as archive artefact (tar.gz).
+Requires updating config.ini to point to latest git module
+![img.png](img.png)
 
 * http://gitlist.org/
 

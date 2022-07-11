@@ -102,10 +102,9 @@ Extracted using 7zip.
 
 ## Git
 
-No rebuild required. Available as archive artefact (.7z).
+No rebuild required. Available as portable exe (.exe).
 
 * https://github.com/git-for-windows/git/releases
-* https://github.com/msysgit/msysgit/releases
 
 ## Gitlist
 

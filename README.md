@@ -110,7 +110,7 @@ No rebuild required. Available as portable exe (.exe).
 
 No rebuild required. Available as archive artefact (tar.gz).
 Requires updating config.ini to point to latest git module
-![img.png](img.png)
+![image](https://user-images.githubusercontent.com/1850089/178372310-8c6b4ed5-0f49-4161-9ebb-90750b71f04b.png)
 
 * http://gitlist.org/
 

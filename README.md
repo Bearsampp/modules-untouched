@@ -140,12 +140,6 @@ No rebuild required. Available as archive artefact (zip).
 
 * https://dev.mysql.com/downloads/mysql/
 
-## Nginx
-
-No rebuild required. Available as archive artefact (.zip).
-
-* http://nginx.org/en/download.html
-
 ## ngrok
 
 No rebuild required. Available as a single EXE file.

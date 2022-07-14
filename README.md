@@ -170,9 +170,9 @@ No rebuild required. Available as archive artefact (zip).
 
 * [php](https://windows.php.net/download)
 * [memcache](https://github.com/nono303/PHP-memcache-dll/tags)
-* [xdebug](https://https://xdebug.org/download)
-* [imagick](https://https://windows.php.net/downloads/pecl/releases/imagick/)
-* [pear](https://https://pear.php.net/package/pearweb_phars/download/)
+* [xdebug](https://xdebug.org/download)
+* [imagick](https://windows.php.net/downloads/pecl/releases/imagick/)
+* [pear](https://pear.php.net/package/pearweb_phars/download/)
 <h6>*all of these are required when updating php.</h6>
 
 ## phpMemAdmin

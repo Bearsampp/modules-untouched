@@ -129,9 +129,10 @@ No rebuild required. Available as archive artefact (zip).
 ## Memcached
 
 No rebuild required. Available as archive artefact (zip).
+<b> Windows dll's seem to be no longer being made.</b>
 
 * https://memcached.org/
-* https://commaster.net/content/installing-memcached-windows
+* https://github.com/memcached/memcached
 
 ## MongoDB
 

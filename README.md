@@ -134,12 +134,6 @@ No rebuild required. Available as archive artefact (zip).
 * https://memcached.org/
 * https://github.com/memcached/memcached
 
-## MongoDB
-
-No rebuild required. Available as archive artefact (zip).
-
-* https://www.mongodb.org/dl/win32/
-
 ## MySQL
 
 No rebuild required. Available as archive artefact (zip).

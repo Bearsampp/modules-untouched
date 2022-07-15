@@ -165,7 +165,7 @@ No rebuild required. Available as archive artefact (zip).
 * [php](https://windows.php.net/download)
 * [memcache](https://github.com/nono303/PHP-memcache-dll/tags)
 * [xdebug](https://xdebug.org/download)
-* [imagick](https://windows.php.net/downloads/pecl/deps/)
+* [imagick](https://pecl.php.net/package/imagick) ( use dll versions )
 * [pear](https://pear.php.net/package/pearweb_phars/download/)
 <h6><b>Pear requires extracting and using the "install-pear-nozlib.phar"</b></h6> 
 <h6>*all of these are required when updating php.</h6>

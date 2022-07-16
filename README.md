@@ -190,10 +190,6 @@ No rebuild required. Available as archive artefact (zip).
 
 * https://github.com/phppgadmin/phppgadmin/releases
 
-Some are available through forked repositories :
-
-* Tomicapo: [phppgadmin-d32e737a0de724ab954a996d5bada363c863770f](https://github.com/Tomicapo/phppgadmin/tree/d32e737a0de724ab954a996d5bada363c863770f)
-
 ## PostgreSQL
 
 No rebuild required. Available as archive artefact (zip).

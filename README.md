@@ -194,7 +194,7 @@ No rebuild required. Available as archive artefact (zip).
 
 No rebuild required. Available as archive artefact (zip).
 
-* https://www.enterprisedb.com/products-services-training/pgbindownload
+* https://www.enterprisedb.com/download-postgresql-binaries
 
 ## Python
 

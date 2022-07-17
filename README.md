@@ -201,8 +201,8 @@ No rebuild required. Available as archive artefact (zip).
 Rebuild required, only available as setup executable.<br />
 Extracted using 7zip.
 
-* https://winpython.github.io/
-* http://www.lfd.uci.edu/~gohlke/pythonlibs/#pyqt4
+* https://winpython.github.io/ ( read readme )
+* https://pypi.org/project/PyQt5/#files
 
 ## Ruby
 

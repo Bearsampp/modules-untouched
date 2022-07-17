@@ -235,7 +235,7 @@ No rebuild required. Available as archive artefact (zip).
 
 No rebuild required. Available as archive artefact (zip).
 
-* http://www.websvn.info/download/
+* https://github.com/websvnphp/websvn/releases
 
 ## XDebugClient
 

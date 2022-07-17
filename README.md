@@ -205,6 +205,10 @@ Extracted using 7zip.
 * https://pypi.org/project/PyQt5/#files
 * https://github.com/winpython/winpython/releases ( official git )
 
+Need to set pyqt properties to match download
+![image](https://user-images.githubusercontent.com/1850089/179404623-aedf7592-5979-4c72-a89b-d0839acd1805.png)
+
+
 ## Ruby
 
 Rebuild required, only available as setup executable.<br />

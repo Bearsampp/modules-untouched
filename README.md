@@ -220,9 +220,10 @@ Extracted using 7zip.
 ## SVN
 
 Rebuild required, only available as setup executable.<br />
-Installed on a computer by selecting SVNSERVE component and rebuilt.
+Installed on a computer by selecting SVNSERVE component and rebuild.
 
 * http://www.collab.net/downloads/subversion
+* https://github.com/nono303/win-svn/tree/1.14.2
 
 ## Webgrind
 

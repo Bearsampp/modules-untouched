@@ -2,7 +2,7 @@
 
 This a sub-repo of [Bearsampp project](https://github.com/bearsampp/bearsampp) involving mirror of all modules binaries untouched from their original locations.<br />
 There are hosted on Github to prevent dead links.<br />
-Binaries files that are not available as archives artefacts or single file are rebuild for bearsampp but original files are included too.<br />
+Binaries files that are not available as archives artifacts or single file are rebuilt for bearsampp but original files are included too.<br />
 Issues must be reported on [Bearsampp repository](https://github.com/bearsampp/bearsampp/issues).
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->

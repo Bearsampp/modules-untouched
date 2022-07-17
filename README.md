@@ -220,7 +220,7 @@ Extracted using 7zip.
 ## SVN
 
 Rebuild required, only available as setup executable.<br />
-Installed on a computer by selecting SVNSERVE component and rebuilded.
+Installed on a computer by selecting SVNSERVE component and rebuilt.
 
 * http://www.collab.net/downloads/subversion
 

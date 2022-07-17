@@ -203,6 +203,7 @@ Extracted using 7zip.
 
 * https://winpython.github.io/ ( read readme )
 * https://pypi.org/project/PyQt5/#files
+* https://github.com/winpython/winpython/releases ( official git )
 
 ## Ruby
 

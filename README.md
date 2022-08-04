@@ -129,9 +129,10 @@ No rebuild required. Available as archive artefact (zip).
 
 ## Memcached
 
-No rebuild required. Available as archive artefact (zip).
-<b> Windows dll's seem to be no longer being made.</b>
-use nono303's build
+Extract zip and drill down to libevent > 2.0 and then x64.
+Zip all files up into memcached-VERSION.7z.
+Available as dual archive artefact (zip).
+<b> Windows dll's seem to be no longer being made by memcached.  Use nono303's build</b>
 </i>Do NOT confuse this with the "memcache" contained as part of php pecl package.  They work together</i>
 
 * https://github.com/nono303/memcached

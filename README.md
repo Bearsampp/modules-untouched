@@ -132,6 +132,7 @@ No rebuild required. Available as archive artefact (zip).
 No rebuild required. Available as archive artefact (zip).
 <b> Windows dll's seem to be no longer being made.</b>
 use nono303's build
+</i>Do NOT confuse this with the "memcache" contained as part of php pecl package.  They work together</i>
 
 * https://github.com/nono303/memcached
 

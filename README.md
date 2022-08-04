@@ -1,4 +1,4 @@
-<p align="center"><a href="https://bearsampp.com" target="_blank"><img width="100" src="https://github.com/Bearsampp/Bearsampp/blob/main/img/Bearsampp-logo.png"></a></p>
+<p align="center"><a href="https://bearsampp.com" target="_blank"><img width="250" src="https://github.com/Bearsampp/Bearsampp/blob/main/img/Bearsampp-logo.svg"></a></p>
 ![Total downloads](https://img.shields.io/github/downloads/bearsampp/modules-untouched/total.svg?style=flat-square)
 
 This a sub-repo of [Bearsampp project](https://github.com/bearsampp/bearsampp) involving mirror of all modules binaries untouched from their original locations.<br />

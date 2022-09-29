@@ -17,26 +17,20 @@ Issues must be reported on [Bearsampp repository](https://github.com/bearsampp/b
 - [Filezilla Server](#filezilla-server)
 - [Ghostscript](#ghostscript)
 - [Git](#git)
-- [Gitlist](#gitlist)
 - [MailHog](#mailhog)
 - [MariaDB](#mariadb)
 - [Memcached](#memcached)
-- [MongoDB](#mongodb)
 - [MySQL](#mysql)
-- [Nginx](#nginx)
 - [ngrok](#ngrok)
 - [Node.js](#nodejs)
 - [Perl](#perl)
 - [PHP](#php)
-- [phpMemAdmin](#phpmemadmin)
 - [phpMyAdmin](#phpmyadmin)
 - [phpPgAdmin](#phppgadmin)
 - [PostgreSQL](#postgresql)
 - [Python](#python)
 - [Ruby](#ruby)
-- [SVN](#svn)
 - [Webgrind](#webgrind)
-- [WebSVN](#websvn)
 - [XDebugClient](#xdebugclient)
 - [Yarn](#yarn)
 
@@ -107,14 +101,6 @@ No rebuild required. Available as portable exe (.exe).
 
 * https://github.com/git-for-windows/git/releases
 
-## Gitlist
-
-No rebuild required. Available as archive artefact (tar.gz).
-Requires updating config.ini to point to latest git module
-![image](https://user-images.githubusercontent.com/1850089/178372310-8c6b4ed5-0f49-4161-9ebb-90750b71f04b.png)
-
-* http://gitlist.org/
-
 ## MailHog
 
 No rebuild required. Available as a single EXE file.
@@ -174,14 +160,6 @@ No rebuild required. Available as archive artefact (zip).
 <h6><b>Pear requires extracting and using the "install-pear-nozlib.phar"</b></h6> 
 <h6>*all of these are required when updating php.</h6>
 
-
-## phpMemAdmin
-
-No rebuild required. Available as archive artefact (zip).<br />
-Taken from sources on Github and version tagged as Travis build number.
-
-* https://github.com/clickalicious/phpMemAdmin/releases
-
 ## phpMyAdmin
 
 No rebuild required. Available as archive artefact (zip).
@@ -221,25 +199,11 @@ Extracted using 7zip.
 * http://rubyinstaller.org
 * https://rubygems.org
 
-## SVN
-
-Rebuild required, only available as setup executable.<br />
-Installed on a computer by selecting SVNSERVE component and rebuild.
-
-* http://www.collab.net/downloads/subversion
-* https://github.com/nono303/win-svn/tree/1.14.2
-
 ## Webgrind
 
 No rebuild required. Available as archive artefact (zip).
 
 * https://github.com/jokkedk/webgrind/releases
-
-## WebSVN
-
-No rebuild required. Available as archive artefact (zip).
-
-* https://github.com/websvnphp/websvn/releases
 
 ## XDebugClient
 

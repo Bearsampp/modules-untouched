@@ -61,7 +61,8 @@ No rebuild required. Available as archive artefact (zip).
 
 No rebuild required. Available as a single PHAR file.
 
-* https://getcomposer.org/
+* https://getcomposer.org/ ( windows only has .exe installer )
+* https://github.com/composer/composer/releases ( preferred )
 
 ## ConsoleZ
 

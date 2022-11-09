@@ -13,10 +13,6 @@ There are hosted on Github to prevent dead links.<br />
 Binaries files that are not available as archives artifacts or single file are rebuilt for bearsampp but original files are included too.<br />
 Issues must be reported on [Bearsampp repository](https://github.com/bearsampp/bearsampp/issues).
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
 - [Adminer](#adminer)
 - [Apache](#apache)
 - [Composer](#composer)

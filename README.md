@@ -170,11 +170,11 @@ No rebuild required. Available as archive artefact (zip).
 
 * https://www.phpmyadmin.net/downloads/
 
-## phpPgAdmin
+## phpPgAdmin2
 
 No rebuild required. Available as archive artefact (zip).
 
-* https://github.com/phppgadmin/phppgadmin/releases
+* https://github.com/ReimuHakurei/phpPgAdmin
 
 ## PostgreSQL
 

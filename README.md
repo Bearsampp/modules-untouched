@@ -190,6 +190,9 @@ Extracted using 7zip.
 * https://winpython.github.io/ ( read readme )
 * https://www.lfd.uci.edu/~gohlke/pythonlibs/#pywin32
 * https://github.com/winpython/winpython/releases ( official git )
+<b>MUST use pyqt package</b>
+![image](https://user-images.githubusercontent.com/1850089/235342622-a27ecfdf-7882-422d-af07-03bf8537ea94.png)
+
 
 Need to set pyqt properties to match download
 ![image](https://user-images.githubusercontent.com/1850089/179404623-aedf7592-5979-4c72-a89b-d0839acd1805.png)

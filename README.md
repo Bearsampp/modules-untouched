@@ -187,10 +187,9 @@ No rebuild required. Available as archive artefact (zip).
 Rebuild required, only available as setup executable.<br />
 Extracted using 7zip.
 
-* https://winpython.github.io/ ( read readme )
 * https://pypi.org/project/pywin32/#files ( Wheel )
 * https://github.com/winpython/winpython/releases ( official git )
-<b>MUST use pyqt package</b>
+<b>MUST use pyqt package, which is the one WITHOUT the "dot" in it.</b>
 ![image](https://user-images.githubusercontent.com/1850089/235342622-a27ecfdf-7882-422d-af07-03bf8537ea94.png)
 
 

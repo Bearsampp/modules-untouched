@@ -51,7 +51,7 @@ Available as a single PHP file.<br />
 
 No rebuild required. Available as archive artefact (zip).
 
-* http://www.apachehaus.com/cgi-bin/download.plx
+* [http://www.apachehaus.com/cgi-bin/download.plx](https://www.apachelounge.com/download/)
 
 ## Composer
 

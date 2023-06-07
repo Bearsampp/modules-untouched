@@ -29,7 +29,7 @@ Issues must be reported on [Bearsampp repository](https://github.com/bearsampp/b
 - [Perl](#perl)
 - [PHP](#php)
 - [phpMyAdmin](#phpmyadmin)
-- [phpPgAdmin](#phppgadmin)
+- [phpPgAdmin](#phppgadmin2)
 - [PostgreSQL](#postgresql)
 - [Python](#python)
 - [Ruby](#ruby)
@@ -159,7 +159,7 @@ No rebuild required. Available as archive artefact (zip).
 * [memcache](https://github.com/nono303/PHP-memcache-dll/tags)
 * [xdebug](https://xdebug.org/download)
 * [imagick](https://pecl.php.net/package/imagick) ( use dll versions )
-* [imagemagick](https://windows.php.net/downloads/pecl/deps/)
+* imagemagick: ([ext-imagick-php8.2-ts-x64.zip](https://github.com/Bearsampp/modules-untouched/files/11673315/ext-imagick-php8.2-ts-x64.zip))
 * [pear](https://pear.php.net/package/pearweb_phars/download/)
 <h6><b>Pear requires extracting and using the "install-pear-nozlib.phar"</b></h6> 
 <h6>*all of these are required when updating php.</h6>

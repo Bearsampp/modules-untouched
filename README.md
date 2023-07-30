@@ -24,7 +24,6 @@ Issues must be reported on [Bearsampp repository](https://github.com/bearsampp/b
 - [MariaDB](#mariadb)
 - [Memcached](#memcached)
 - [MySQL](#mysql)
-- [ngrok](#ngrok)
 - [Node.js](#nodejs)
 - [Perl](#perl)
 - [PHP](#php)
@@ -132,12 +131,6 @@ Available as dual archive artefact (zip).
 No rebuild required. Available as archive artefact (zip).
 
 * https://dev.mysql.com/downloads/mysql/
-
-## ngrok
-
-No rebuild required. Available as a single EXE file.
-
-* https://ngrok.com/download
 
 ## Node.js
 

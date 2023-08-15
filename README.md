@@ -11,8 +11,8 @@
 This a sub-repo of [Bearsampp project](https://github.com/bearsampp/bearsampp) involving mirror of all modules binaries untouched from their original locations.<br />
 There are hosted on Github to prevent dead links.<br />
 Binaries files that are not available as archives artifacts or single file are rebuilt for bearsampp but original files are included too.<br />
+Use threadsafe packages!<br />
 Issues must be reported on [Bearsampp repository](https://github.com/bearsampp/bearsampp/issues).
-Use threadsafe packages!
 
 - [Adminer](#adminer)
 - [Apache](#apache)

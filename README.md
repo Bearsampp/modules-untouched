@@ -12,6 +12,7 @@ This a sub-repo of [Bearsampp project](https://github.com/bearsampp/bearsampp) i
 There are hosted on Github to prevent dead links.<br />
 Binaries files that are not available as archives artifacts or single file are rebuilt for bearsampp but original files are included too.<br />
 Issues must be reported on [Bearsampp repository](https://github.com/bearsampp/bearsampp/issues).
+Use threadsafe packages!
 
 - [Adminer](#adminer)
 - [Apache](#apache)
@@ -156,6 +157,7 @@ No rebuild required. Available as archive artefact (zip).
 * [pear](https://pear.php.net/package/pearweb_phars/download/)
 <h6><b>Pear requires extracting and using the "install-pear-nozlib.phar"</b></h6> 
 <h6>*all of these are required when updating php.</h6>
+<h6>test imagemagick with php --ri imagick</h6>
 
 ## phpMyAdmin
 

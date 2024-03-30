@@ -152,7 +152,7 @@ No rebuild required. Available as archive artefact (zip).
 * [php](https://windows.php.net/download)
 * [memcache](https://github.com/nono303/PHP-memcache-dll/tags)
 * [xdebug](https://xdebug.org/download)
-* [imagick](https://pecl.php.net/package/imagick) ( use dll versions )
+* [imagick]([https://pecl.php.net/package/imagick](https://github.com/Bearsampp/modules-untouched/releases/tag/imagick-2023.12.13)) ( use dll versions )
 * [imagemagick:](https://github.com/Imagick/imagick/issues/573) ([ext-imagick-php8.2-ts-x64.zip](https://github.com/Bearsampp/modules-untouched/files/11673315/ext-imagick-php8.2-ts-x64.zip))
 * [pear](https://pear.php.net/package/pearweb_phars/download/)
 <h6><b>Pear requires extracting and using the "install-pear-nozlib.phar"</b></h6> 

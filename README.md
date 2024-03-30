@@ -31,6 +31,7 @@ Issues must be reported on [Bearsampp repository](https://github.com/bearsampp/b
 - [phpMyAdmin](#phpmyadmin)
 - [phpPgAdmin](#phppgadmin2)
 - [PostgreSQL](#postgresql)
+- [Prerequisite](#Prerequisites)
 - [Python](#python)
 - [Ruby](#ruby)
 - [Webgrind](#webgrind)
@@ -176,6 +177,10 @@ No rebuild required. Available as archive artefact (zip).
 No rebuild required. Available as archive artefact (zip).
 
 * https://www.enterprisedb.com/download-postgresql-binaries
+
+## Prerequisites
+No rebuild required.  Update src.
+https://github.com/abbodi1406/vcredist/releases
 
 ## Python
 

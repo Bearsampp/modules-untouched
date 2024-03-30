@@ -179,7 +179,8 @@ No rebuild required. Available as archive artefact (zip).
 * https://www.enterprisedb.com/download-postgresql-binaries
 
 ## Prerequisites
-No rebuild required.  Update src.
+No rebuild required.  Update src.<br>
+
 https://github.com/abbodi1406/vcredist/releases
 
 ## Python

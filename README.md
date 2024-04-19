@@ -155,7 +155,7 @@ No rebuild required. Available as archive artefact (zip).
 * [memcache](https://github.com/nono303/PHP-memcache-dll/tags) [try here first](https://phpext.phptools.online/extension/caching/memcached-19)
 * [xdebug](https://xdebug.org/download)
 * [imagemagick:](https://windows.php.net/downloads/pecl/releases/imagick)
-* [imagick:]([https://github.com/Imagick/imagick/issues/573](https://phpext.phptools.online/extension/images/imagick-121))
+* [imagick:](https://github.com/Imagick/imagick/issues/573](https://phpext.phptools.online/extension/images/imagick-121))
 * [pear](https://pear.php.net/package/pearweb_phars/download/)
 <h6><b>Pear requires extracting and using the "install-pear-nozlib.phar"</b></h6> 
 <h6>*all of these are required when updating php.</h6>

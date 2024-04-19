@@ -52,7 +52,8 @@ Available as a single PHP file.<br />
 
 No rebuild required. Available as archive artefact (zip).
 
-* [http://www.apachehaus.com/cgi-bin/download.plx](https://www.apachelounge.com/download/)
+* https://www.apachelounge.com/download/
+* be sure to get mod_fcgid also
 
 ## Composer
 

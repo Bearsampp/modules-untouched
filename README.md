@@ -152,7 +152,7 @@ No rebuild required. Available as archive artefact (zip).
 No rebuild required. Available as archive artefact (zip).
 
 * [php](https://windows.php.net/download)
-* [memcache](https://github.com/nono303/PHP-memcache-dll/tags) [try here first](https://phpext.phptools.online/extension/caching/memcached-19)
+* [memcache](https://github.com/nono303/PHP-memcache-dll/tags)
 * [xdebug](https://xdebug.org/download)
 * [imagemagick:](https://windows.php.net/downloads/pecl/releases/imagick)
 * [imagick:](https://github.com/Imagick/imagick/issues/573](https://phpext.phptools.online/extension/images/imagick-121))

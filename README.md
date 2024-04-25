@@ -182,7 +182,7 @@ No rebuild required. Available as archive artefact (zip).
 ## Prerequisites
 No rebuild required.  Update src.<br>
 
-https://github.com/abbodi1406/vcredist/releases
+[Latest VC](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170#latest-microsoft-visual-c-redistributable-version)
 
 ## Python
 

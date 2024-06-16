@@ -128,6 +128,7 @@ Available as dual archive artefact (zip).
 </i>Do NOT confuse this with the "memcache" contained as part of php pecl package.  They work together</i>
 
 * https://github.com/nono303/memcached
+*  [try here first](https://phpext.phptools.online/extension/caching/memcached-19)
 
 ## MySQL
 
@@ -152,7 +153,7 @@ No rebuild required. Available as archive artefact (zip).
 No rebuild required. Available as archive artefact (zip).
 
 * [php](https://windows.php.net/download)
-* [memcache](https://github.com/nono303/PHP-memcache-dll/tags) [try here first](https://phpext.phptools.online/extension/caching/memcached-19)
+* [memcache](https://github.com/nono303/PHP-memcache-dll/tags)
 * [xdebug](https://xdebug.org/download)
 * [imagemagick:](https://imagemagick.org/script/download.php#windows)
 * [imagick:](https://mlocati.github.io/articles/php-windows-imagick.html)

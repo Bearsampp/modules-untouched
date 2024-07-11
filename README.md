@@ -154,7 +154,7 @@ No rebuild required. Available as archive artefact (zip).
 
 * [php](https://windows.php.net/download)
 * [memcache](https://github.com/nono303/PHP-memcache-dll/tags)
-* [xdebug](https://xdebug.org/download)
+* [xdebug](https://xdebug.org/download/historical)
 * [imagemagick:](https://imagemagick.org/script/download.php#windows)
 * [imagick:](https://mlocati.github.io/articles/php-windows-imagick.html)
 * [pear](https://pear.php.net/package/pearweb_phars/download/)

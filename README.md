@@ -55,6 +55,8 @@ No rebuild required. Available as archive artefact (zip).
 * https://www.apachelounge.com/download/
 * be sure to get mod_fcgid also
 
+NOTE: Check OpenSSL version here: https://www.apachelounge.com/viewforum.php?f=1
+
 ## Composer
 
 No rebuild required. Available as a single PHAR file.

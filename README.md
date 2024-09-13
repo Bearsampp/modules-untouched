@@ -16,12 +16,14 @@ Issues must be reported on [Bearsampp repository](https://github.com/bearsampp/b
 
 - [Adminer](#adminer)
 - [Apache](#apache)
+- [Bruno](#bruno)
 - [Composer](#composer)
 - [ConsoleZ](#consolez)
 - [Filezilla Server](#filezilla-server)
 - [Ghostscript](#ghostscript)
 - [Git](#git)
 - [MailHog](#mailhog)
+- [Mailpit](#mailpit)
 - [MariaDB](#mariadb)
 - [Memcached](#memcached)
 - [MySQL](#mysql)
@@ -36,9 +38,8 @@ Issues must be reported on [Bearsampp repository](https://github.com/bearsampp/b
 - [Ruby](#ruby)
 - [Webgrind](#webgrind)
 - [XDebugClient](#xdebugclient)
+- [Xlight](#xlight)
 - [Yarn](#yarn)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Adminer
 
@@ -56,6 +57,14 @@ No rebuild required. Available as archive artefact (zip).
 * be sure to get mod_fcgid also
 
 NOTE: Check OpenSSL version here: https://www.apachelounge.com/viewforum.php?f=1
+
+## Bruno
+
+extract and move everything in "win-unpacked" to root.
+delete "win-unpacked"
+rezip and upload
+
+* https://www.usebruno.com/downloads
 
 ## Composer
 
@@ -114,6 +123,12 @@ No rebuild required. Available as portable exe (.exe).
 No rebuild required. Available as a single EXE file.
 
 * https://github.com/mailhog/MailHog/releases
+
+## Mailpit
+
+No rebuild required.
+
+* https://github.com/axllent/mailpit/releases
 
 ## MariaDB
 
@@ -221,6 +236,12 @@ No rebuild required. Available as archive artefact (zip).
 No rebuild required. Available as archive artefact (zip).
 
 * https://code.google.com/archive/p/xdebugclient/
+
+## Xlight
+
+No rebuild required.
+
+* https://www.xlightftpd.com/download.htm
 
 ## Yarn
 

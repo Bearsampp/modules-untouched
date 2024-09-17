@@ -216,6 +216,8 @@ Extracted using 7zip.
 Need to set pyqt properties to match download
 ![image](https://user-images.githubusercontent.com/1850089/179404623-aedf7592-5979-4c72-a89b-d0839acd1805.png)
 
+uznip, move files into root, delete subfolder, rezip and upload
+
 
 ## Ruby
 

@@ -195,7 +195,7 @@ No rebuild required. Available as archive artefact (zip).
 
 No rebuild required. Available as archive artefact (zip).
 
-* [https://www.enterprisedb.com/download-postgresql-binaries](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)
+* https://www.enterprisedb.com/download-postgresql-binaries
 
 ## Prerequisites
 No rebuild required.  Update src.<br>

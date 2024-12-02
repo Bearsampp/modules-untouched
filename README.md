@@ -88,7 +88,7 @@ No rebuild required. Available as archive artefact (zip).
 
 No rebuild required. Available as archive artefact (zip).
 
-* https://github.com/mridgers/clink
+* https://github.com/chrisant996/clink
 
 #### GnuWin32 CoreUtils
 

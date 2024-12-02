@@ -17,6 +17,7 @@ Issues must be reported on [Bearsampp repository](https://github.com/bearsampp/b
 - [Adminer](#adminer)
 - [Apache](#apache)
 - [Bruno](#bruno)
+- [Clink](#clink)
 - [Composer](#composer)
 - [ConsoleZ](#consolez)
 - [Filezilla Server](#filezilla-server)

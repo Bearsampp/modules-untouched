@@ -228,6 +228,8 @@ Extracted using 7zip.
 * http://rubyinstaller.org
 * https://rubygems.org
 
+`If using .zip then uznip, move files into root, delete subfolder, rezip and upload`
+
 ## Webgrind
 
 No rebuild required. Available as archive artefact (zip).

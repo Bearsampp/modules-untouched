@@ -224,7 +224,7 @@ uznip, move files into root, delete subfolder, rezip and upload
 
 No rebuild required
 
-* http://rubyinstaller.org
+* [http://rubyinstaller.org](https://rubyinstaller.org/downloads/) use 7-zip archive build
 * https://rubygems.org
 
 ## Webgrind

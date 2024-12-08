@@ -20,10 +20,8 @@ Issues must be reported on [Bearsampp repository](https://github.com/bearsampp/b
 - [Clink](#clink)
 - [Composer](#composer)
 - [ConsoleZ](#consolez)
-- [Filezilla Server](#filezilla-server)
 - [Ghostscript](#ghostscript)
 - [Git](#git)
-- [MailHog](#mailhog)
 - [Mailpit](#mailpit)
 - [MariaDB](#mariadb)
 - [Memcached](#memcached)
@@ -38,7 +36,6 @@ Issues must be reported on [Bearsampp repository](https://github.com/bearsampp/b
 - [Python](#python)
 - [Ruby](#ruby)
 - [Webgrind](#webgrind)
-- [XDebugClient](#xdebugclient)
 - [Xlight](#xlight)
 - [Yarn](#yarn)
 
@@ -97,14 +94,6 @@ No rebuild required. Available as archive artefact for Binaries and Dependencies
 
 * http://gnuwin32.sourceforge.net/packages/coreutils.htm
 
-## Filezilla Server
-
-Rebuild required, only available as setup executable.<br />
-Extracted using 7zip and rebuild without unecessary files (sources, readme).
-
-* http://sourceforge.net/projects/filezilla/files/FileZilla%20Server/
-* http://mirror.ufs.ac.za/filezilla/FileZilla%20Server/
-
 ## Ghostscript
 
 Rebuild required, only available as setup executable.<br />
@@ -118,12 +107,6 @@ Extracted using 7zip.
 No rebuild required. Available as portable exe (.exe).
 
 * https://github.com/git-for-windows/git/releases
-
-## MailHog
-
-No rebuild required. Available as a single EXE file.
-
-* https://github.com/mailhog/MailHog/releases
 
 ## Mailpit
 
@@ -233,12 +216,6 @@ No rebuild required. Available as archive artefact (zip).
 
 * https://github.com/jokkedk/webgrind/releases
 
-## XDebugClient
-
-No rebuild required. Available as archive artefact (zip).
-
-* https://code.google.com/archive/p/xdebugclient/
-
 ## Xlight
 
 No rebuild required.
@@ -248,5 +225,7 @@ No rebuild required.
 ## Yarn
 
 No rebuild required. Available as msi artefact.
+Requires nodejs also.
 
 * https://yarnpkg.com/en/docs/install/
+* https://nodejs.org/en

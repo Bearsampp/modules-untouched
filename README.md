@@ -222,13 +222,10 @@ uznip, move files into root, delete subfolder, rezip and upload
 
 ## Ruby
 
-Rebuild required, only available as setup executable.<br />
-Extracted using 7zip.
+No rebuild required
 
 * http://rubyinstaller.org
 * https://rubygems.org
-
-`If using .zip then uznip, move files into root, delete subfolder, rezip and upload`
 
 ## Webgrind
 

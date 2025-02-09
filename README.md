@@ -102,6 +102,10 @@ Extracted using 7zip.
 * https://www.ghostscript.com/download/gsdnld.html
 * https://github.com/ArtifexSoftware/ghostpdl-downloads/releases
 
+Remove the following before zipping...
+![image](https://github.com/user-attachments/assets/349f3d5d-679f-40d6-908c-ceb2306c1045)
+
+
 ## Git
 
 No rebuild required. Available as portable exe (.exe).

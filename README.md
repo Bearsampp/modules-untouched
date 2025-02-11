@@ -126,14 +126,12 @@ No rebuild required. Available as archive artefact (zip).
 
 ## Memcached
 
-Extract zip and drill down to libevent > 2.0 and then x64.
-Zip all files up into memcached-VERSION.7z.
-Available as dual archive artefact (zip).
+download https://github.com/Bearsampp/sandbox/releases/download/2025.2.11/memcached_download.bat and run it.
+use the created .zip file.
 <b> Windows dll's seem to be no longer being made by memcached.  Use nono303's build</b>
 </i>Do NOT confuse this with the "memcache" contained as part of php pecl package.  They work together</i>
 
 * https://github.com/nono303/memcached
-*  [try here first](https://phpext.phptools.online/extension/caching/memcached-19)
 
 ## MySQL
 

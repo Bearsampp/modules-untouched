@@ -196,8 +196,8 @@ Extracted using 7zip.
 
 * https://pypi.org/project/pywin32/#files ( Wheel )
 * https://github.com/winpython/winpython/releases ( official git )
-<b>MUST use pyqt package, which is the one WITHOUT the "dot" in it.</b>
-![image](https://user-images.githubusercontent.com/1850089/235342622-a27ecfdf-7882-422d-af07-03bf8537ea94.png)
+<b>MUST use pyqt package, which is the "slim" version.</b>
+![image](https://github.com/user-attachments/assets/b2c73095-d104-4ebc-a7ac-82af7d710820)
 
 
 Need to set pyqt properties to match download

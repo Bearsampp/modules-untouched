@@ -35,9 +35,7 @@ Issues must be reported on [Bearsampp repository](https://github.com/bearsampp/b
 - [Prerequisite](#Prerequisites)
 - [Python](#python)
 - [Ruby](#ruby)
-- [Webgrind](#webgrind)
 - [Xlight](#xlight)
-- [Yarn](#yarn)
 
 ## Adminer
 
@@ -213,22 +211,12 @@ No rebuild required
 * [http://rubyinstaller.org](https://rubyinstaller.org/downloads/) use 7-zip archive build
 * https://rubygems.org
 
-## Webgrind
-
-No rebuild required. Available as archive artefact (zip).
-
-* https://github.com/jokkedk/webgrind/releases
 
 ## Xlight
 
 No rebuild required.
 
 * https://www.xlightftpd.com/download.htm
-
-## Yarn
-
-No rebuild required. Available as msi artefact.
-Requires nodejs also.
 
 * https://yarnpkg.com/en/docs/install/
 * https://nodejs.org/en

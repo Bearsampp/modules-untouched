@@ -195,7 +195,7 @@ Rebuild required, only available as setup executable.<br />
 Extracted using 7zip.
 
 * https://pypi.org/project/pywin32/#files ( Wheel )
-* https://github.com/winpython/winpython/releases ( official git )
+* [https://github.com/winpython/winpython/releases ( official git )](https://winpython.github.io/)
 <b>MUST use pyqt package, which is the "slim" version.</b>
 ![image](https://github.com/user-attachments/assets/b2c73095-d104-4ebc-a7ac-82af7d710820)
 
@@ -203,7 +203,7 @@ Extracted using 7zip.
 Need to set pyqt properties to match download
 ![image](https://user-images.githubusercontent.com/1850089/179404623-aedf7592-5979-4c72-a89b-d0839acd1805.png)
 
-uznip, move files into root, delete subfolder, rezip and upload
+unzip, move files into root, delete subfolder, rezip and upload
 
 
 ## Ruby

@@ -57,8 +57,8 @@ NOTE: Check OpenSSL version here: https://www.apachelounge.com/viewforum.php?f=1
 
 ## Bruno
 
-Download portable x64
-No rebuld needed.
+*Download portable x64
+*No rebuld needed.
 
 * https://www.usebruno.com/downloads
 

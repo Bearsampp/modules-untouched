@@ -14,7 +14,6 @@ Binaries files that are not available as archives artifacts or single file are r
 Use threadsafe packages!<br />
 Issues must be reported on [Bearsampp repository](https://github.com/bearsampp/bearsampp/issues).
 
-- [Adminer](#adminer)
 - [Apache](#apache)
 - [Bruno](#bruno)
 - [Clink](#clink)
@@ -37,14 +36,6 @@ Issues must be reported on [Bearsampp repository](https://github.com/bearsampp/b
 - [Python](#python)
 - [Ruby](#ruby)
 - [Xlight](#xlight)
-
-## Adminer
-
-Available as a single PHP file.<br />
-[Login server enhanced](https://github.com/crazy-max/login-servers-enhanced) plugin and [Adminer theme by Hever](https://raw.githubusercontent.com/vrana/adminer/master/designs/hever/adminer.css) have been integrated.
-
-* https://github.com/vrana/adminer/releases
-* https://github.com/vrana/adminer/blob/master/plugins/plugin.php
 
 ## Apache
 
@@ -225,6 +216,3 @@ No rebuild required
 No rebuild required.
 
 * https://www.xlightftpd.com/download.htm
-
-* https://yarnpkg.com/en/docs/install/
-* https://nodejs.org/en

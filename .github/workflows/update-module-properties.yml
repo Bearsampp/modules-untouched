@@ -142,7 +142,8 @@ jobs:
           
           if not assets:
               if module_name == 'composer':
-                  print(f"No .phar assets found starting with '{module_name}' in release")
+                  print(f"No .phar assets found in release")
+                  print(f"Available assets: {[a['name'] for a in release_data.get('assets', [])]}")
               else:
                   print(f"No .7z or .zip assets found starting with '{module_name}' in release")
               exit(0)

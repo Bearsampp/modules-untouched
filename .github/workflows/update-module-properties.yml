@@ -236,6 +236,7 @@ jobs:
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GH_PAT }}
+          base: main
           commit-message: |
             Update ${{ steps.module_info.outputs.module_name }} module properties
             

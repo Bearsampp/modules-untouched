@@ -94,52 +94,51 @@ jobs:
                   composer_version = version_match.group(1)
                   print(f"Extracted composer version from release name: {composer_version}")
           
-          # Extract assets that start with module name
+          # Extract assets
           # Special handling for composer (uses .phar files)
           assets = []
           for asset in release_data.get('assets', []):
               filename = asset['name']
               
-              # Check if file starts with module name
-              if filename.startswith(module_name):
-                  # For composer, accept .phar files; for others, accept .7z or .zip
-                  if module_name == 'composer':
-                      if filename.endswith('.phar'):
-                          download_url = asset['browser_download_url']
-                          # Use version from release name, or extract from filename
-                          if composer_version:
-                              ver = composer_version
+              # For composer, accept any .phar file (doesn't need to start with "composer")
+              # For other modules, file must start with module name
+              if module_name == 'composer':
+                  if filename.endswith('.phar'):
+                      download_url = asset['browser_download_url']
+                      # Use version from release name, or extract from filename
+                      if composer_version:
+                          ver = composer_version
+                      else:
+                          version_match = re.search(r'(\d+\.\d+\.\d+(?:\.\d+)?)', filename)
+                          if version_match:
+                              ver = version_match.group(1)
                           else:
-                              version_match = re.search(r'(\d+\.\d+\.\d+(?:\.\d+)?)', filename)
-                              if version_match:
-                                  ver = version_match.group(1)
-                              else:
-                                  print(f"ERROR: Could not extract version for composer from release name or filename: {filename}")
-                                  print(f"Release name: {release_data.get('name', 'N/A')}")
-                                  exit(1)
+                              print(f"ERROR: Could not extract version for composer from release name or filename: {filename}")
+                              print(f"Release name: {release_data.get('name', 'N/A')}")
+                              exit(1)
+                      assets.append({
+                          'version': ver,
+                          'url': download_url,
+                          'filename': filename
+                      })
+                      print(f"Found: {filename} -> Version: {ver}")
+              elif filename.startswith(module_name):
+                  # Standard modules use .7z or .zip and must start with module name
+                  if filename.endswith('.7z') or filename.endswith('.zip'):
+                      download_url = asset['browser_download_url']
+                      
+                      # Extract version number (flexible pattern)
+                      version_match = re.search(r'(\d+\.\d+\.\d+(?:\.\d+)?)', filename)
+                      if version_match:
+                          ver = version_match.group(1)
                           assets.append({
                               'version': ver,
                               'url': download_url,
                               'filename': filename
                           })
                           print(f"Found: {filename} -> Version: {ver}")
-                  else:
-                      # Standard modules use .7z or .zip
-                      if filename.endswith('.7z') or filename.endswith('.zip'):
-                          download_url = asset['browser_download_url']
-                          
-                          # Extract version number (flexible pattern)
-                          version_match = re.search(r'(\d+\.\d+\.\d+(?:\.\d+)?)', filename)
-                          if version_match:
-                              ver = version_match.group(1)
-                              assets.append({
-                                  'version': ver,
-                                  'url': download_url,
-                                  'filename': filename
-                              })
-                              print(f"Found: {filename} -> Version: {ver}")
-                          else:
-                              print(f"Warning: Could not extract version from: {filename}")
+                      else:
+                          print(f"Warning: Could not extract version from: {filename}")
           
           if not assets:
               if module_name == 'composer':

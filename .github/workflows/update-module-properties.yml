@@ -226,9 +226,17 @@ jobs:
       - name: Check for changes
         id: check_changes
         run: |
+          echo "Git status:"
+          git status
+          echo ""
+          echo "Git diff:"
+          git diff
+          echo ""
           if [[ -n $(git status --porcelain) ]]; then
+            echo "Changes detected!"
             echo "changes=true" >> $GITHUB_OUTPUT
           else
+            echo "No changes detected"
             echo "changes=false" >> $GITHUB_OUTPUT
           fi
       

@@ -152,13 +152,11 @@ jobs:
           properties_file = f"modules/{module_name}.properties"
           
           if not os.path.exists(properties_file):
-              print(f"Properties file not found: {properties_file}")
-              print(f"Creating new properties file...")
-              os.makedirs('modules', exist_ok=True)
-              with open(properties_file, 'w', encoding='utf-8') as f:
-                  f.write(f"# {module_name.upper()} Module Properties\n")
-                  f.write(f"# Auto-generated and maintained by automation\n\n")
+              print(f"ERROR: Properties file not found: {properties_file}")
+              print(f"The properties file must already exist in the repository.")
+              exit(1)
           
+          print(f"Reading existing properties file: {properties_file}")
           with open(properties_file, 'r', encoding='utf-8') as f:
               lines = f.readlines()
           

@@ -65,6 +65,10 @@ jobs:
           module_name = module_match.group(1)
           print(f"Module name: {module_name}")
           
+          # Save module name for next steps (do this early in case of errors)
+          with open('module_name.txt', 'w') as f:
+              f.write(module_name)
+          
           # Construct API URL
           api_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases/tags/{release_tag}"
           
@@ -208,17 +212,18 @@ jobs:
           print(f"\nSuccessfully updated {properties_file}")
           print(f"Total versions: {len(sorted_properties)}")
           
-          # Save module name for next steps
-          with open('module_name.txt', 'w') as f:
-              f.write(module_name)
-          
           EOF
       
       - name: Read module name
         id: module_info
+        if: always()
         run: |
-          MODULE_NAME=$(cat module_name.txt)
-          echo "module_name=$MODULE_NAME" >> $GITHUB_OUTPUT
+          if [ -f module_name.txt ]; then
+            MODULE_NAME=$(cat module_name.txt)
+            echo "module_name=$MODULE_NAME" >> $GITHUB_OUTPUT
+          else
+            echo "module_name=unknown" >> $GITHUB_OUTPUT
+          fi
       
       - name: Check for changes
         id: check_changes

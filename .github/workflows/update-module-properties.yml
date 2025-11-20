@@ -160,6 +160,10 @@ jobs:
           with open(properties_file, 'r', encoding='utf-8') as f:
               lines = f.readlines()
           
+          print(f"File contents ({len(lines)} lines):")
+          for i, line in enumerate(lines, 1):
+              print(f"  {i}: {line.rstrip()}")
+          
           # Parse existing properties
           properties = OrderedDict()
           header_lines = []
@@ -174,6 +178,10 @@ jobs:
                   if '=' in line and not stripped.startswith('#'):
                       key, value = line.split('=', 1)
                       properties[key.strip()] = value.strip()
+          
+          print(f"\nExisting properties before update: {len(properties)} entries")
+          for key, value in properties.items():
+              print(f"  {key} = {value}")
           
           # Add new versions
           for asset in assets:

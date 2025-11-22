@@ -84,53 +84,50 @@ jobs:
           response.raise_for_status()
           release_data = response.json()
           
-          # For composer, extract version from release title/name
-          composer_version = None
-          if module_name == 'composer':
-              release_name = release_data.get('name', '')
-              # Try to extract version from release name (e.g., "Composer 2.8.4" -> "2.8.4")
-              version_match = re.search(r'(\d+\.\d+\.\d+(?:\.\d+)?)', release_name)
+          # Extract version from release title/name (fallback for all modules)
+          release_name_version = None
+          release_name = release_data.get('name', '')
+          if release_name:
+              # Try to extract version from release name (supports 2-5+ part versions: X.Y, X.Y.Z, X.Y.Z.W, etc.)
+              version_match = re.search(r'(\d+(?:\.\d+)+)', release_name)
               if version_match:
-                  composer_version = version_match.group(1)
-                  print(f"Extracted composer version from release name: {composer_version}")
+                  release_name_version = version_match.group(1)
+                  print(f"Found version in release name: {release_name_version}")
           
           # Extract assets
-          # Special handling for composer (uses .phar files)
+          # Special handling for composer (uses .phar files) and xlight (version in release name)
           assets = []
           for asset in release_data.get('assets', []):
               filename = asset['name']
               
               # For composer, accept any .phar file (doesn't need to start with "composer")
+              # For xlight, accept xlight-x64.zip (version comes from release name)
               # For other modules, file must start with module name
               if module_name == 'composer':
                   if filename.endswith('.phar'):
                       download_url = asset['browser_download_url']
-                      # Use version from release name, or extract from filename
-                      if composer_version:
-                          ver = composer_version
+                      # Try to extract version from filename first, then fall back to release name
+                      version_match = re.search(r'(\d+(?:\.\d+)+)', filename)
+                      if version_match:
+                          ver = version_match.group(1)
+                      elif release_name_version:
+                          ver = release_name_version
                       else:
-                          version_match = re.search(r'(\d+\.\d+\.\d+(?:\.\d+)?)', filename)
-                          if version_match:
-                              ver = version_match.group(1)
-                          else:
-                              print(f"ERROR: Could not extract version for composer from release name or filename: {filename}")
-                              print(f"Release name: {release_data.get('name', 'N/A')}")
-                              exit(1)
+                          print(f"ERROR: Could not extract version for composer from release name or filename: {filename}")
+                          print(f"Release name: {release_data.get('name', 'N/A')}")
+                          exit(1)
                       assets.append({
                           'version': ver,
                           'url': download_url,
                           'filename': filename
                       })
                       print(f"Found: {filename} -> Version: {ver}")
-              elif filename.lower().startswith(module_name):
-                  # Standard modules use .7z or .zip and must start with module name (case-insensitive)
-                  if filename.endswith('.7z') or filename.endswith('.zip'):
+              elif module_name == 'xlight':
+                  # For xlight, look for xlight-x64.zip and use version from release name
+                  if filename == 'xlight-x64.zip':
                       download_url = asset['browser_download_url']
-                      
-                      # Extract version number (flexible pattern)
-                      version_match = re.search(r'(\d+\.\d+\.\d+(?:\.\d+)?)', filename)
-                      if version_match:
-                          ver = version_match.group(1)
+                      if release_name_version:
+                          ver = release_name_version
                           assets.append({
                               'version': ver,
                               'url': download_url,
@@ -138,14 +135,63 @@ jobs:
                           })
                           print(f"Found: {filename} -> Version: {ver}")
                       else:
-                          print(f"Warning: Could not extract version from: {filename}")
+                          print(f"ERROR: Could not extract version for xlight from release name")
+                          print(f"Release name: {release_data.get('name', 'N/A')}")
+                          exit(1)
+              elif filename.lower().startswith(module_name):
+                  # Standard modules use .7z, .exe, or .zip and must start with module name (case-insensitive)
+                  if filename.endswith('.7z') or filename.endswith('.exe') or filename.endswith('.zip'):
+                      download_url = asset['browser_download_url']
+                      
+                      # Try to extract version from filename first, then fall back to release name
+                      version_match = re.search(r'(\d+(?:\.\d+)+)', filename)
+                      if version_match:
+                          ver = version_match.group(1)
+                          assets.append({
+                              'version': ver,
+                              'url': download_url,
+                              'filename': filename
+                          })
+                          print(f"Found: {filename} -> Version: {ver} (from filename)")
+                      elif release_name_version:
+                          ver = release_name_version
+                          assets.append({
+                              'version': ver,
+                              'url': download_url,
+                              'filename': filename
+                          })
+                          print(f"Found: {filename} -> Version: {ver} (from release name)")
+                      else:
+                          print(f"\n{'='*60}")
+                          print(f"ERROR: Could not extract version for {module_name}")
+                          print(f"{'='*60}")
+                          print(f"Module name: {module_name}")
+                          print(f"Release tag: {release_tag}")
+                          print(f"Release name: {release_data.get('name', 'N/A')}")
+                          print(f"Asset filename: {filename}")
+                          print(f"Asset URL: {download_url}")
+                          print(f"\nVersion extraction attempts:")
+                          print(f"  1. Filename regex pattern: r'(\\d+(?:\\.\\d+)+)'")
+                          print(f"     Matches: X.Y, X.Y.Z, X.Y.Z.W, etc. (2+ parts)")
+                          print(f"     Result: No match found in '{filename}'")
+                          print(f"  2. Release name: '{release_data.get('name', 'N/A')}'")
+                          print(f"     Result: No version found")
+                          print(f"\nAll assets in this release:")
+                          for idx, a in enumerate(release_data.get('assets', []), 1):
+                              print(f"  {idx}. {a['name']}")
+                          print(f"{'='*60}\n")
+                          exit(1)
           
           if not assets:
               if module_name == 'composer':
                   print(f"No .phar assets found in release")
                   print(f"Available assets: {[a['name'] for a in release_data.get('assets', [])]}")
+              elif module_name == 'xlight':
+                  print(f"No xlight-x64.zip asset found in release")
+                  print(f"Available assets: {[a['name'] for a in release_data.get('assets', [])]}")
               else:
-                  print(f"No .7z or .zip assets found starting with '{module_name}' in release")
+                  print(f"No .7z, .exe, or .zip assets found starting with '{module_name}' in release")
+                  print(f"Available assets: {[a['name'] for a in release_data.get('assets', [])]}")
               exit(0)
           
           # Read existing properties file
@@ -250,7 +296,7 @@ jobs:
             This PR updates the `${{ steps.module_info.outputs.module_name }}.properties` file with new versions from release `${{ github.event.release.tag_name || github.event.inputs.release_tag }}`.
             
             ### Changes:
-            - Extracted assets starting with `${{ steps.module_info.outputs.module_name }}`
+            - Extracted assets starting with `${{ steps.module_info.outputs.module_name }}` (.7z, .exe, or .zip files)
             - Added version entries with download URLs
             - Maintained semver ordering (newest first)
             
@@ -276,3 +322,11 @@ jobs:
           gh pr merge ${{ steps.create_pr.outputs.pull-request-number }} --auto --squash
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
+      
+      - name: Cleanup
+        if: always()
+        run: |
+          if [ -f module_name.txt ]; then
+            rm module_name.txt
+            echo "Cleaned up module_name.txt"
+          fi

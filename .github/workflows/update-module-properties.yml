@@ -99,6 +99,7 @@ jobs:
           # - composer: uses .phar files
           # - xlight: version in release name
           # - git: files start with "portable"
+          # - nodejs: files start with "node-" instead of "nodejs"
           # - ghostscript: version embedded without dots (e.g., gs10051w64.7z for version 10.05.1)
           assets = []
           for asset in release_data.get('assets', []):
@@ -107,6 +108,7 @@ jobs:
               # For composer, accept any .phar file (doesn't need to start with "composer")
               # For xlight, accept xlight-x64.zip (version comes from release name)
               # For git, files start with "portable" instead of "git"
+              # For nodejs, files start with "node-" instead of "nodejs"
               # For other modules, file must start with module name
               if module_name == 'composer':
                   if filename.endswith('.phar'):
@@ -173,6 +175,37 @@ jobs:
                               print(f"Found: {filename} -> Version: {ver} (from release name)")
                           else:
                               print(f"ERROR: Could not extract version for git from release name or filename: {filename}")
+                              print(f"Release name: {release_data.get('name', 'N/A')}")
+                              exit(1)
+              elif module_name == 'nodejs':
+                  # For nodejs, files start with "node-" instead of "nodejs"
+                  # Accept files with .7z, .exe, .zip extensions
+                  if filename.lower().startswith('node-'):
+                      # Check if file has valid extension
+                      valid_ext = (filename.endswith('.7z') or filename.endswith('.exe') or filename.endswith('.zip'))
+                      if valid_ext:
+                          download_url = asset['browser_download_url']
+
+                          # Try to extract version from filename first, then fall back to release name
+                          version_match = re.search(r'(\d+(?:\.\d+)+)', filename)
+                          if version_match:
+                              ver = version_match.group(1)
+                              assets.append({
+                                  'version': ver,
+                                  'url': download_url,
+                                  'filename': filename
+                              })
+                              print(f"Found: {filename} -> Version: {ver} (from filename)")
+                          elif release_name_version:
+                              ver = release_name_version
+                              assets.append({
+                                  'version': ver,
+                                  'url': download_url,
+                                  'filename': filename
+                              })
+                              print(f"Found: {filename} -> Version: {ver} (from release name)")
+                          else:
+                              print(f"ERROR: Could not extract version for nodejs from release name or filename: {filename}")
                               print(f"Release name: {release_data.get('name', 'N/A')}")
                               exit(1)
               elif module_name == 'ghostscript':
@@ -285,6 +318,10 @@ jobs:
               elif module_name == 'git':
                   print(f"No valid assets found in release")
                   print(f"Expected: .7z, .exe, or .zip files starting with 'portable'")
+                  print(f"Available assets: {[a['name'] for a in release_data.get('assets', [])]}")
+              elif module_name == 'nodejs':
+                  print(f"No valid assets found in release")
+                  print(f"Expected: .7z, .exe, or .zip files starting with 'node-'")
                   print(f"Available assets: {[a['name'] for a in release_data.get('assets', [])]}")
               elif module_name == 'ghostscript':
                   print(f"No valid ghostscript assets found in release")

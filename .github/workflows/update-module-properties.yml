@@ -6,7 +6,7 @@ name: Update Module Properties
 on:
   release:
     types: [published, edited]
-  
+
   # Manual trigger for testing
   workflow_dispatch:
     inputs:
@@ -17,22 +17,22 @@ on:
 jobs:
   update-properties:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_PAT }}
-      
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      
+
       - name: Install dependencies
         run: |
           pip install requests packaging
-      
+
       - name: Extract module name and update properties
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -46,44 +46,44 @@ jobs:
           import requests
           from packaging import version
           from collections import OrderedDict
-          
+
           # Get environment variables
           release_tag = os.environ['RELEASE_TAG']
           repo_owner = os.environ['REPO_OWNER']
           repo_name = os.environ['REPO_NAME']
           github_token = os.environ['GITHUB_TOKEN']
-          
+
           print(f"Processing release: {release_tag}")
-          
+
           # Extract module name from tag (e.g., "php-2025.10.31" -> "php")
           module_match = re.match(r'^([a-zA-Z0-9_-]+)-\d{4}\.\d{1,2}\.\d{1,2}', release_tag)
           if not module_match:
               print(f"ERROR: Could not extract module name from tag: {release_tag}")
               print("Expected format: MODULENAME-YYYY.MM.DD (e.g., php-2025.10.31)")
               exit(1)
-          
+
           module_name = module_match.group(1).lower()
           print(f"Module name: {module_name}")
-          
+
           # Save module name for next steps (do this early in case of errors)
           with open('module_name.txt', 'w') as f:
               f.write(module_name)
-          
+
           # Construct API URL
           api_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases/tags/{release_tag}"
-          
+
           headers = {
               'Authorization': f'token {github_token}',
               'Accept': 'application/vnd.github.v3+json'
           }
-          
+
           print(f"Fetching release information from: {api_url}")
-          
+
           # Fetch release data
           response = requests.get(api_url, headers=headers)
           response.raise_for_status()
           release_data = response.json()
-          
+
           # Extract version from release title/name (fallback for all modules)
           release_name_version = None
           release_name = release_data.get('name', '')
@@ -93,13 +93,13 @@ jobs:
               if version_match:
                   release_name_version = version_match.group(1)
                   print(f"Found version in release name: {release_name_version}")
-          
+
           # Extract assets
           # Special handling for composer (uses .phar files), xlight (version in release name), and git (files start with "portable")
           assets = []
           for asset in release_data.get('assets', []):
               filename = asset['name']
-              
+
               # For composer, accept any .phar file (doesn't need to start with "composer")
               # For xlight, accept xlight-x64.zip (version comes from release name)
               # For git, files start with "portable" instead of "git"
@@ -141,36 +141,41 @@ jobs:
                           exit(1)
               elif module_name == 'git':
                   # For git, files start with "portable" instead of "git"
-                  if filename.lower().startswith('portable') and (filename.endswith('.7z') or filename.endswith('.exe') or filename.endswith('.zip')):
-                      download_url = asset['browser_download_url']
-                      
-                      # Try to extract version from filename first, then fall back to release name
-                      version_match = re.search(r'(\d+(?:\.\d+)+)', filename)
-                      if version_match:
-                          ver = version_match.group(1)
-                          assets.append({
-                              'version': ver,
-                              'url': download_url,
-                              'filename': filename
-                          })
-                          print(f"Found: {filename} -> Version: {ver} (from filename)")
-                      elif release_name_version:
-                          ver = release_name_version
-                          assets.append({
-                              'version': ver,
-                              'url': download_url,
-                              'filename': filename
-                          })
-                          print(f"Found: {filename} -> Version: {ver} (from release name)")
-                      else:
-                          print(f"ERROR: Could not extract version for git from release name or filename: {filename}")
-                          print(f"Release name: {release_data.get('name', 'N/A')}")
-                          exit(1)
+                  # Accept files with .7z, .exe, .zip extensions (including double extensions like .7z.exe)
+                  if filename.lower().startswith('portable'):
+                      # Check if file has valid extension (including double extensions)
+                      valid_ext = (filename.endswith('.7z') or filename.endswith('.exe') or
+                                   filename.endswith('.zip') or filename.endswith('.7z.exe'))
+                      if valid_ext:
+                          download_url = asset['browser_download_url']
+
+                          # Try to extract version from filename first, then fall back to release name
+                          version_match = re.search(r'(\d+(?:\.\d+)+)', filename)
+                          if version_match:
+                              ver = version_match.group(1)
+                              assets.append({
+                                  'version': ver,
+                                  'url': download_url,
+                                  'filename': filename
+                              })
+                              print(f"Found: {filename} -> Version: {ver} (from filename)")
+                          elif release_name_version:
+                              ver = release_name_version
+                              assets.append({
+                                  'version': ver,
+                                  'url': download_url,
+                                  'filename': filename
+                              })
+                              print(f"Found: {filename} -> Version: {ver} (from release name)")
+                          else:
+                              print(f"ERROR: Could not extract version for git from release name or filename: {filename}")
+                              print(f"Release name: {release_data.get('name', 'N/A')}")
+                              exit(1)
               elif filename.lower().startswith(module_name):
                   # Standard modules use .7z, .exe, or .zip and must start with module name (case-insensitive)
                   if filename.endswith('.7z') or filename.endswith('.exe') or filename.endswith('.zip'):
                       download_url = asset['browser_download_url']
-                      
+
                       # Try to extract version from filename first, then fall back to release name
                       version_match = re.search(r'(\d+(?:\.\d+)+)', filename)
                       if version_match:
@@ -209,7 +214,7 @@ jobs:
                               print(f"  {idx}. {a['name']}")
                           print(f"{'='*60}\n")
                           exit(1)
-          
+
           if not assets:
               if module_name == 'composer':
                   print(f"No .phar assets found in release")
@@ -225,28 +230,28 @@ jobs:
                   print(f"No .7z, .exe, or .zip assets found starting with '{module_name}' in release")
                   print(f"Available assets: {[a['name'] for a in release_data.get('assets', [])]}")
               exit(0)
-          
+
           # Read existing properties file
           properties_file = f"modules/{module_name}.properties"
-          
+
           if not os.path.exists(properties_file):
               print(f"ERROR: Properties file not found: {properties_file}")
               print(f"The properties file must already exist in the repository.")
               exit(1)
-          
+
           print(f"Reading existing properties file: {properties_file}")
           with open(properties_file, 'r', encoding='utf-8') as f:
               lines = f.readlines()
-          
+
           print(f"File contents ({len(lines)} lines):")
           for i, line in enumerate(lines, 1):
               print(f"  {i}: {line.rstrip()}")
-          
+
           # Parse existing properties
           properties = OrderedDict()
           header_lines = []
           in_header = True
-          
+
           for line in lines:
               stripped = line.strip()
               if in_header and (stripped.startswith('#') or stripped == ''):
@@ -256,21 +261,21 @@ jobs:
                   if '=' in line and not stripped.startswith('#'):
                       key, value = line.split('=', 1)
                       properties[key.strip()] = value.strip()
-          
+
           print(f"\nExisting properties before update: {len(properties)} entries")
           for key, value in properties.items():
               print(f"  {key} = {value}")
-          
+
           # Add new versions
           for asset in assets:
               ver = asset['version']
               url = asset['url']
-              
+
               # Create property key (just version number)
               key = ver
               properties[key] = url
               print(f"Added/Updated: {key} = {url}")
-          
+
           # Sort properties by version (semver)
           def extract_version(key):
               # Parse version directly from key
@@ -278,26 +283,26 @@ jobs:
                   return version.parse(key)
               except:
                   return version.parse("0.0.0")
-          
+
           sorted_properties = OrderedDict(
               sorted(properties.items(), key=lambda x: extract_version(x[0]), reverse=True)
           )
-          
+
           # Write back to file
           with open(properties_file, 'w', encoding='utf-8') as f:
               # Write header
               for line in header_lines:
                   f.write(line)
-              
+
               # Write sorted properties with spaces around equals sign
               for key, value in sorted_properties.items():
                   f.write(f"{key} = {value}\n")
-          
+
           print(f"\nSuccessfully updated {properties_file}")
           print(f"Total versions: {len(sorted_properties)}")
-          
+
           EOF
-      
+
       - name: Read module name
         id: module_info
         if: always()
@@ -308,7 +313,7 @@ jobs:
           else
             echo "module_name=unknown" >> $GITHUB_OUTPUT
           fi
-      
+
       - name: Create Pull Request
         id: create_pr
         uses: peter-evans/create-pull-request@v6
@@ -317,23 +322,23 @@ jobs:
           base: main
           commit-message: |
             Update ${{ steps.module_info.outputs.module_name }} module properties
-            
+
             Auto-generated from release ${{ github.event.release.tag_name || github.event.inputs.release_tag }}
           branch: update-${{ steps.module_info.outputs.module_name }}-${{ github.event.release.tag_name || github.event.inputs.release_tag }}
           delete-branch: true
           title: 'Update ${{ steps.module_info.outputs.module_name }} properties from release ${{ github.event.release.tag_name || github.event.inputs.release_tag }}'
           body: |
             ## 🤖 Automated Module Properties Update
-            
+
             This PR updates the `${{ steps.module_info.outputs.module_name }}.properties` file with new versions from release `${{ github.event.release.tag_name || github.event.inputs.release_tag }}`.
-            
+
             ### Changes:
             - Extracted assets starting with `${{ steps.module_info.outputs.module_name }}` (.7z, .exe, or .zip files)
             - Added version entries with download URLs
             - Maintained semver ordering (newest first)
-            
+
             **Release URL:** ${{ github.event.release.html_url || format('https://github.com/{0}/{1}/releases/tag/{2}', github.repository_owner, github.event.repository.name, github.event.inputs.release_tag) }}
-            
+
             ### Next Steps:
             1. ⏳ Link validation will run automatically
             2. ✅ Once validation passes, this PR will auto-merge
@@ -341,20 +346,20 @@ jobs:
           labels: |
             automated
             module-update
-      
+
       - name: Wait for validation checks
         if: steps.create_pr.outputs.pull-request-number != ''
         run: |
           echo "Waiting for link validation to complete..."
           sleep 10
-      
+
       - name: Enable auto-merge
         if: steps.create_pr.outputs.pull-request-number != ''
         run: |
           gh pr merge ${{ steps.create_pr.outputs.pull-request-number }} --auto --squash
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
-      
+
       - name: Cleanup
         if: always()
         run: |

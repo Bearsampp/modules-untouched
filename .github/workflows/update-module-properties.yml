@@ -95,7 +95,11 @@ jobs:
                   print(f"Found version in release name: {release_name_version}")
 
           # Extract assets
-          # Special handling for composer (uses .phar files), xlight (version in release name), and git (files start with "portable")
+          # Special handling for:
+          # - composer: uses .phar files
+          # - xlight: version in release name
+          # - git: files start with "portable"
+          # - ghostscript: version embedded without dots (e.g., gs10051w64.7z for version 10.05.1)
           assets = []
           for asset in release_data.get('assets', []):
               filename = asset['name']
@@ -171,6 +175,62 @@ jobs:
                               print(f"ERROR: Could not extract version for git from release name or filename: {filename}")
                               print(f"Release name: {release_data.get('name', 'N/A')}")
                               exit(1)
+              elif module_name == 'ghostscript':
+                  # For ghostscript, files are named like gs10051w64.7z where 10051 = version 10.05.1
+                  # Pattern: gs + version_without_dots + w32/w64 + .7z
+                  if filename.lower().startswith('gs') and filename.endswith('.7z'):
+                      download_url = asset['browser_download_url']
+
+                      # Extract the numeric part between 'gs' and 'w32'/'w64'
+                      # Example: gs10051w64.7z -> 10051
+                      match = re.match(r'gs(\d+)w(?:32|64)\.7z', filename.lower())
+                      if match:
+                          version_digits = match.group(1)
+                          # Convert version digits to proper version format
+                          # Examples: 922 -> 9.22, 9561 -> 9.56.1, 10051 -> 10.05.1, 1000 -> 10.0
+                          if len(version_digits) == 3:
+                              # Format: XYZ -> X.YZ (e.g., 922 -> 9.22)
+                              ver = f"{version_digits[0]}.{version_digits[1:]}"
+                          elif len(version_digits) == 4:
+                              if version_digits.startswith('10'):
+                                  # Format: 10XY -> 10.X.Y or 10.XY (e.g., 1000 -> 10.0, 1003 -> 10.03)
+                                  if version_digits[2:] == '00':
+                                      ver = f"10.{version_digits[2]}"  # 1000 -> 10.0
+                                  else:
+                                      ver = f"10.{version_digits[2:]}"  # 1003 -> 10.03
+                              else:
+                                  # Format: XYZW -> X.YZ.W (e.g., 9561 -> 9.56.1)
+                                  ver = f"{version_digits[0]}.{version_digits[1:3]}.{version_digits[3]}"
+                          elif len(version_digits) == 5:
+                              # Format: 10XYZ -> 10.XY.Z (e.g., 10051 -> 10.05.1, 10020 -> 10.02.0)
+                              ver = f"10.{version_digits[2:4]}.{version_digits[4]}"
+                          else:
+                              print(f"WARNING: Unexpected version digit length for ghostscript: {version_digits}")
+                              if release_name_version:
+                                  ver = release_name_version
+                              else:
+                                  print(f"ERROR: Could not parse version from filename: {filename}")
+                                  continue
+
+                          assets.append({
+                              'version': ver,
+                              'url': download_url,
+                              'filename': filename
+                          })
+                          print(f"Found: {filename} -> Version: {ver} (parsed from filename)")
+                      elif release_name_version:
+                          # Fallback to release name version
+                          ver = release_name_version
+                          assets.append({
+                              'version': ver,
+                              'url': download_url,
+                              'filename': filename
+                          })
+                          print(f"Found: {filename} -> Version: {ver} (from release name)")
+                      else:
+                          print(f"ERROR: Could not extract version for ghostscript from filename: {filename}")
+                          print(f"Release name: {release_data.get('name', 'N/A')}")
+                          exit(1)
               elif filename.lower().startswith(module_name):
                   # Standard modules use .7z, .exe, or .zip and must start with module name (case-insensitive)
                   if filename.endswith('.7z') or filename.endswith('.exe') or filename.endswith('.zip'):
@@ -226,6 +286,10 @@ jobs:
                   print(f"No valid assets found in release")
                   print(f"Expected: .7z, .exe, or .zip files starting with 'portable'")
                   print(f"Available assets: {[a['name'] for a in release_data.get('assets', [])]}")
+              elif module_name == 'ghostscript':
+                  print(f"No valid ghostscript assets found in release")
+                  print(f"Expected: .7z files matching pattern gs<version>w32/w64.7z")
+                  print(f"Available assets: {[a['name'] for a in release_data.get('assets', [])]}")
               else:
                   print(f"No .7z, .exe, or .zip assets found starting with '{module_name}' in release")
                   print(f"Available assets: {[a['name'] for a in release_data.get('assets', [])]}")
@@ -266,6 +330,11 @@ jobs:
           for key, value in properties.items():
               print(f"  {key} = {value}")
 
+          # Track if any changes were made
+          changes_made = False
+          added_versions = []
+          updated_versions = []
+
           # Add new versions
           for asset in assets:
               ver = asset['version']
@@ -273,8 +342,55 @@ jobs:
 
               # Create property key (just version number)
               key = ver
-              properties[key] = url
-              print(f"Added/Updated: {key} = {url}")
+
+              # Check if this is a new version or an update
+              if key in properties:
+                  if properties[key] != url:
+                      updated_versions.append(f"{key}: {properties[key]} -> {url}")
+                      properties[key] = url
+                      changes_made = True
+                      print(f"Updated: {key} = {url}")
+                  else:
+                      print(f"Unchanged: {key} = {url} (already exists with same URL)")
+              else:
+                  added_versions.append(f"{key} = {url}")
+                  properties[key] = url
+                  changes_made = True
+                  print(f"Added: {key} = {url}")
+
+          # Check if any changes were actually made
+          if not changes_made:
+              print(f"\n{'='*70}")
+              print(f"ERROR: No changes were made to {properties_file}")
+              print(f"{'='*70}")
+              print(f"\nRelease Information:")
+              print(f"  Release Tag: {release_tag}")
+              print(f"  Release Name: {release_data.get('name', 'N/A')}")
+              print(f"  Module: {module_name}")
+              print(f"\nAssets Found in Release:")
+              for idx, asset in enumerate(assets, 1):
+                  print(f"  {idx}. {asset['filename']}")
+                  print(f"     Version: {asset['version']}")
+                  print(f"     URL: {asset['url']}")
+              print(f"\nExisting Properties File Content:")
+              print(f"  File: {properties_file}")
+              print(f"  Total entries: {len(properties)}")
+              for key, value in properties.items():
+                  print(f"    {key} = {value}")
+              print(f"\nReason:")
+              print(f"  All versions from this release already exist in the properties file")
+              print(f"  with the same URLs. No updates are needed.")
+              print(f"\nPossible Causes:")
+              print(f"  1. This release was already processed previously")
+              print(f"  2. The properties file was manually updated with these versions")
+              print(f"  3. The workflow was re-run on the same release")
+              print(f"\nAction Required:")
+              print(f"  If this is unexpected, verify:")
+              print(f"  - The release contains new assets not in the properties file")
+              print(f"  - The asset filenames match the expected pattern for {module_name}")
+              print(f"  - The version extraction logic is working correctly")
+              print(f"{'='*70}\n")
+              exit(1)
 
           # Sort properties by version (semver)
           def extract_version(key):
@@ -298,8 +414,22 @@ jobs:
               for key, value in sorted_properties.items():
                   f.write(f"{key} = {value}\n")
 
-          print(f"\nSuccessfully updated {properties_file}")
-          print(f"Total versions: {len(sorted_properties)}")
+          print(f"\n{'='*70}")
+          print(f"SUCCESS: Updated {properties_file}")
+          print(f"{'='*70}")
+          print(f"Total versions in file: {len(sorted_properties)}")
+
+          if added_versions:
+              print(f"\nAdded {len(added_versions)} new version(s):")
+              for ver in added_versions:
+                  print(f"  + {ver}")
+
+          if updated_versions:
+              print(f"\nUpdated {len(updated_versions)} existing version(s):")
+              for ver in updated_versions:
+                  print(f"  ~ {ver}")
+
+          print(f"{'='*70}\n")
 
           EOF
 

@@ -101,6 +101,7 @@ jobs:
           # - mailpit: version in release name (files named mailpit-windows-amd64.zip)
           # - git: files start with "portable"
           # - nodejs: files start with "node-" instead of "nodejs"
+          # - cmder: accepts cmder.7z or cmder_mini.zip (version from release name)
           # - ghostscript: version embedded without dots (e.g., gs10051w64.7z for version 10.05.1)
           assets = []
           for asset in release_data.get('assets', []):
@@ -225,6 +226,22 @@ jobs:
                               print(f"ERROR: Could not extract version for nodejs from release name or filename: {filename}")
                               print(f"Release name: {release_data.get('name', 'N/A')}")
                               exit(1)
+              elif module_name == 'cmder':
+                  # For cmder, accept cmder.7z or cmder_mini.zip (version comes from release name)
+                  if filename.lower() in ['cmder.7z', 'cmder_mini.zip']:
+                      download_url = asset['browser_download_url']
+                      if release_name_version:
+                          ver = release_name_version
+                          assets.append({
+                              'version': ver,
+                              'url': download_url,
+                              'filename': filename
+                          })
+                          print(f"Found: {filename} -> Version: {ver}")
+                      else:
+                          print(f"ERROR: Could not extract version for cmder from release name")
+                          print(f"Release name: {release_data.get('name', 'N/A')}")
+                          exit(1)
               elif module_name == 'ghostscript':
                   # For ghostscript, files are named like gs10051w64.7z where 10051 = version 10.05.1
                   # Pattern: gs + version_without_dots + w32/w64 + .7z
@@ -347,6 +364,10 @@ jobs:
               elif module_name == 'nodejs':
                   print(f"No valid assets found in release")
                   print(f"Expected: .7z, .exe, or .zip files starting with 'node-'")
+                  print(f"Available assets: {[a['name'] for a in release_data.get('assets', [])]}")
+              elif module_name == 'cmder':
+                  print(f"No valid cmder assets found in release")
+                  print(f"Expected: cmder.7z or cmder_mini.zip")
                   print(f"Available assets: {[a['name'] for a in release_data.get('assets', [])]}")
               elif module_name == 'ghostscript':
                   print(f"No valid ghostscript assets found in release")

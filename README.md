@@ -18,7 +18,7 @@ Issues must be reported on [Bearsampp repository](https://github.com/bearsampp/b
 - [Bruno](#bruno)
 - [Clink](#clink)
 - [Composer](#composer)
-- [ConsoleZ](#consolez)
+- [Cmder](#cmder)
 - [Ghostscript](#ghostscript)
 - [Git](#git)
 - [Mailpit](#mailpit)
@@ -60,28 +60,34 @@ No rebuild required. Available as a single PHAR file.
 * https://getcomposer.org/ ( windows only has .exe installer )
 * https://github.com/composer/composer/releases ( preferred )
 
-## ConsoleZ
+## Cmder    
+Conemu with extra features<br />
 
-ConsoleZ with extra dependencies.<br />
-See `deps.properties` file on the module repository.
-
-#### ConsoleZ
-
+#### Cmder
+choose cmder_mini   
 No rebuild required. Available as archive artefact (zip).
 
-* https://github.com/cbucher/console/releases
+* https://github.com/cmderdev/cmder/tags
 
-#### Clink
+#### Clink Completions
 
-No rebuild required. Available as archive artefact (zip).
+extract and copy files to <i>vendor/clink-completions</i> in the module version
 
-* https://github.com/chrisant996/clink
+* https://github.com/vladimir-kotikov/clink-completions/releases
 
-#### GnuWin32 CoreUtils
+#### oh-my-posh
 
 No rebuild required. Available as archive artefact for Binaries and Dependencies (zip).
 
-* http://gnuwin32.sourceforge.net/packages/coreutils.htm
+* https://github.com/JanDeDobbeleer/oh-my-posh/releases/tag/v28.0.0
+
+oh-my-posh theme ( Paradox - Bearsampp default )
+* https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/paradox.omp.json
+
+#### Customization guide
+* https://amanek.com/better-command-line-experience-on-windows-with-conemu-clink-and-oh-my-posh/
+To reset default bearsampp omp theme use    
+```oh-my-posh init pwsh --config https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/paradox.omp.json | Invoke-Expression```
 
 ## Ghostscript
 

@@ -226,8 +226,8 @@ jobs:
                               print(f"ERROR: Could not extract version for nodejs from release name or filename: {filename}")
                               print(f"Release name: {release_data.get('name', 'N/A')}")
                               exit(1)
-              elif module_name == 'shell':
-                  # For shell (PowerShell), files are named like PowerShell-7.5.4-win-x64.zip
+              elif module_name == 'powershell':
+                  # For powershell, files are named like PowerShell-7.5.4-win-x64.zip
                   if filename.lower().startswith('powershell') and filename.endswith('.zip'):
                       download_url = asset['browser_download_url']
 
@@ -250,7 +250,7 @@ jobs:
                           })
                           print(f"Found: {filename} -> Version: {ver} (from release name)")
                       else:
-                          print(f"ERROR: Could not extract version for shell from release name or filename: {filename}")
+                          print(f"ERROR: Could not extract version for powershell from release name or filename: {filename}")
                           print(f"Release name: {release_data.get('name', 'N/A')}")
                           exit(1)
               elif module_name == 'ghostscript':
@@ -380,8 +380,8 @@ jobs:
                   print(f"No valid ghostscript assets found in release")
                   print(f"Expected: .7z files matching pattern gs<version>w32/w64.7z")
                   print(f"Available assets: {[a['name'] for a in release_data.get('assets', [])]}")
-              elif module_name == 'shell':
-                  print(f"No valid shell (PowerShell) assets found in release")
+              elif module_name == 'powershell':
+                  print(f"No valid powershell assets found in release")
                   print(f"Expected: .zip files starting with 'PowerShell'")
                   print(f"Available assets: {[a['name'] for a in release_data.get('assets', [])]}")
               else:

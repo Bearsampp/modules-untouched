@@ -136,6 +136,7 @@ No rebuild required. Available as archive artefact (zip).
 * [imagemagick:](https://imagemagick.org/script/download.php#windows)
 * [imagick:](https://mlocati.github.io/articles/php-windows-imagick.html)
 * [pear](https://pear.php.net/package/pearweb_phars/download/)
+* try [php-pecl](https://pecl.php.net/package/memcache/8.2/windows) for memcache first.
 <h6><b>Pear requires extracting and using the "install-pear-nozlib.phar"</b></h6> 
 <h6>*all of these are required when updating php.</h6>
 <h6>test imagemagick with php --ri imagick</h6>

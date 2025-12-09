@@ -491,7 +491,7 @@ jobs:
           # Check if any changes were actually made
           if not changes_made:
               print(f"\n{'='*70}")
-              print(f"ERROR: No changes were made to {properties_file}")
+              print(f"INFO: No changes were made to {properties_file}")
               print(f"{'='*70}")
               print(f"\nRelease Information:")
               print(f"  Release Tag: {release_tag}")
@@ -514,13 +514,9 @@ jobs:
               print(f"  1. This release was already processed previously")
               print(f"  2. The properties file was manually updated with these versions")
               print(f"  3. The workflow was re-run on the same release")
-              print(f"\nAction Required:")
-              print(f"  If this is unexpected, verify:")
-              print(f"  - The release contains new assets not in the properties file")
-              print(f"  - The asset filenames match the expected pattern for {module_name}")
-              print(f"  - The version extraction logic is working correctly")
+              print(f"\nNo action required - this is normal if the release was already processed.")
               print(f"{'='*70}\n")
-              exit(1)
+              exit(0)
 
           # Sort properties by version (semver)
           def extract_version(key):

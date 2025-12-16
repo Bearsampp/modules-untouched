@@ -93,7 +93,8 @@ No rebuild required. Available as archive artefact (zip).
 ## Memcached
 
 Download https://github.com/Bearsampp/sandbox/releases/download/2025.2.11/memcached_download.bat and run it.
-use the created .zip file.
+use the created .zip file.  
+#### NOTE: as of 2025.12.16 running "gradle release" will automatically fetch the files and create the zip as part of the build process
 
 <b> Windows dll's seem to be no longer being made by memcached.  Use nono303's build</b>
 </i>Do NOT confuse this with the "memcache" contained as part of php pecl package.  They work together</i>

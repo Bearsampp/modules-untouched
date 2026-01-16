@@ -119,7 +119,7 @@ In order to see version you must first extract the .zip then check the propertie
 
 No rebuild required. Available as msi or 7z artefact.
 
-* https://nodejs.org/dist/
+* https://nodejs.org/dist/latest
 
 ## Perl
 

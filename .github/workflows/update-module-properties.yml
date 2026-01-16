@@ -385,9 +385,10 @@ jobs:
                       # Try to extract version from filename first, then fall back to release name
                       # For Ruby, extract full version including build number (e.g., 3.4.7-1 from rubyinstaller-3.4.7-1-x64.7z)
                       if module_name == 'ruby':
-                          version_match = re.search(r'(\d+(?:\.\d+)+(?:-\d+)?)', filename)
+                          version_match = re.search(r'(\d+(?:\.\d+)+(?:-\d+)?)(?=[-._]|\.(?:7z|exe|zip|phar))', filename)
                       else:
-                          version_match = re.search(r'(\d+(?:\.\d+)+)', filename)
+                          # Use negative lookahead to avoid matching the "7" in ".7z"
+                          version_match = re.search(r'(\d+(?:\.\d+)+)(?=[-._]|\.(?:7z|exe|zip|phar))', filename)
 
                       if version_match:
                           ver = version_match.group(1)

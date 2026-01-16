@@ -1,1 +1,1 @@
-ghostscript
+mailpit

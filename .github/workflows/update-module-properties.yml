@@ -101,6 +101,7 @@ jobs:
           # - mailpit: version in release name (files named mailpit-windows-amd64.zip)
           # - git: files start with "portable"
           # - nodejs: files start with "node-" instead of "nodejs"
+          # - perl: files start with "strawberry" or "perl" (e.g., strawberry-perl-5.42.0-64bit.zip)
           # - shell: files start with "PowerShell" instead of "shell" (e.g., PowerShell-7.5.4-win-x64.zip)
           # - ghostscript: version embedded without dots (e.g., gs10051w64.7z for version 10.05.1)
           assets = []
@@ -283,6 +284,37 @@ jobs:
                               print(f"Found: {filename} -> Version: {ver} (from release name)")
                           else:
                               print(f"ERROR: Could not extract version for apache from release name or filename: {filename}")
+                              print(f"Release name: {release_data.get('name', 'N/A')}")
+                              exit(1)
+              elif module_name == 'perl':
+                  # For perl, files start with "strawberry" or "perl" (e.g., strawberry-perl-5.42.0-64bit.zip)
+                  # Accept files with .7z, .exe, .zip extensions
+                  if (filename.lower().startswith('strawberry') or filename.lower().startswith('perl')):
+                      # Check if file has valid extension
+                      valid_ext = (filename.endswith('.7z') or filename.endswith('.exe') or filename.endswith('.zip'))
+                      if valid_ext:
+                          download_url = asset['browser_download_url']
+
+                          # Try to extract version from filename first, then fall back to release name
+                          version_match = re.search(r'(\d+(?:\.\d+)+)', filename)
+                          if version_match:
+                              ver = version_match.group(1)
+                              assets.append({
+                                  'version': ver,
+                                  'url': download_url,
+                                  'filename': filename
+                              })
+                              print(f"Found: {filename} -> Version: {ver} (from filename)")
+                          elif release_name_version:
+                              ver = release_name_version
+                              assets.append({
+                                  'version': ver,
+                                  'url': download_url,
+                                  'filename': filename
+                              })
+                              print(f"Found: {filename} -> Version: {ver} (from release name)")
+                          else:
+                              print(f"ERROR: Could not extract version for perl from release name or filename: {filename}")
                               print(f"Release name: {release_data.get('name', 'N/A')}")
                               exit(1)
               elif module_name == 'ghostscript':
@@ -516,6 +548,9 @@ jobs:
               print(f"  3. The workflow was re-run on the same release")
               print(f"\nNo action required - this is normal if the release was already processed.")
               print(f"{'='*70}\n")
+              # Write a marker file to indicate no changes were needed
+              with open('no_changes_needed.txt', 'w') as f:
+                  f.write('true')
               exit(0)
 
           # Sort properties by version (semver)
@@ -570,8 +605,18 @@ jobs:
             echo "module_name=unknown" >> $GITHUB_OUTPUT
           fi
 
+      - name: Check if changes were made
+        id: check_changes
+        run: |
+          if [ -f no_changes_needed.txt ]; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+
       - name: Create Pull Request
         id: create_pr
+        if: steps.check_changes.outputs.has_changes == 'true'
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GH_PAT }}
@@ -622,4 +667,8 @@ jobs:
           if [ -f module_name.txt ]; then
             rm module_name.txt
             echo "Cleaned up module_name.txt"
+          fi
+          if [ -f no_changes_needed.txt ]; then
+            rm no_changes_needed.txt
+            echo "Cleaned up no_changes_needed.txt"
           fi

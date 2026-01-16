@@ -117,7 +117,8 @@ jobs:
                   if filename.endswith('.phar'):
                       download_url = asset['browser_download_url']
                       # Try to extract version from filename first, then fall back to release name
-                      version_match = re.search(r'(\d+(?:\.\d+)+)', filename)
+                      # Use negative lookahead to avoid matching the "7" in ".7z"
+                      version_match = re.search(r'(\d+(?:\.\d+)+)(?=[-._]|\.(?:7z|exe|zip|phar))', filename)
                       if version_match:
                           ver = version_match.group(1)
                       elif release_name_version:
@@ -175,7 +176,8 @@ jobs:
                           download_url = asset['browser_download_url']
 
                           # Try to extract version from filename first, then fall back to release name
-                          version_match = re.search(r'(\d+(?:\.\d+)+)', filename)
+                          # Use negative lookahead to avoid matching the "7" in ".7z"
+                          version_match = re.search(r'(\d+(?:\.\d+)+)(?=[-._]|\.(?:7z|exe|zip|phar))', filename)
                           if version_match:
                               ver = version_match.group(1)
                               assets.append({
@@ -206,7 +208,8 @@ jobs:
                           download_url = asset['browser_download_url']
 
                           # Try to extract version from filename first, then fall back to release name
-                          version_match = re.search(r'(\d+(?:\.\d+)+)', filename)
+                          # Use negative lookahead to avoid matching the "7" in ".7z"
+                          version_match = re.search(r'(\d+(?:\.\d+)+)(?=[-._]|\.(?:7z|exe|zip|phar))', filename)
                           if version_match:
                               ver = version_match.group(1)
                               assets.append({
@@ -296,7 +299,8 @@ jobs:
                           download_url = asset['browser_download_url']
 
                           # Try to extract version from filename first, then fall back to release name
-                          version_match = re.search(r'(\d+(?:\.\d+)+)', filename)
+                          # Use negative lookahead to avoid matching the "7" in ".7z"
+                          version_match = re.search(r'(\d+(?:\.\d+)+)(?=[-._]|\.(?:7z|exe|zip|phar))', filename)
                           if version_match:
                               ver = version_match.group(1)
                               assets.append({

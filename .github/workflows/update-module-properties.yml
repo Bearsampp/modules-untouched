@@ -5,7 +5,7 @@ name: Update Module Properties
 
 on:
   release:
-    types: [published, edited]
+    types: [published, prereleased, edited]
 
   # Manual trigger for testing
   workflow_dispatch:

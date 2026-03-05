@@ -17,6 +17,8 @@ on:
 jobs:
   update-properties:
     runs-on: ubuntu-latest
+    # Only run in modules-untouched repository
+    if: ${{ endsWith(github.repository, 'modules-untouched') }}
 
     steps:
       - name: Checkout repository

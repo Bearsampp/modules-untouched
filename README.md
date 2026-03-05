@@ -16,7 +16,6 @@ Issues must be reported on [Bearsampp repository](https://github.com/bearsampp/b
 
 - [Apache](#apache)
 - [Bruno](#bruno)
-- [Clink](#clink)
 - [Composer](#composer)
 - [Ghostscript](#ghostscript)
 - [Git](#git)

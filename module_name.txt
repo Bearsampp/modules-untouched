@@ -1,1 +1,1 @@
-mailpit
+mariadb

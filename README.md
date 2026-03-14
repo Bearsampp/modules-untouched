@@ -131,7 +131,7 @@ No rebuild required. Available as archive artefact (zip).
 No rebuild required. Available as archive artefact (zip).
 
 * [php](https://windows.php.net/download)
-* [memcache](https://github.com/nono303/PHP-memcache-dll/tags)
+* [memcache](https://github.com/nono303/PHP-memcache-dll/tree/master/vs17/x64/ts)
 * [xdebug](https://xdebug.org/download/historical)
 * [imagemagick:](https://imagemagick.org/script/download.php#windows)
 * [imagick:](https://pecl.php.net/package/imagick)

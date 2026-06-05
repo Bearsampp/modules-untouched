@@ -46,17 +46,11 @@ jobs:
                   from packaging import version
                   from collections import OrderedDict
                   
-                  # ============================================================
-                  # SMART DEBUG MODE (D3)
-                  # ============================================================
                   DEBUG = False
                   def debug(*args):
                       if DEBUG:
                           print(*args)
                   
-                  # ============================================================
-                  # ENVIRONMENT
-                  # ============================================================
                   release_tag = os.environ['RELEASE_TAG']
                   repo_owner = os.environ['REPO_OWNER']
                   repo_name = os.environ['REPO_NAME']
@@ -64,44 +58,33 @@ jobs:
                   
                   print(f"Processing release: {release_tag}")
                   
-                  # ============================================================
-                  # MODULE NAME EXTRACTION
-                  # ============================================================
-                  module_match = re.match(r'^([a-zA-Z0-9_-]+)-\d{4}\.\d{1,2}\.\d{1,2}', release_tag)
-                  if not module_match:
+                  m = re.match(r'^([a-zA-Z0-9_-]+)-\d{4}\.\d{1,2}\.\d{1,2}', release_tag)
+                  if not m:
                       print(f"ERROR: Could not extract module name from tag: {release_tag}")
                       exit(1)
                   
-                  module_name = module_match.group(1).lower()
+                  module_name = m.group(1).lower()
                   print(f"Module name: {module_name}")
                   
                   with open('module_name.txt', 'w') as f:
                       f.write(module_name)
                   
-                  # ============================================================
-                  # FETCH RELEASE DATA
-                  # ============================================================
                   api_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases/tags/{release_tag}"
                   headers = {
                       'Authorization': f'token {github_token}',
                       'Accept': 'application/vnd.github.v3+json'
                   }
                   
-                  response = requests.get(api_url, headers=headers)
-                  response.raise_for_status()
-                  release_data = response.json()
+                  resp = requests.get(api_url, headers=headers)
+                  resp.raise_for_status()
+                  release_data = resp.json()
                   
-                  # Extract version from release name
-                  release_name = release_data.get('name', '')
+                  release_name = release_data.get('name', '') or ''
                   release_name_version = None
-                  if release_name:
-                      m = re.search(r'(\d+(?:\.\d+)+)', release_name)
-                      if m:
-                          release_name_version = m.group(1)
+                  vm = re.search(r'(\d+(?:\.\d+)+)', release_name)
+                  if vm:
+                      release_name_version = vm.group(1)
                   
-                  # ============================================================
-                  # MODULE RULES (DECLARATIVE)
-                  # ============================================================
                   MODULE_RULES = {
                       "python": {
                           "patterns": [
@@ -138,15 +121,13 @@ jobs:
                       }
                   }
                   
-                  # ============================================================
-                  # VERSION EXTRACTION HELPERS
-                  # ============================================================
                   def extract_version(module, filename):
-                      # Ghostscript special case
+                      fname = filename.lower()
+                  
                       if module == "ghostscript":
-                          m = re.match(r'gs(\d+)w(?:32|64)\.7z', filename.lower())
-                          if m:
-                              digits = m.group(1)
+                          gm = re.match(r'gs(\d+)w(?:32|64)\.7z', fname)
+                          if gm:
+                              digits = gm.group(1)
                               if len(digits) == 3:
                                   return f"{digits[0]}.{digits[1:]}"
                               if len(digits) == 4:
@@ -159,16 +140,12 @@ jobs:
                                   return f"10.{digits[2:4]}.{digits[4]}"
                           return release_name_version
                   
-                      # Standard version extraction
-                      m = re.search(r'(\d+(?:\.\d+)+(?:-\d+)?)(?=[-._]|\.(?:7z|zip|exe|phar))', filename)
-                      if m:
-                          return m.group(1)
+                      rm = re.search(r'(\d+(?:\.\d+)+(?:-\d+)?)(?=[-._]|\.(?:7z|zip|exe|phar))', filename)
+                      if rm:
+                          return rm.group(1)
                   
                       return release_name_version
                   
-                  # ============================================================
-                  # ASSET MATCHING
-                  # ============================================================
                   def matches_module(module, filename):
                       rules = MODULE_RULES.get(module)
                       if not rules:
@@ -178,9 +155,6 @@ jobs:
                               return True
                       return False
                   
-                  # ============================================================
-                  # PROCESS ASSETS
-                  # ============================================================
                   assets = []
                   for asset in release_data.get('assets', []):
                       filename = asset['name']
@@ -198,96 +172,3 @@ jobs:
                   
                   if not assets:
                       print(f"No valid assets found for module '{module_name}'")
-                      exit(0)
-                  
-                  # ============================================================
-                  # READ PROPERTIES FILE
-                  # ============================================================
-                  properties_file = f"modules/{module_name}.properties"
-                  if not os.path.exists(properties_file):
-                      print(f"ERROR: Properties file not found: {properties_file}")
-                      exit(1)
-                  
-                  with open(properties_file, 'r', encoding='utf-8') as f:
-                      lines = f.readlines()
-                  
-                  properties = OrderedDict()
-                  header = []
-                  in_header = True
-                  
-                  for line in lines:
-                      stripped = line.strip()
-                      if in_header and (stripped.startswith('#') or stripped == ''):
-                          header.append(line)
-                      else:
-                          in_header = False
-                          if '=' in line and not stripped.startswith('#'):
-                              k, v = line.split('=', 1)
-                              properties[k.strip()] = v.strip()
-                  
-                  # ============================================================
-                  # UPDATE PROPERTIES
-                  # ============================================================
-                  changes = False
-                  for a in assets:
-                      ver = a["version"]
-                      url = a["url"]
-                      if ver not in properties or properties[ver] != url:
-                          properties[ver] = url
-                          changes = True
-                  
-                  if not changes:
-                      print(f"INFO: No changes needed for {properties_file}")
-                      exit(0)
-                  
-                  # Sort newest → oldest
-                  def parse_ver(v):
-                      try:
-                          return version.parse(v)
-                      except:
-                          return version.parse("0.0.0")
-                  
-                  properties = OrderedDict(
-                      sorted(properties.items(), key=lambda x: parse_ver(x[0]), reverse=True)
-                  )
-                  
-                  # ============================================================
-                  # WRITE UPDATED FILE
-                  # ============================================================
-                  with open(properties_file, 'w', encoding='utf-8') as f:
-                      for line in header:
-                          f.write(line)
-                      for k, v in properties.items():
-                          f.write(f"{k} = {v}\n")
-                  
-                  print(f"SUCCESS: Updated {properties_file}")
-                  
-                  EOF
-
-            - name: Read module name
-              id: module_info
-              if: always()
-              run: |
-                  if [ -f module_name.txt ]; then
-                    echo "module_name=$(cat module_name.txt)" >> $GITHUB_OUTPUT
-                  else
-                    echo "module_name=unknown" >> $GITHUB_OUTPUT
-                  fi
-
-            - name: Create Pull Request
-              id: create_pr
-              uses: peter-evans/create-pull-request@v6
-              with:
-                  token: ${{ secrets.GH_PAT }}
-                  base: main
-                  commit-message: |
-                      Update ${{ steps.module_info.outputs.module_name }} module properties
-                  branch: update-${{ steps.module_info.outputs.module_name }}-${{ github.event.release.tag_name || github.event.inputs.release_tag }}
-                  delete-branch: true
-                  title: 'Update ${{ steps.module_info.outputs.module_name }} properties'
-                  body: |
-                      Automated update of `${{ steps.module_info.outputs.module_name }}.properties`.
-
-            - name: Enable auto-merge
-              if: steps.create_pr.outputs.pull-request-number != ''
-              run: gh pr merge --auto --squash ${{ steps.create_pr.outputs.pull-request-number }}

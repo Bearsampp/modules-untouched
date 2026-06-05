@@ -189,7 +189,7 @@ No rebuild required.  Update src.<br>
 
 Rebuild required, only available as setup executable.<br />
 Extracted using 7zip.
-
+[WinPython](https://winpython.github.io/)
 <b>MUST use pyqt package, which is the "slimf" version.</b>
 <img width="1071" height="27" alt="image" src="https://github.com/user-attachments/assets/f0f992b7-983c-4c12-a7a2-df6b309a1cf6" />
 

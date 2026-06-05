@@ -9,6 +9,9 @@ on:
             release_tag:
                 description: 'Release tag to process (e.g., php-2025.10.31)'
                 required: true
+    permissions:
+        contents: write
+        pull-requests: write
 
 jobs:
     update-properties:

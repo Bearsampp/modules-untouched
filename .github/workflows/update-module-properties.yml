@@ -44,8 +44,238 @@ jobs:
                   REPO_NAME: ${{ github.event.repository.name }}
               run: |
                   python << 'EOF'
-                  # (your Python script remains unchanged)
-                  # (not repeated here for clarity)
+                  import os
+                  import re
+                  import requests
+                  from packaging import version
+                  from collections import OrderedDict
+                  
+                  # Smart debug flag
+                  DEBUG = False
+                  def debug(*args):
+                      if DEBUG:
+                          print(*args)
+                  
+                  # ------------------------------------------------------------
+                  # Environment
+                  # ------------------------------------------------------------
+                  release_tag = os.environ['RELEASE_TAG']
+                  repo_owner = os.environ['REPO_OWNER']
+                  repo_name = os.environ['REPO_NAME']
+                  github_token = os.environ['GITHUB_TOKEN']
+                  
+                  print(f"Processing release: {release_tag}")
+                  
+                  # ------------------------------------------------------------
+                  # Module name from tag
+                  # ------------------------------------------------------------
+                  m = re.match(r'^([a-zA-Z0-9_-]+)-\d{4}\.\d{1,2}\.\d{1,2}', release_tag)
+                  if not m:
+                      print(f"ERROR: Could not extract module name from tag: {release_tag}")
+                      exit(1)
+                  
+                  module_name = m.group(1).lower()
+                  print(f"Module name: {module_name}")
+                  
+                  with open('module_name.txt', 'w', encoding='utf-8') as f:
+                      f.write(module_name)
+                  
+                  # ------------------------------------------------------------
+                  # Fetch release data
+                  # ------------------------------------------------------------
+                  api_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases/tags/{release_tag}"
+                  headers = {
+                      'Authorization': f'token {github_token}',
+                      'Accept': 'application/vnd.github.v3+json'
+                  }
+                  
+                  resp = requests.get(api_url, headers=headers)
+                  resp.raise_for_status()
+                  release_data = resp.json()
+                  
+                  release_name = release_data.get('name') or ''
+                  release_name_version = None
+                  vm = re.search(r'(\d+(?:\.\d+)+)', release_name)
+                  if vm:
+                      release_name_version = vm.group(1)
+                  
+                  # ------------------------------------------------------------
+                  # Module rules (hybrid Python, etc.)
+                  # ------------------------------------------------------------
+                  MODULE_RULES = {
+                      "python": {
+                          "patterns": [
+                              r'^winpython.*\.(?:7z|zip|exe)$',
+                              r'^python-.*\.(?:7z|zip|exe)$'
+                          ]
+                      },
+                      "git": {
+                          "patterns": [r'^portable.*\.(?:7z|zip|exe|7z\.exe)$']
+                      },
+                      "nodejs": {
+                          "patterns": [r'^node-.*\.(?:7z|zip|exe)$']
+                      },
+                      "perl": {
+                          "patterns": [r'^(strawberry|perl).*']
+                      },
+                      "apache": {
+                          "patterns": [r'^(httpd|apache).*']
+                      },
+                      "powershell": {
+                          "patterns": [r'^powershell-.*\.zip$']
+                      },
+                      "composer": {
+                          "patterns": [r'.*\.phar$']
+                      },
+                      "xlight": {
+                          "patterns": [r'^xlight-x64\.zip$']
+                      },
+                      "mailpit": {
+                          "patterns": [r'^mailpit-windows-amd64\.zip$']
+                      },
+                      "ghostscript": {
+                          "patterns": [r'^gs\d+w(?:32|64)\.7z$']
+                      }
+                  }
+                  
+                  # ------------------------------------------------------------
+                  # Version extraction
+                  # ------------------------------------------------------------
+                  def extract_version(module, filename):
+                      fname = filename.lower()
+                  
+                      # Ghostscript special handling
+                      if module == "ghostscript":
+                          gm = re.match(r'gs(\d+)w(?:32|64)\.7z', fname)
+                          if gm:
+                              digits = gm.group(1)
+                              # 3 digits: 950 -> 9.50
+                              if len(digits) == 3:
+                                  return f"{digits[0]}.{digits[1:]}"
+                              # 4 digits: 1000, 1001, 1002, etc.
+                              if len(digits) == 4:
+                                  if digits.startswith("10"):
+                                      if digits[2:] == "00":
+                                          return f"10.{digits[2]}"
+                                      return f"10.{digits[2:]}"
+                                  return f"{digits[0]}.{digits[1:3]}.{digits[3]}"
+                              # 5 digits: 10010 -> 10.01.0 style
+                              if len(digits) == 5:
+                                  return f"10.{digits[2:4]}.{digits[4]}"
+                          return release_name_version
+                  
+                      # Generic version extraction
+                      rm = re.search(
+                          r'(\d+(?:\.\d+)+(?:-\d+)?)(?=[-._]|\.(?:7z|zip|exe|phar))',
+                          filename
+                      )
+                      if rm:
+                          return rm.group(1)
+                  
+                      return release_name_version
+                  
+                  # ------------------------------------------------------------
+                  # Asset matching
+                  # ------------------------------------------------------------
+                  def matches_module(module, filename):
+                      rules = MODULE_RULES.get(module)
+                      if not rules:
+                          return filename.lower().startswith(module.lower())
+                      for pattern in rules["patterns"]:
+                          if re.match(pattern, filename, re.IGNORECASE):
+                              return True
+                      return False
+                  
+                  # ------------------------------------------------------------
+                  # Collect assets
+                  # ------------------------------------------------------------
+                  assets = []
+                  for asset in release_data.get('assets', []):
+                      filename = asset['name']
+                      if matches_module(module_name, filename):
+                          ver = extract_version(module_name, filename)
+                          if not ver:
+                              DEBUG = True
+                              debug(f"Failed to extract version for {filename}")
+                              continue
+                          assets.append({
+                              "version": ver,
+                              "url": asset['browser_download_url'],
+                              "filename": filename
+                          })
+                  
+                  if not assets:
+                      print(f"No valid assets found for module '{module_name}'")
+                      print(f"Available assets: {[a['name'] for a in release_data.get('assets', [])]}")
+                      exit(0)
+                  
+                  # ------------------------------------------------------------
+                  # Read existing properties
+                  # ------------------------------------------------------------
+                  properties_file = f"modules/{module_name}.properties"
+                  if not os.path.exists(properties_file):
+                      print(f"ERROR: Properties file not found: {properties_file}")
+                      exit(1)
+                  
+                  with open(properties_file, 'r', encoding='utf-8') as f:
+                      lines = f.readlines()
+                  
+                  properties = OrderedDict()
+                  header_lines = []
+                  in_header = True
+                  
+                  for line in lines:
+                      stripped = line.strip()
+                      if in_header and (stripped.startswith('#') or stripped == ''):
+                          header_lines.append(line)
+                      else:
+                          in_header = False
+                          if '=' in line and not stripped.startswith('#'):
+                              k, v = line.split('=', 1)
+                              properties[k.strip()] = v.strip()
+                  
+                  # ------------------------------------------------------------
+                  # Update properties map
+                  # ------------------------------------------------------------
+                  changes_made = False
+                  for a in assets:
+                      ver = a["version"]
+                      url = a["url"]
+                      if ver in properties:
+                          if properties[ver] != url:
+                              properties[ver] = url
+                              changes_made = True
+                      else:
+                          properties[ver] = url
+                          changes_made = True
+                  
+                  if not changes_made:
+                      print(f"INFO: No changes were made to {properties_file}")
+                      exit(0)
+                  
+                  # ------------------------------------------------------------
+                  # Sort newest → oldest (by semantic version)
+                  # ------------------------------------------------------------
+                  def parse_ver(v):
+                      try:
+                          return version.parse(v)
+                      except Exception:
+                          return version.parse("0.0.0")
+                  
+                  sorted_props = OrderedDict(
+                      sorted(properties.items(), key=lambda x: parse_ver(x[0]), reverse=True)
+                  )
+                  
+                  # ------------------------------------------------------------
+                  # Write back, preserving header and F1 format
+                  # ------------------------------------------------------------
+                  with open(properties_file, 'w', encoding='utf-8') as f:
+                      for line in header_lines:
+                          f.write(line)
+                      for k, v in sorted_props.items():
+                          f.write(f"{k} = {v}\n")
+                  
+                  print(f"SUCCESS: Updated {properties_file}")
                   EOF
 
             - name: Read module name

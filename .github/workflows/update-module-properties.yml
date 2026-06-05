@@ -172,3 +172,98 @@ jobs:
                   
                   if not assets:
                       print(f"No valid assets found for module '{module_name}'")
+                      print(f"Available assets: {[a['name'] for a in release_data.get('assets', [])]}")
+                      exit(0)
+                  
+                  properties_file = f"modules/{module_name}.properties"
+                  if not os.path.exists(properties_file):
+                      print(f"ERROR: Properties file not found: {properties_file}")
+                      exit(1)
+                  
+                  with open(properties_file, 'r', encoding='utf-8') as f:
+                      lines = f.readlines()
+                  
+                  properties = OrderedDict()
+                  header_lines = []
+                  in_header = True
+                  
+                  for line in lines:
+                      stripped = line.strip()
+                      if in_header and (stripped.startswith('#') or stripped == ''):
+                          header_lines.append(line)
+                      else:
+                          in_header = False
+                          if '=' in line and not stripped.startswith('#'):
+                              k, v = line.split('=', 1)
+                              properties[k.strip()] = v.strip()
+                  
+                  changes_made = False
+                  for a in assets:
+                      ver = a["version"]
+                      url = a["url"]
+                      if ver in properties:
+                          if properties[ver] != url:
+                              properties[ver] = url
+                              changes_made = True
+                      else:
+                          properties[ver] = url
+                          changes_made = True
+                  
+                  if not changes_made:
+                      print(f"INFO: No changes were made to {properties_file}")
+                      exit(0)
+                  
+                  def parse_ver(v):
+                      try:
+                          return version.parse(v)
+                      except Exception:
+                          return version.parse("0.0.0")
+                  
+                  sorted_props = OrderedDict(
+                      sorted(properties.items(), key=lambda x: parse_ver(x[0]), reverse=True)
+                  )
+                  
+                  with open(properties_file, 'w', encoding='utf-8') as f:
+                      for line in header_lines:
+                          f.write(line)
+                      for k, v in sorted_props.items():
+                          f.write(f"{k} = {v}\n")
+                  
+                  print(f"SUCCESS: Updated {properties_file}")
+                  EOF
+
+            - name: Read module name
+              id: module_info
+              if: always()
+              run: |
+                  if [ -f module_name.txt ]; then
+                    MODULE_NAME=$(cat module_name.txt)
+                    echo "module_name=$MODULE_NAME" >> $GITHUB_OUTPUT
+                  else
+                    echo "module_name=unknown" >> $GITHUB_OUTPUT
+                  fi
+
+            - name: Create Pull Request
+              id: create_pr
+              uses: peter-evans/create-pull-request@v6
+              with:
+                  token: ${{ secrets.GH_PAT }}
+                  base: main
+                  commit-message: |
+                      Update ${{ steps.module_info.outputs.module_name }} module properties
+                      
+                      Auto-generated from release ${{ github.event.release.tag_name || github.event.inputs.release_tag }}
+                  branch: update-${{ steps.module_info.outputs.module_name }}-${{ github.event.release.tag_name || github.event.inputs.release_tag }}
+                  delete-branch: true
+                  title: 'Update ${{ steps.module_info.outputs.module_name }} properties from release ${{ github.event.release.tag_name || github.event.inputs.release_tag }}'
+                  body: |
+                      Automated update of `${{ steps.module_info.outputs.module_name }}.properties` from release `${{ github.event.release.tag_name || github.event.inputs.release_tag }}`.
+                  labels: |
+                      automated
+                      module-update
+
+            - name: Enable auto-merge
+              if: steps.create_pr.outputs.pull-request-number != ''
+              run: |
+                  echo "Enabling auto-merge for PR #${{ steps.create_pr.outputs.pull-request-number }}"
+                  gh pr merge --auto --squash ${{ steps.create_pr.outputs.pull-request-number }}

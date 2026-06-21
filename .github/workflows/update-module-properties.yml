@@ -2,7 +2,7 @@ name: Update Module Properties
 
 on:
     release:
-        types: [published, prereleased, edited]
+        types: [published, prereleased, edited, deleted]
 
     workflow_dispatch:
         inputs:
@@ -42,6 +42,7 @@ jobs:
                   RELEASE_TAG: ${{ github.event.release.tag_name || github.event.inputs.release_tag }}
                   REPO_OWNER: ${{ github.repository_owner }}
                   REPO_NAME: ${{ github.event.repository.name }}
+                  EVENT_ACTION: ${{ github.event.action }}
               run: |
                   python << 'EOF'
                   import os
@@ -63,8 +64,9 @@ jobs:
                   repo_owner = os.environ['REPO_OWNER']
                   repo_name = os.environ['REPO_NAME']
                   github_token = os.environ['GITHUB_TOKEN']
+                  event_action = os.environ.get('EVENT_ACTION', 'workflow_dispatch')
                   
-                  print(f"Processing release: {release_tag}")
+                  print(f"Processing release: {release_tag} (Action: {event_action})")
                   
                   # ------------------------------------------------------------
                   # Module name from tag
@@ -81,23 +83,102 @@ jobs:
                       f.write(module_name)
                   
                   # ------------------------------------------------------------
-                  # Fetch release data
+                  # Handle Deletion
                   # ------------------------------------------------------------
-                  api_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases/tags/{release_tag}"
-                  headers = {
-                      'Authorization': f'token {github_token}',
-                      'Accept': 'application/vnd.github.v3+json'
-                  }
+                  if event_action == 'deleted':
+                      properties_file = f"modules/{module_name}.properties"
+                      if not os.path.exists(properties_file):
+                          print(f"INFO: Properties file not found: {properties_file}")
+                          exit(0)
+                    
+                      with open(properties_file, 'r', encoding='utf-8') as f:
+                          lines = f.readlines()
+                    
+                      properties = OrderedDict()
+                      header_lines = []
+                      in_header = True
+                    
+                      for line in lines:
+                          stripped = line.strip()
+                          if in_header and (stripped.startswith('#') or stripped == ''):
+                              header_lines.append(line)
+                          else:
+                              in_header = False
+                              if '=' in line and not stripped.startswith('#'):
+                                  k, v = line.split('=', 1)
+                                  properties[k.strip()] = v.strip()
+                    
+                      # We need to find which version(s) to remove.
+                      # Since it's a deletion, we don't have assets.
+                      # We'll try to extract the version from the tag itself.
+                      # Usually tag is module-YYYY.MM.DD
+                      # The properties file uses versions like 8.4.3
+                      # Wait, if the tag is 'php-2025.10.31', what version does it correspond to in php.properties?
+                      # Looking at the code: ver = extract_version(module_name, filename)
+                      # For non-ghostscript, it's generic version extraction from filename.
+                      # If we don't know the version, we can't easily delete it from properties.
+                    
+                      # HOWEVER, the user said: "if a module version such as https://github.com/Bearsampp/sandbox/releases/tag/2026.3.22 was subsequently deleted"
+                      # If they delete the release, we want to remove it.
+                      # Maybe we can look for the URL in the properties file?
+                      # The URL contains the tag name.
+                      # URL example: https://github.com/Bearsampp/sandbox/releases/download/php-2025.10.31/php-8.4.3-Win32-vs17-x64.zip
+                      # So if we search for "/releases/download/{release_tag}/" in the URL, we can find the entry to delete!
+                    
+                      to_delete = []
+                      for ver, url in properties.items():
+                          if f"/releases/download/{release_tag}/" in url:
+                              to_delete.append(ver)
+                    
+                      if not to_delete:
+                          print(f"INFO: No entries found for tag {release_tag} in {properties_file}")
+                          exit(0)
+                    
+                      for ver in to_delete:
+                          print(f"Removing version {ver} (URL: {properties[ver]})")
+                          del properties[ver]
+                    
+                      # Sort and write back
+                      def parse_ver(v):
+                          try:
+                              return version.parse(v)
+                          except Exception:
+                              return version.parse("0.0.0")
+                    
+                      sorted_props = OrderedDict(
+                          sorted(properties.items(), key=lambda x: parse_ver(x[0]), reverse=True)
+                      )
+                    
+                      with open(properties_file, 'w', encoding='utf-8') as f:
+                          for line in header_lines:
+                              f.write(line)
+                          for k, v in sorted_props.items():
+                              f.write(f"{k} = {v}\n")
+                    
+                      print(f"SUCCESS: Removed {len(to_delete)} entries from {properties_file}")
+                      exit(0)
                   
-                  resp = requests.get(api_url, headers=headers)
-                  resp.raise_for_status()
-                  release_data = resp.json()
-                  
-                  release_name = release_data.get('name') or ''
+                  # ------------------------------------------------------------
+                  # Fetch release data (for non-deletion)
+                  # ------------------------------------------------------------
+                  release_data = {}
                   release_name_version = None
-                  vm = re.search(r'(\d+(?:\.\d+)+)', release_name)
-                  if vm:
-                      release_name_version = vm.group(1)
+                  
+                  if event_action != 'deleted':
+                      api_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases/tags/{release_tag}"
+                      headers = {
+                          'Authorization': f'token {github_token}',
+                          'Accept': 'application/vnd.github.v3+json'
+                      }
+                      
+                      resp = requests.get(api_url, headers=headers)
+                      resp.raise_for_status()
+                      release_data = resp.json()
+                      
+                      release_name = release_data.get('name') or ''
+                      vm = re.search(r'(\d+(?:\.\d+)+)', release_name)
+                      if vm:
+                          release_name_version = vm.group(1)
                   
                   # ------------------------------------------------------------
                   # Module rules (hybrid Python, etc.)
@@ -299,6 +380,20 @@ jobs:
                   title: 'Update ${{ steps.module_info.outputs.module_name }} properties'
                   body: |
                       Automated update of `${{ steps.module_info.outputs.module_name }}.properties`.
+                      
+                      Action: ${{ github.event.action || 'workflow_dispatch' }}
+                      Release: ${{ github.event.release.tag_name || github.event.inputs.release_tag }}
+                      
+                      ${{ github.event.action == 'deleted' && 'Note: The associated Git tag will be deleted if this PR is merged (or immediately if tag deletion is enabled).' || '' }}
+
+            - name: Delete Git tag
+              if: github.event.action == 'deleted'
+              env:
+                  GH_TOKEN: ${{ secrets.GH_PAT }}
+                  RELEASE_TAG: ${{ github.event.release.tag_name }}
+              run: |
+                  echo "Deleting tag: $RELEASE_TAG"
+                  gh api -X DELETE "repos/${{ github.repository }}/git/refs/tags/$RELEASE_TAG" || echo "Tag already deleted or not found."
 
             - name: Enable auto-merge
               if: steps.create_pr.outputs.pull-request-number != ''

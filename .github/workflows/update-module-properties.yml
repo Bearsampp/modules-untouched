@@ -224,7 +224,15 @@ jobs:
                   # ------------------------------------------------------------
                   def extract_version(module, filename):
                       fname = filename.lower()
-                  
+
+                      # Git special handling
+                      if module == "git":
+                          # PortableGit-2.55.0.2-64-bit.7z.exe -> 2.55.0.2
+                          gm = re.search(r'portablegit-(\d+\.\d+(?:\.\d+)*)(?=-(?:\d+-)?bit|\.7z)', fname, re.IGNORECASE)
+                          if gm:
+                              return gm.group(1)
+                          return release_name_version
+
                       # Ghostscript special handling
                       if module == "ghostscript":
                           gm = re.match(r'gs(\d+)w(?:32|64)\.7z', fname)
@@ -244,7 +252,7 @@ jobs:
                               if len(digits) == 5:
                                   return f"10.{digits[2:4]}.{digits[4]}"
                           return release_name_version
-                  
+
                       # Generic version extraction
                       rm = re.search(
                           r'(\d+(?:\.\d+)+(?:-\d+)?)(?=[-._]|\.(?:7z|zip|exe|phar))',
@@ -252,7 +260,7 @@ jobs:
                       )
                       if rm:
                           return rm.group(1)
-                  
+
                       return release_name_version
                   
                   # ------------------------------------------------------------

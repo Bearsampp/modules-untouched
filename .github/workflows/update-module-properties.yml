@@ -36,6 +36,9 @@ jobs:
               run: |
                   pip install requests packaging
 
+            - name: Wait for release to be indexed
+              run: sleep 30
+
             - name: Extract module name and update properties
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

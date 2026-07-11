@@ -366,7 +366,7 @@ jobs:
                           f.write(line)
                       for k, v in sorted_props.items():
                           f.write(f"{k} = {v}\n")
-                  
+
                   print(f"SUCCESS: Updated {properties_file}")
                   EOF
 
@@ -382,7 +382,7 @@ jobs:
 
             - name: Create Pull Request
               id: create_pr
-              uses: peter-evans/create-pull-request@v8
+              uses: peter-evans/create-pull-request@v7
               env:
                   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
               with:

@@ -93,14 +93,14 @@ jobs:
                       if not os.path.exists(properties_file):
                           print(f"INFO: Properties file not found: {properties_file}")
                           exit(0)
-                    
+
                       with open(properties_file, 'r', encoding='utf-8') as f:
                           lines = f.readlines()
-                    
+
                       properties = OrderedDict()
                       header_lines = []
                       in_header = True
-                    
+
                       for line in lines:
                           stripped = line.strip()
                           if in_header and (stripped.startswith('#') or stripped == ''):
@@ -110,7 +110,7 @@ jobs:
                               if '=' in line and not stripped.startswith('#'):
                                   k, v = line.split('=', 1)
                                   properties[k.strip()] = v.strip()
-                    
+
                       # We need to find which version(s) to remove.
                       # Since it's a deletion, we don't have assets.
                       # We'll try to extract the version from the tag itself.
@@ -120,44 +120,44 @@ jobs:
                       # Looking at the code: ver = extract_version(module_name, filename)
                       # For non-ghostscript, it's generic version extraction from filename.
                       # If we don't know the version, we can't easily delete it from properties.
-                    
+
                       # HOWEVER, the user said: "if a module version such as https://github.com/Bearsampp/sandbox/releases/tag/2026.3.22 was subsequently deleted"
                       # If they delete the release, we want to remove it.
                       # Maybe we can look for the URL in the properties file?
                       # The URL contains the tag name.
                       # URL example: https://github.com/Bearsampp/sandbox/releases/download/php-2025.10.31/php-8.4.3-Win32-vs17-x64.zip
                       # So if we search for "/releases/download/{release_tag}/" in the URL, we can find the entry to delete!
-                    
+
                       to_delete = []
                       for ver, url in properties.items():
                           if f"/releases/download/{release_tag}/" in url:
                               to_delete.append(ver)
-                    
+
                       if not to_delete:
                           print(f"INFO: No entries found for tag {release_tag} in {properties_file}")
                           exit(0)
-                    
+
                       for ver in to_delete:
                           print(f"Removing version {ver} (URL: {properties[ver]})")
                           del properties[ver]
-                    
+
                       # Sort and write back
                       def parse_ver(v):
                           try:
                               return version.parse(v)
                           except Exception:
                               return version.parse("0.0.0")
-                    
+
                       sorted_props = OrderedDict(
                           sorted(properties.items(), key=lambda x: parse_ver(x[0]), reverse=True)
                       )
-                    
+
                       with open(properties_file, 'w', encoding='utf-8') as f:
                           for line in header_lines:
                               f.write(line)
                           for k, v in sorted_props.items():
                               f.write(f"{k} = {v}\n")
-                    
+
                       print(f"SUCCESS: Removed {len(to_delete)} entries from {properties_file}")
                       exit(0)
                   

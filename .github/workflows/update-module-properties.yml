@@ -412,6 +412,7 @@ jobs:
               if: steps.create_pr.outputs.pull-request-number != ''
               env:
                   GH_TOKEN: ${{ secrets.GH_PAT }}
+                  GITHUB_TOKEN: ${{ secrets.GH_PAT }}
               run: |
                   echo "Enabling auto-merge for PR #${{ steps.create_pr.outputs.pull-request-number }}"
-                  gh pr merge --auto --squash ${{ steps.create_pr.outputs.pull-request-number }}
+                  gh pr merge --auto --squash "${{ steps.create_pr.outputs.pull-request-number }}" --repo "${{ github.repository }}"

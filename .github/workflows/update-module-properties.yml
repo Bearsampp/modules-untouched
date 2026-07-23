@@ -36,6 +36,31 @@ jobs:
               run: |
                   pip install requests packaging
 
+            - name: Debug release event data
+              run: |
+                   echo "=== GitHub Context Debug ==="
+                   echo "Event name: ${{ github.event_name }}"
+                   echo "Event action: ${{ github.event.action }}"
+                   echo "Repository: ${{ github.repository }}"
+                   echo "Repository owner: ${{ github.repository_owner }}"
+                   echo "Ref: ${{ github.ref }}"
+                   echo ""
+                   echo "=== Release Event Data ==="
+                   echo "Release tag name: ${{ github.event.release.tag_name }}"
+                   echo "Release name: ${{ github.event.release.name }}"
+                   echo "Release draft: ${{ github.event.release.draft }}"
+                   echo "Release prerelease: ${{ github.event.release.prerelease }}"
+                   echo "Release assets count: ${{ length(github.event.release.assets) }}"
+                   echo ""
+                   echo "=== Workflow Dispatch Input ==="
+                   echo "Input release_tag: ${{ github.event.inputs.release_tag }}"
+                   echo ""
+                   echo "=== Resolved Release Tag ==="
+                   echo "Final RELEASE_TAG: ${{ github.event.release.tag_name || github.event.inputs.release_tag }}"
+                   echo ""
+                   echo "=== Full Event JSON ==="
+                   echo "${{ toJson(github.event) }}"
+
             - name: Wait for release to be indexed
               run: sleep 30
 
@@ -45,7 +70,7 @@ jobs:
                   RELEASE_TAG: ${{ github.event.release.tag_name || github.event.inputs.release_tag }}
                   REPO_OWNER: ${{ github.repository_owner }}
                   REPO_NAME: ${{ github.event.repository.name }}
-                  EVENT_ACTION: ${{ github.event. }}
+                  EVENT_ACTION: ${{ github.event.action }}
               run: |
                   python << 'EOF'
                   import os

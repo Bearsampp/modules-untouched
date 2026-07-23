@@ -45,7 +45,7 @@ jobs:
                   RELEASE_TAG: ${{ github.event.release.tag_name || github.event.inputs.release_tag }}
                   REPO_OWNER: ${{ github.repository_owner }}
                   REPO_NAME: ${{ github.event.repository.name }}
-                  EVENT_ACTION: ${{ github.event.action }}
+                  EVENT_ACTION: ${{ github.event. }}
               run: |
                   python << 'EOF'
                   import os
@@ -382,7 +382,7 @@ jobs:
 
             - name: Create Pull Request
               id: create_pr
-              uses: peter-evans/create-pull-request@v7
+              uses: peter-evans/create-pull-request@v8
               env:
                   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
               with:

@@ -45,7 +45,7 @@ jobs:
                   RELEASE_TAG: ${{ github.event.release.tag_name || github.event.inputs.release_tag }}
                   REPO_OWNER: ${{ github.repository_owner }}
                   REPO_NAME: ${{ github.event.repository.name }}
-                  EVENT_ACTION: ${{ github.event. }}
+                  EVENT_ACTION: ${{ github.event.action || 'workflow_dispatch' }}
               run: |
                   python << 'EOF'
                   import os

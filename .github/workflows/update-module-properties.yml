@@ -37,7 +37,7 @@ jobs:
                   pip install requests packaging
 
             - name: Wait for release to be indexed
-              run: sleep 60
+              run: sleep 20
 
             - name: Extract module name and update properties
               env:

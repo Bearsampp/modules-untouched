@@ -411,8 +411,8 @@ jobs:
             - name: Enable auto-merge
               if: steps.create_pr.outputs.pull-request-number != ''
               env:
-                  GH_TOKEN: ${{ secrets.GH_PAT }}
-                  GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+                  GH_TOKEN: ${{ secrets.BEARSAMPP_BOT_PAT }}
+                  GITHUB_TOKEN: ${{ secrets.BEARSAMPP_BOT_PAT }}
               run: |
                   echo "Enabling auto-merge for PR #${{ steps.create_pr.outputs.pull-request-number }}"
-                  gh pr review --approve "${{ steps.create_pr.outputs.pull-request-number }}" --repo "${{ github.repository }}"
+                  gh pr merge --auto --merge "${{ steps.create_pr.outputs.pull-request-number }}" --repo "${{ github.repository }}"

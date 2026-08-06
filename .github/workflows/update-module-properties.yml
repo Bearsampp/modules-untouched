@@ -5,10 +5,6 @@ on:
         # 'released' covers pre-release -> full release ("latest") conversions.
         types: [published, prereleased, released, edited, deleted]
 
-    # TEMPORARY: one-shot catch-up run for testing (delete after it fires)
-    schedule:
-        - cron: '14 23 * * *'
-
     workflow_dispatch:
         inputs:
             release_tag:
@@ -336,66 +332,6 @@ jobs:
                       exit(0)
 
                   # ------------------------------------------------------------
-                  # Scheduled catch-up run (TEMPORARY test trigger)
-                  # ------------------------------------------------------------
-                  if event_name == 'schedule':
-                      print("Scheduled run: checking recent releases...")
-                      all_releases = []
-                      page = 1
-                      while True:
-                          resp = requests.get(
-                              f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases",
-                              params={'per_page': 100, 'page': page},
-                              headers=headers
-                          )
-                          resp.raise_for_status()
-                          batch = resp.json()
-                          if not batch:
-                              break
-                          all_releases.extend(batch)
-                          if len(batch) < 100:
-                              break
-                          page += 1
-                          if page > 3:
-                              break
-
-                      from datetime import datetime, timedelta, timezone
-
-                      recent_days = 30
-                      cutoff = datetime.now(timezone.utc) - timedelta(days=recent_days)
-
-                      processed_modules = []
-                      changed_any = False
-                      for release in all_releases:
-                          if release.get('draft'):
-                              print(f"SKIP draft release: {release.get('tag_name')}")
-                              continue
-                          published = release.get('published_at')
-                          if published:
-                              dt = datetime.fromisoformat(published.replace('Z', '+00:00'))
-                              if dt < cutoff:
-                                  print(f"INFO: Stopping at release older than {recent_days} days: {release.get('tag_name')}")
-                                  break
-                          module, changed, failed = process_release(release)
-                          if failed:
-                              module_name = module_name_from_tag(release.get('tag_name', ''))
-                              print(f"SKIP no properties file for module '{module_name}'")
-                              continue
-                          if changed and module and module not in processed_modules:
-                              processed_modules.append(module)
-                          if changed:
-                              changed_any = True
-
-                      if processed_modules:
-                          with open('module_name.txt', 'w', encoding='utf-8') as f:
-                              f.write('-'.join(processed_modules))
-
-                      if not changed_any:
-                          print("INFO: No releases required property updates")
-
-                      exit(0)
-
-                  # ------------------------------------------------------------
                   # Single release mode (release event / workflow_dispatch)
                   # ------------------------------------------------------------
                   module_name = module_name_from_tag(release_tag)
@@ -436,14 +372,14 @@ jobs:
               with:
                   token: ${{ secrets.GH_PAT }}
                   base: main
-                  branch: update-${{ steps.module_info.outputs.module_name }}-${{ github.event.release.tag_name || github.event.inputs.release_tag || github.event_name }}
+                  branch: update-${{ steps.module_info.outputs.module_name }}-${{ github.event.release.tag_name || github.event.inputs.release_tag }}
                   delete-branch: true
                   title: 'Update ${{ steps.module_info.outputs.module_name }} properties'
                   body: |
                       Automated update of `${{ steps.module_info.outputs.module_name }}.properties`.
                       
                       Action: ${{ github.event.action || 'workflow_dispatch' }}
-                      Release: ${{ github.event.release.tag_name || github.event.inputs.release_tag || github.event_name }}
+                      Release: ${{ github.event.release.tag_name || github.event.inputs.release_tag }}
                       
                       ${{ github.event.action == 'deleted' && 'Note: The associated Git tag will be deleted if this PR is merged (or immediately if tag deletion is enabled).' || '' }}
 

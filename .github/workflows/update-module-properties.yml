@@ -2,7 +2,8 @@ name: Update Module Properties
 
 on:
     release:
-        types: [published, prereleased, edited, deleted]
+        # 'released' covers pre-release -> full release ("latest") conversions.
+        types: [published, prereleased, released, edited, deleted]
 
     workflow_dispatch:
         inputs:
@@ -37,7 +38,7 @@ jobs:
                   pip install requests packaging
 
             - name: Wait for release to be indexed
-              run: sleep 20
+              run: sleep 10
 
             - name: Extract module name and update properties
               env:
@@ -46,6 +47,7 @@ jobs:
                   REPO_OWNER: ${{ github.repository_owner }}
                   REPO_NAME: ${{ github.event.repository.name }}
                   EVENT_ACTION: ${{ github.event.action || 'workflow_dispatch' }}
+                  EVENT_NAME: ${{ github.event_name }}
               run: |
                   python << 'EOF'
                   import os
@@ -63,130 +65,39 @@ jobs:
                   # ------------------------------------------------------------
                   # Environment
                   # ------------------------------------------------------------
-                  release_tag = os.environ['RELEASE_TAG']
+                  release_tag = os.environ.get('RELEASE_TAG', '')
                   repo_owner = os.environ['REPO_OWNER']
                   repo_name = os.environ['REPO_NAME']
                   github_token = os.environ['GITHUB_TOKEN']
                   event_action = os.environ.get('EVENT_ACTION', 'workflow_dispatch')
-                  
-                  print(f"Processing release: {release_tag} (Action: {event_action})")
-                  
+                  event_name = os.environ.get('EVENT_NAME', 'workflow_dispatch')
+
+                  print(f"Processing event: {event_name} (Action: {event_action}) Release: {release_tag}")
+
+                  headers = {
+                      'Authorization': f'token {github_token}',
+                      'Accept': 'application/vnd.github.v3+json'
+                  }
+
                   # ------------------------------------------------------------
                   # Module name from tag
                   # ------------------------------------------------------------
-                  m = re.match(r'^([a-zA-Z0-9_-]+)-\d{4}\.\d{1,2}\.\d{1,2}', release_tag)
-                  if not m:
-                      print(f"ERROR: Could not extract module name from tag: {release_tag}")
-                      exit(1)
-                  
-                  module_name = m.group(1).lower()
-                  print(f"Module name: {module_name}")
-                  
-                  with open('module_name.txt', 'w', encoding='utf-8') as f:
-                      f.write(module_name)
-                  
-                  # ------------------------------------------------------------
-                  # Handle Deletion
-                  # ------------------------------------------------------------
-                  if event_action == 'deleted':
-                      properties_file = f"modules/{module_name}.properties"
-                      if not os.path.exists(properties_file):
-                          print(f"INFO: Properties file not found: {properties_file}")
-                          exit(0)
+                  def module_name_from_tag(tag):
+                      m = re.match(r'^([a-zA-Z0-9_-]+)-\d{4}\.\d{1,2}\.\d{1,2}', tag)
+                      if not m:
+                          return None
+                      return m.group(1).lower()
 
-                      with open(properties_file, 'r', encoding='utf-8') as f:
-                          lines = f.readlines()
-
-                      properties = OrderedDict()
-                      header_lines = []
-                      in_header = True
-
-                      for line in lines:
-                          stripped = line.strip()
-                          if in_header and (stripped.startswith('#') or stripped == ''):
-                              header_lines.append(line)
-                          else:
-                              in_header = False
-                              if '=' in line and not stripped.startswith('#'):
-                                  k, v = line.split('=', 1)
-                                  properties[k.strip()] = v.strip()
-
-                      # We need to find which version(s) to remove.
-                      # Since it's a deletion, we don't have assets.
-                      # We'll try to extract the version from the tag itself.
-                      # Usually tag is module-YYYY.MM.DD
-                      # The properties file uses versions like 8.4.3
-                      # Wait, if the tag is 'php-2025.10.31', what version does it correspond to in php.properties?
-                      # Looking at the code: ver = extract_version(module_name, filename)
-                      # For non-ghostscript, it's generic version extraction from filename.
-                      # If we don't know the version, we can't easily delete it from properties.
-
-                      # HOWEVER, the user said: "if a module version such as https://github.com/Bearsampp/sandbox/releases/tag/2026.3.22 was subsequently deleted"
-                      # If they delete the release, we want to remove it.
-                      # Maybe we can look for the URL in the properties file?
-                      # The URL contains the tag name.
-                      # URL example: https://github.com/Bearsampp/sandbox/releases/download/php-2025.10.31/php-8.4.3-Win32-vs17-x64.zip
-                      # So if we search for "/releases/download/{release_tag}/" in the URL, we can find the entry to delete!
-
-                      to_delete = []
-                      for ver, url in properties.items():
-                          if f"/releases/download/{release_tag}/" in url:
-                              to_delete.append(ver)
-
-                      if not to_delete:
-                          print(f"INFO: No entries found for tag {release_tag} in {properties_file}")
-                          exit(0)
-
-                      for ver in to_delete:
-                          print(f"Removing version {ver} (URL: {properties[ver]})")
-                          del properties[ver]
-
-                      # Sort and write back
-                      def parse_ver(v):
-                          try:
-                              return version.parse(v)
-                          except Exception:
-                              return version.parse("0.0.0")
-
-                      sorted_props = OrderedDict(
-                          sorted(properties.items(), key=lambda x: parse_ver(x[0]), reverse=True)
-                      )
-
-                      with open(properties_file, 'w', encoding='utf-8') as f:
-                          for line in header_lines:
-                              f.write(line)
-                          for k, v in sorted_props.items():
-                              f.write(f"{k} = {v}\n")
-
-                      print(f"SUCCESS: Removed {len(to_delete)} entries from {properties_file}")
-                      exit(0)
-                  
-                  # ------------------------------------------------------------
-                  # Fetch release data (for non-deletion)
-                  # ------------------------------------------------------------
-                  release_data = {}
-                  release_name_version = None
-                  
-                  if event_action != 'deleted':
-                      api_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases/tags/{release_tag}"
-                      headers = {
-                          'Authorization': f'token {github_token}',
-                          'Accept': 'application/vnd.github.v3+json'
-                      }
-                      
-                      resp = requests.get(api_url, headers=headers)
-                      resp.raise_for_status()
-                      release_data = resp.json()
-                      
-                      release_name = release_data.get('name') or ''
-                      vm = re.search(r'(\d+(?:\.\d+)+)', release_name)
-                      if vm:
-                          release_name_version = vm.group(1)
-                  
                   # ------------------------------------------------------------
                   # Module rules (hybrid Python, etc.)
                   # ------------------------------------------------------------
                   MODULE_RULES = {
+                      "php": {
+                          # Main PHP binaries only (php-8.5.9-Win32-vs17-x64.zip).
+                          # Excludes bundled extensions like php_memcache-*, and
+                          # files like ImageMagick-* that share the release.
+                          "patterns": [r'^php-\d+.*\.(?:7z|zip|exe)$']
+                      },
                       "python": {
                           "patterns": [
                               r'^winpython.*\.(?:7z|zip|exe)$',
@@ -225,7 +136,7 @@ jobs:
                   # ------------------------------------------------------------
                   # Version extraction
                   # ------------------------------------------------------------
-                  def extract_version(module, filename):
+                  def extract_version(module, filename, release_name_version=None):
                       fname = filename.lower()
 
                       # Git special handling
@@ -279,95 +190,168 @@ jobs:
                       return False
                   
                   # ------------------------------------------------------------
-                  # Collect assets
+                  # Properties file helpers
                   # ------------------------------------------------------------
-                  assets = []
-                  for asset in release_data.get('assets', []):
-                      filename = asset['name']
-                      if matches_module(module_name, filename):
-                          ver = extract_version(module_name, filename)
-                          if not ver:
-                              DEBUG = True
-                              debug(f"Failed to extract version for {filename}")
-                              continue
-                          assets.append({
-                              "version": ver,
-                              "url": asset['browser_download_url'],
-                              "filename": filename
-                          })
-                  
-                  if not assets:
-                      print(f"No valid assets found for module '{module_name}'")
-                      print(f"Available assets: {[a['name'] for a in release_data.get('assets', [])]}")
-                      exit(0)
-                  
-                  # ------------------------------------------------------------
-                  # Read existing properties
-                  # ------------------------------------------------------------
-                  properties_file = f"modules/{module_name}.properties"
-                  if not os.path.exists(properties_file):
-                      print(f"ERROR: Properties file not found: {properties_file}")
-                      exit(1)
-                  
-                  with open(properties_file, 'r', encoding='utf-8') as f:
-                      lines = f.readlines()
-                  
-                  properties = OrderedDict()
-                  header_lines = []
-                  in_header = True
-                  
-                  for line in lines:
-                      stripped = line.strip()
-                      if in_header and (stripped.startswith('#') or stripped == ''):
-                          header_lines.append(line)
-                      else:
-                          in_header = False
-                          if '=' in line and not stripped.startswith('#'):
-                              k, v = line.split('=', 1)
-                              properties[k.strip()] = v.strip()
-                  
-                  # ------------------------------------------------------------
-                  # Update properties map
-                  # ------------------------------------------------------------
-                  changes_made = False
-                  for a in assets:
-                      ver = a["version"]
-                      url = a["url"]
-                      if ver in properties:
-                          if properties[ver] != url:
-                              properties[ver] = url
-                              changes_made = True
-                      else:
-                          properties[ver] = url
-                          changes_made = True
-                  
-                  if not changes_made:
-                      print(f"INFO: No changes were made to {properties_file}")
-                      exit(0)
-                  
-                  # ------------------------------------------------------------
-                  # Sort newest → oldest (by semantic version)
-                  # ------------------------------------------------------------
+                  def parse_properties(properties_file):
+                      with open(properties_file, 'r', encoding='utf-8') as f:
+                          lines = f.readlines()
+
+                      properties = OrderedDict()
+                      header_lines = []
+                      in_header = True
+
+                      for line in lines:
+                          stripped = line.strip()
+                          if in_header and (stripped.startswith('#') or stripped == ''):
+                              header_lines.append(line)
+                          else:
+                              in_header = False
+                              if '=' in line and not stripped.startswith('#'):
+                                  k, v = line.split('=', 1)
+                                  properties[k.strip()] = v.strip()
+                      return properties, header_lines
+
                   def parse_ver(v):
                       try:
                           return version.parse(v)
                       except Exception:
                           return version.parse("0.0.0")
-                  
-                  sorted_props = OrderedDict(
-                      sorted(properties.items(), key=lambda x: parse_ver(x[0]), reverse=True)
-                  )
-                  
-                  # ------------------------------------------------------------
-                  # Write back, preserving header and F1 format
-                  # ------------------------------------------------------------
-                  with open(properties_file, 'w', encoding='utf-8') as f:
-                      for line in header_lines:
-                          f.write(line)
-                      for k, v in sorted_props.items():
-                          f.write(f"{k} = {v}\n")
 
-                  print(f"SUCCESS: Updated {properties_file}")
+                  def write_properties(properties_file, properties, header_lines):
+                      sorted_props = OrderedDict(
+                          sorted(properties.items(), key=lambda x: parse_ver(x[0]), reverse=True)
+                      )
+
+                      with open(properties_file, 'w', encoding='utf-8') as f:
+                          for line in header_lines:
+                              f.write(line)
+                          for k, v in sorted_props.items():
+                              f.write(f"{k} = {v}\n")
+
+                  # ------------------------------------------------------------
+                  # Process a single release
+                  # Returns (module_name, changed, failed).
+                  # Missing versions are added; existing versions get their URL
+                  # updated if the release now points to a different asset.
+                  # ------------------------------------------------------------
+                  def process_release(release):
+                      tag = release.get('tag_name', '')
+                      module_name = module_name_from_tag(tag)
+                      if not module_name:
+                          print(f"ERROR: Could not extract module name from tag: {tag}")
+                          return None, False, False
+
+                      print(f"Module name: {module_name}")
+
+                      release_name = release.get('name') or ''
+                      vm = re.search(r'(\d+(?:\.\d+)+)', release_name)
+                      release_name_version = vm.group(1) if vm else None
+
+                      # Collect assets
+                      assets = []
+                      for asset in release.get('assets', []):
+                          filename = asset['name']
+                          if matches_module(module_name, filename):
+                              ver = extract_version(module_name, filename, release_name_version)
+                              if not ver:
+                                  DEBUG = True
+                                  debug(f"Failed to extract version for {filename}")
+                                  continue
+                              assets.append({
+                                  "version": ver,
+                                  "url": asset['browser_download_url'],
+                                  "filename": filename
+                              })
+
+                      if not assets:
+                          print(f"No valid assets found for module '{module_name}'")
+                          print(f"Available assets: {[a['name'] for a in release.get('assets', [])]}")
+                          return module_name, False, False
+
+                      # Read existing properties
+                      properties_file = f"modules/{module_name}.properties"
+                      if not os.path.exists(properties_file):
+                          print(f"ERROR: Properties file not found: {properties_file}")
+                          return module_name, False, True
+
+                      properties, header_lines = parse_properties(properties_file)
+
+                      # Update properties map
+                      changes_made = False
+                      for a in assets:
+                          ver = a["version"]
+                          url = a["url"]
+                          if ver in properties:
+                              if properties[ver] != url:
+                                  properties[ver] = url
+                                  changes_made = True
+                          else:
+                              properties[ver] = url
+                              changes_made = True
+
+                      if not changes_made:
+                          print(f"INFO: No changes were made to {properties_file}")
+                          return module_name, False, False
+
+                      write_properties(properties_file, properties, header_lines)
+                      print(f"SUCCESS: Updated {properties_file}")
+                      return module_name, True, False
+
+                  # ------------------------------------------------------------
+                  # Handle Deletion
+                  # ------------------------------------------------------------
+                  if event_action == 'deleted':
+                      module_name = module_name_from_tag(release_tag)
+                      if not module_name:
+                          print(f"ERROR: Could not extract module name from tag: {release_tag}")
+                          exit(1)
+
+                      properties_file = f"modules/{module_name}.properties"
+                      if not os.path.exists(properties_file):
+                          print(f"INFO: Properties file not found: {properties_file}")
+                          exit(0)
+
+                      properties, header_lines = parse_properties(properties_file)
+
+                      # Find entries whose download URL references the deleted release tag
+                      to_delete = []
+                      for ver, url in properties.items():
+                          if f"/releases/download/{release_tag}/" in url:
+                              to_delete.append(ver)
+
+                      if not to_delete:
+                          print(f"INFO: No entries found for tag {release_tag} in {properties_file}")
+                          exit(0)
+
+                      for ver in to_delete:
+                          print(f"Removing version {ver} (URL: {properties[ver]})")
+                          del properties[ver]
+
+                      write_properties(properties_file, properties, header_lines)
+                      print(f"SUCCESS: Removed {len(to_delete)} entries from {properties_file}")
+                      exit(0)
+
+                  # ------------------------------------------------------------
+                  # Single release mode (release event / workflow_dispatch)
+                  # ------------------------------------------------------------
+                  module_name = module_name_from_tag(release_tag)
+                  if not module_name:
+                      print(f"ERROR: Could not extract module name from tag: {release_tag}")
+                      exit(1)
+
+                  with open('module_name.txt', 'w', encoding='utf-8') as f:
+                      f.write(module_name)
+
+                  api_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases/tags/{release_tag}"
+                  resp = requests.get(api_url, headers=headers)
+                  resp.raise_for_status()
+                  release_data = resp.json()
+
+                  module, changed, failed = process_release(release_data)
+                  if failed:
+                      exit(1)
+
+                  exit(0)
                   EOF
 
             - name: Read module name

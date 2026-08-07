@@ -101,7 +101,8 @@ jobs:
                       "python": {
                           "patterns": [
                               r'^winpython.*\.(?:7z|zip|exe)$',
-                              r'^python-.*\.(?:7z|zip|exe)$'
+                              r'^python-.*\.(?:7z|zip|exe)$',
+                              r'^wpy\d.*\.(?:7z|zip)$'
                           ]
                       },
                       "git": {
@@ -126,7 +127,7 @@ jobs:
                           "patterns": [r'^xlight-x64\.zip$']
                       },
                       "mailpit": {
-                          "patterns": [r'^mailpit-windows-amd64\.zip$']
+                          "patterns": [r'^mailpit-windows-amd64(?:\.\d+)?\.zip$']
                       },
                       "ghostscript": {
                           "patterns": [r'^gs\d+w(?:32|64)\.7z$']
@@ -276,7 +277,10 @@ jobs:
 
                       properties, header_lines = parse_properties(properties_file)
 
-                      # Update properties map
+                      # Update properties map. The newest release always
+                      # wins: any pre-existing entry for the same version is
+                      # re-pointed at this release (handles hotfix/security
+                      # re-releases of an older version).
                       changes_made = False
                       for a in assets:
                           ver = a["version"]
@@ -287,6 +291,23 @@ jobs:
                                   changes_made = True
                           else:
                               properties[ver] = url
+                              changes_made = True
+
+                      # Reconcile stale entries. For modules with explicit
+                      # asset rules, drop any entry whose URL no longer
+                      # matches this module's asset pattern (e.g., bundled
+                      # extensions like php_memcache-* that slipped in under
+                      # older, looser matching). Stale releases must not
+                      # linger in the properties file.
+                      if module_name in MODULE_RULES:
+                          stale_versions = []
+                          for ver, url in properties.items():
+                              url_filename = url.rsplit('/', 1)[-1]
+                              if not matches_module(module_name, url_filename):
+                                  stale_versions.append(ver)
+                          for ver in stale_versions:
+                              print(f"Removing stale entry: {ver} (URL: {properties[ver]})")
+                              del properties[ver]
                               changes_made = True
 
                       if not changes_made:

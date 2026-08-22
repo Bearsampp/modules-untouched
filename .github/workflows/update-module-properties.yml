@@ -413,11 +413,14 @@ jobs:
                   echo "Deleting tag: $RELEASE_TAG"
                   gh api -X DELETE "repos/${{ github.repository }}/git/refs/tags/$RELEASE_TAG" || echo "Tag already deleted or not found."
 
-            - name: Enable auto-merge
+            - name: Merge Pull Request
               if: steps.create_pr.outputs.pull-request-number != ''
               env:
                   GH_TOKEN: ${{ secrets.BEARSAMPP_BOT_PAT }}
                   GITHUB_TOKEN: ${{ secrets.BEARSAMPP_BOT_PAT }}
               run: |
-                  echo "Enabling auto-merge for PR #${{ steps.create_pr.outputs.pull-request-number }}"
-                  gh pr merge --auto --merge "${{ steps.create_pr.outputs.pull-request-number }}" --repo "${{ github.repository }}"
+                  echo "Merging PR #${{ steps.create_pr.outputs.pull-request-number }}"
+                  gh pr merge --merge "${{ steps.create_pr.outputs.pull-request-number }}" --repo "${{ github.repository }}" \
+                    || gh pr merge --squash "${{ steps.create_pr.outputs.pull-request-number }}" --repo "${{ github.repository }}" \
+                    || gh pr merge --rebase "${{ steps.create_pr.outputs.pull-request-number }}" --repo "${{ github.repository }}" \
+                    || echo "Merge skipped (PR already merged or not mergeable)."

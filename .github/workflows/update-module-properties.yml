@@ -127,7 +127,12 @@ jobs:
                           "patterns": [r'^xlight-x64\.zip$']
                       },
                       "mailpit": {
-                          "patterns": [r'^mailpit-windows-amd64(?:\.\d+)?\.zip$']
+                          # Asset names carry no version, so keys come from
+                          # the release title (e.g. 1.31.0). version_pattern
+                          # rejects malformed legacy keys like "64.1" scraped
+                          # out of "amd64" in the asset filename.
+                          "patterns": [r'^mailpit-windows-amd64(?:\.\d+)?\.zip$'],
+                          "version_pattern": r'^\d+\.\d+\.\d+$'
                       },
                       "ghostscript": {
                           "patterns": [r'^gs\d+w(?:32|64)\.7z$']
@@ -139,6 +144,13 @@ jobs:
                   # ------------------------------------------------------------
                   def extract_version(module, filename, release_name_version=None):
                       fname = filename.lower()
+
+                      # Mailpit special handling
+                      # Asset names carry no version (mailpit-windows-amd64.zip,
+                      # or .1/.2 suffixes added by GitHub for duplicates), so the
+                      # version must come from the release title (e.g. 1.31.0).
+                      if module == "mailpit":
+                          return release_name_version
 
                       # Git special handling
                       if module == "git":
@@ -297,13 +309,20 @@ jobs:
                       # asset rules, drop any entry whose URL no longer
                       # matches this module's asset pattern (e.g., bundled
                       # extensions like php_memcache-* that slipped in under
-                      # older, looser matching). Stale releases must not
-                      # linger in the properties file.
+                      # older, looser matching). Modules may also declare a
+                      # version_pattern; entries whose key does not match it
+                      # (e.g., "64.1" scraped from an amd64 filename) are
+                      # stale as well. Stale releases must not linger in the
+                      # properties file.
                       if module_name in MODULE_RULES:
+                          ver_pattern = MODULE_RULES[module_name].get("version_pattern")
                           stale_versions = []
                           for ver, url in properties.items():
                               url_filename = url.rsplit('/', 1)[-1]
                               if not matches_module(module_name, url_filename):
+                                  stale_versions.append(ver)
+                              elif ver_pattern and not re.match(ver_pattern, str(ver)):
+                                  print(f"Removing malformed entry: {ver} (URL: {url})")
                                   stale_versions.append(ver)
                           for ver in stale_versions:
                               print(f"Removing stale entry: {ver} (URL: {properties[ver]})")

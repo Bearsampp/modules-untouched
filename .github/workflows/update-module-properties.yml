@@ -41,6 +41,7 @@ jobs:
               run: sleep 10
 
             - name: Extract module name and update properties
+              id: update_properties
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   RELEASE_TAG: ${{ github.event.release.tag_name || github.event.inputs.release_tag }}
@@ -346,6 +347,9 @@ jobs:
                           print(f"ERROR: Could not extract module name from tag: {release_tag}")
                           exit(1)
 
+                      with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as f:
+                          f.write(f"module_name={module_name}\n")
+
                       properties_file = f"modules/{module_name}.properties"
                       if not os.path.exists(properties_file):
                           print(f"INFO: Properties file not found: {properties_file}")
@@ -379,8 +383,8 @@ jobs:
                       print(f"ERROR: Could not extract module name from tag: {release_tag}")
                       exit(1)
 
-                  with open('module_name.txt', 'w', encoding='utf-8') as f:
-                      f.write(module_name)
+                  with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as f:
+                      f.write(f"module_name={module_name}\n")
 
                   api_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases/tags/{release_tag}"
                   resp = requests.get(api_url, headers=headers)
@@ -394,16 +398,6 @@ jobs:
                   exit(0)
                   EOF
 
-            - name: Read module name
-              id: module_info
-              if: always()
-              run: |
-                  if [ -f module_name.txt ]; then
-                    echo "module_name=$(cat module_name.txt)" >> $GITHUB_OUTPUT
-                  else
-                    echo "module_name=unknown" >> $GITHUB_OUTPUT
-                  fi
-
             - name: Create Pull Request
               id: create_pr
               uses: peter-evans/create-pull-request@v8
@@ -412,11 +406,11 @@ jobs:
               with:
                   token: ${{ secrets.GH_PAT }}
                   base: main
-                  branch: update-${{ steps.module_info.outputs.module_name }}-${{ github.event.release.tag_name || github.event.inputs.release_tag }}
+                  branch: update-${{ steps.update_properties.outputs.module_name }}-${{ github.event.release.tag_name || github.event.inputs.release_tag }}
                   delete-branch: true
-                  title: 'Update ${{ steps.module_info.outputs.module_name }} properties'
+                  title: 'Update ${{ steps.update_properties.outputs.module_name }} properties'
                   body: |
-                      Automated update of `${{ steps.module_info.outputs.module_name }}.properties`.
+                      Automated update of `${{ steps.update_properties.outputs.module_name }}.properties`.
                       
                       Action: ${{ github.event.action || 'workflow_dispatch' }}
                       Release: ${{ github.event.release.tag_name || github.event.inputs.release_tag }}

@@ -187,7 +187,16 @@ jobs:
                           filename
                       )
                       if rm:
-                          return rm.group(1)
+                          ver = rm.group(1)
+                          # Some modules use a "-N" build counter that is not
+                          # part of the real version (e.g. PostgreSQL assets
+                          # are named postgresql-14.24-1-windows-x64-binaries.zip).
+                          # Ignore a trailing "-1-" / "-1": 14.24-1 -> 14.24.
+                          if ver.endswith('-1-'):
+                              ver = ver[:-3]
+                          elif ver.endswith('-1'):
+                              ver = ver[:-2]
+                          return ver
 
                       return release_name_version
                   

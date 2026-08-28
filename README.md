@@ -38,7 +38,7 @@ Issues must be reported on [Bearsampp repository](https://github.com/bearsampp/b
 
 ## Apache
 
-No rebuild required. Available as archive artefact (zip).
+No rebuild required. Available as archive artifact (zip).
 
 * https://www.apachelounge.com/download/
 * be sure to get mod_fcgid also
@@ -48,7 +48,7 @@ NOTE: Check OpenSSL version here: https://www.apachelounge.com/viewforum.php?f=1
 ## Bruno
 
 *Download portable x64
-*No rebuld needed.
+*No rebuild needed.
 
 * https://www.usebruno.com/downloads
 
@@ -85,7 +85,7 @@ No rebuild required.
 
 ## MariaDB
 
-No rebuild required. Available as archive artefact (zip).
+No rebuild required. Available as archive artifact (zip).
 
 * https://downloads.mariadb.org/mariadb/+releases/
 
@@ -102,13 +102,13 @@ use the created .zip file.
 
 ## MySQL
 
-No rebuild required. Available as archive artefact (zip).
+No rebuild required. Available as archive artifact (zip).
 
 * https://dev.mysql.com/downloads/mysql/
 
 ## Ngrok
 
-No rebuild required. Available as a 7z artefact.
+No rebuild required. Available as a 7z artifact.
 
 In order to see version you must first extract the .zip then check the properties->Details section of the .exe
 
@@ -116,19 +116,19 @@ In order to see version you must first extract the .zip then check the propertie
 
 ## Node.js
 
-No rebuild required. Available as msi or 7z artefact.
+No rebuild required. Available as msi or 7z artifact.
 
 * https://nodejs.org/dist/latest
 
 ## Perl
 
-No rebuild required. Available as archive artefact (zip).
+No rebuild required. Available as archive artifact (zip).
 
 * http://strawberryperl.com/releases.html
 
 ## PHP
 
-No rebuild required. Available as archive artefact (zip).
+No rebuild required. Available as archive artifact (zip).
 
 * [php](https://windows.php.net/download)
 * [memcache](https://github.com/nono303/PHP-memcache-dll/tree/master/vs17/x64/ts)
@@ -144,31 +144,31 @@ No rebuild required. Available as archive artefact (zip).
 
 ## phpMyAdmin
 
-No rebuild required. Available as archive artefact (zip).
+No rebuild required. Available as archive artifact (zip).
 
 * https://www.phpmyadmin.net/downloads/
 
 ## phpPgAdmin
 
-No rebuild required. Available as source code artefact (zip).
+No rebuild required. Available as source code artifact (zip).
 
 * https://github.com/ReimuHakurei/phpPgAdmin
 
 ## PostgreSQL
 
-No rebuild required. Available as archive artefact (zip).
+No rebuild required. Available as archive artifact (zip).
 
 * https://www.enterprisedb.com/download-postgresql-binaries
 
 ## PowerShell
 
-No rebuild required. Available as archive artefact (zip).
+No rebuild required. Available as archive artifact (zip).
 
 * https://github.com/PowerShell/PowerShell/releases
 
 #### oh-my-posh
 
-No rebuild required. Available as archive artefact for Binaries and Dependencies (zip).
+No rebuild required. Available as archive artifact for Binaries and Dependencies (zip).
 
 * https://github.com/JanDeDobbeleer/oh-my-posh/releases
 

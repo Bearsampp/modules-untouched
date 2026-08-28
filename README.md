@@ -148,9 +148,9 @@ No rebuild required. Available as archive artefact (zip).
 
 * https://www.phpmyadmin.net/downloads/
 
-## phpPgAdmin2
+## phpPgAdmin
 
-No rebuild required. Available as archive artefact (zip).
+No rebuild required. Available as source code artefact (zip).
 
 * https://github.com/ReimuHakurei/phpPgAdmin
 

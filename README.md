@@ -28,7 +28,7 @@ Issues must be reported on [Bearsampp repository](https://github.com/bearsampp/b
 - [Perl](#perl)
 - [PHP](#php)
 - [phpMyAdmin](#phpmyadmin)
-- [phpPgAdmin](#phppgadmin2)
+- [phpPgAdmin](#phppgadmin)
 - [PostgreSQL](#postgresql)
 - [PowerShell](#powershell)
 - [Prerequisite](#Prerequisites)

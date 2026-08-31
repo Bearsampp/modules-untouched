@@ -182,8 +182,13 @@ jobs:
                           return release_name_version
 
                       # Generic version extraction
+                      # Only a "-1" build counter or a prerelease suffix
+                      # ("-RC", "-beta", "-alpha", "-dev") belongs in the
+                      # version. Arbitrary build counters (e.g. Apache's
+                      # "-260617" in httpd-2.4.68-260617-Win64-VS18.zip)
+                      # are NOT part of the version and are left out.
                       rm = re.search(
-                          r'(\d+(?:\.\d+)+(?:-\d+)?)(?=[-._]|\.(?:7z|zip|exe|phar))',
+                          r'(\d+(?:\.\d+)+(?:-1)?)(?=[-._]|\.(?:7z|zip|exe|phar))',
                           filename
                       )
                       if rm:

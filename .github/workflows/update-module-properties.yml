@@ -97,7 +97,16 @@ jobs:
                           # Main PHP binaries only (php-8.5.9-Win32-vs17-x64.zip).
                           # Excludes bundled extensions like php_memcache-*, and
                           # files like ImageMagick-* that share the release.
-                          "patterns": [r'^php-\d+.*\.(?:7z|zip|exe)$']
+                          "patterns": [r'^php-\d+.*\.(?:7z|zip|exe)$'],
+                          # PHP keys are three-part (8.6.0) or two-part (8.6),
+                          # optionally with a prerelease suffix (8.6.0beta3,
+                          # 8.0.0RC5, 8.6.0-rc3). A two-part key is fine when
+                          # the asset really is two-part (php-8.6-2026.9.13.7z);
+                          # keys truncated from a longer filename (a "8.6"
+                          # scraped out of php-8.6.0beta3-...zip) are caught by
+                          # the URL-based reconcile below (recheck_from_url).
+                          "version_pattern": r"(?i)^\d+\.\d+(?:\.\d+)?(?:[._-]?(?:rc|alpha|beta|preview|pre|dev)\d+)?$",
+                          "recheck_from_url": True
                       },
                       "python": {
                           "patterns": [
@@ -183,13 +192,16 @@ jobs:
 
                       # Generic version extraction
                       # Only a "-1" build counter or a prerelease suffix
-                      # ("-RC", "-beta", "-alpha", "-dev") belongs in the
+                      # ("-RC", "-beta", "-alpha", "-dev", or the no-separator
+                      # PHP form like "beta3"/"RC5" in
+                      # php-8.6.0beta3-Win32-vs18-x64.zip) belongs in the
                       # version. Arbitrary build counters (e.g. Apache's
                       # "-260617" in httpd-2.4.68-260617-Win64-VS18.zip)
                       # are NOT part of the version and are left out.
                       rm = re.search(
-                          r'(\d+(?:\.\d+)+(?:-1)?)(?=[-._]|\.(?:7z|zip|exe|phar))',
-                          filename
+                          r'(\d+(?:\.\d+)+(?:[._-]?(?:rc|alpha|beta|preview|pre|dev)\d*)?(?:-1)?)(?=[-._]|\.(?:7z|zip|exe|phar))',
+                          filename,
+                          re.IGNORECASE
                       )
                       if rm:
                           ver = rm.group(1)
@@ -327,10 +339,17 @@ jobs:
                       # older, looser matching). Modules may also declare a
                       # version_pattern; entries whose key does not match it
                       # (e.g., "64.1" scraped from an amd64 filename) are
-                      # stale as well. Stale releases must not linger in the
-                      # properties file.
+                      # stale as well. Modules may additionally flag
+                      # recheck_from_url: the key must re-extract from its own
+                      # asset filename, so a legitimate two-part key (8.6 from
+                      # php-8.6-2026.9.13.7z) survives while a key truncated
+                      # from a longer name (8.6 scraped from
+                      # php-8.6.0beta3-...zip) is dropped. Stale releases must
+                      # not linger in the properties file.
                       if module_name in MODULE_RULES:
-                          ver_pattern = MODULE_RULES[module_name].get("version_pattern")
+                          rule = MODULE_RULES[module_name]
+                          ver_pattern = rule.get("version_pattern")
+                          recheck_url = rule.get("recheck_from_url")
                           stale_versions = []
                           for ver, url in properties.items():
                               url_filename = url.rsplit('/', 1)[-1]
@@ -339,6 +358,11 @@ jobs:
                               elif ver_pattern and not re.match(ver_pattern, str(ver)):
                                   print(f"Removing malformed entry: {ver} (URL: {url})")
                                   stale_versions.append(ver)
+                              elif recheck_url:
+                                  extracted = extract_version(module_name, url_filename)
+                                  if extracted and str(extracted) != str(ver):
+                                      print(f"Removing mismatched entry: {ver} (asset {url_filename} re-extracts as {extracted})")
+                                      stale_versions.append(ver)
                           for ver in stale_versions:
                               print(f"Removing stale entry: {ver} (URL: {properties[ver]})")
                               del properties[ver]

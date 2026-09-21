@@ -190,7 +190,10 @@ Gradle pulls latest version automatically
 
 Rebuild required, only available as setup executable.<br />
 Extracted using 7zip.
-[WinPython](https://winpython.github.io/)
+
+* https://winpython.github.io/ ( read readme )
+* https://pypi.org/project/PyQt5/#files ( python wheels )
+* https://github.com/winpython/winpython/releases ( official git )
 <b>MUST use pyqt package, which is the "slim" version.</b>
 ![image](https://github.com/user-attachments/assets/b2c73095-d104-4ebc-a7ac-82af7d710820)
 
